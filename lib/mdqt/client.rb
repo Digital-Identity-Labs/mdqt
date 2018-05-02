@@ -1,7 +1,7 @@
-module MDQ
+module MDQT
   class Client
 
-    require 'mdq/client/metadata_service'
+    require 'mdqt/client/metadata_service'
 
     def initialize(options={})
 

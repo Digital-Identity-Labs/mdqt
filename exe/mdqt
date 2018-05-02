@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
 require 'rubygems'
-require 'mdq/cli'
+require 'mdqt/cli'
 
 require 'commander'
 
 Commander.configure do
   program :name, 'mdqt'
-  program :version, MDQ::VERSION
+  program :version, MDQT::VERSION
   program :description, 'MDQ SAML metadata client'
 
   global_option '--verbose'
@@ -14,22 +14,22 @@ Commander.configure do
   default_command :help
 
   command :version do |c|
-    c.syntax = 'mdq version'
+    c.syntax = 'mdqt version'
     c.description = 'Display version information'
     c.action do |args, options|
-      say "mdq version #{MDQ::VERSION}"
+      say "mdqt version #{MDQT::VERSION}"
     end
   end
 
   command :get do |c|
-    c.syntax = 'mdq get [options] [entity id] [entity id] '
+    c.syntax = 'mdqt get [options] [entity id] [entity id] '
     c.description = 'Download one entity record or an aggregate of entity records'
     c.option '--service URL', String, 'MDQ service to search for entities. Defaults to MDQT_SERVICE or MDQ_BASE_URL env variables'
     c.option '--verify-with PATH', String, 'Validate downloads using specified certificate'
     c.option '--stdin', 'accept one or more entity ids from STDIN'
     c.action do |args, options|
-      options.default MDQ::CLI::Defaults.cli_defaults
-      MDQ::CLI::Get.run(args, options)
+      options.default MDQT::CLI::Defaults.cli_defaults
+      MDQT::CLI::Get.run(args, options)
     end
   end
 

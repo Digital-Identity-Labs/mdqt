@@ -1,14 +1,14 @@
-module MDQ
+module MDQT
 
   class CLI
 
-    require 'mdq/cli/base'
+    require 'mdqt/cli/base'
 
     class Get < Base
 
       def run(args, options)
 
-        client = MDQ::Client.new(base_url: options.service)
+        client = MDQT::Client.new(base_url: options.service)
 
         if args.empty?
           results = [client.get_metadata("")]

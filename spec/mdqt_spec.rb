@@ -1,8 +1,8 @@
 require "spec_helper"
 
-describe Mdq do
+describe MDQT do
   it "has a version number" do
-    expect(Mdq::VERSION).not_to be nil
+    expect(MDQT::VERSION).not_to be nil
   end
 
   it "does something useful" do

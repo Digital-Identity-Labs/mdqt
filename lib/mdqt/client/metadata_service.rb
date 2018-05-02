@@ -1,4 +1,4 @@
-module MDQ
+module MDQT
   class Client
 
     class MetadataService
@@ -27,7 +27,7 @@ module MDQ
           req.options.timeout = 100
           req.options.open_timeout = 5
           req.headers['Content-Type'] = 'application/samlmetadata+xml'
-          req.headers['User-Agent'] = "MDQT v#{MDQ::VERSION}"
+          req.headers['User-Agent'] = "MDQT v#{MDQT::VERSION}"
         end
       end
 

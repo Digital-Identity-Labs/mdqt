@@ -1,17 +1,17 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'mdq/version'
+require 'mdqt/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "mdq"
-  spec.version       = MDQ::VERSION
+  spec.name          = "mdqt"
+  spec.version       = MDQT::VERSION
   spec.authors       = ["Pete Birkinshaw"]
   spec.email         = ["pete@digitalidentitylabs.com"]
 
   spec.summary       = %q{Library and utility for accessing MDQ services}
   spec.description   = %q{Library and utility for accessing MDQ service}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.homepage      = "https://github.com/Digital-Identity-Labs/mdqt"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'

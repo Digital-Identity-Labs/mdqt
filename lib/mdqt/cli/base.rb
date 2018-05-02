@@ -1,4 +1,4 @@
-module MDQ
+module MDQT
 
   class CLI
 
