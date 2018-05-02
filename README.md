@@ -3,6 +3,9 @@
 MDQT is small library and commandline tool to query MDQ services for SAML metadata.
 You can do this with `curl` but it's a little more convenient to use `mdqt` instead.
 
+At present `mdqt` does *not* verify signed metadata, so an extra step is required to use it
+securely.
+
 ## MDQ?
 
 MDQ is a simple HTTP-based standard for looking up individual SAML entity metadata. Rather than regularly
