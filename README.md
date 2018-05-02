@@ -1,7 +1,7 @@
 # MDQT - A Metadata Query Tool
 
-MDQT is simple library and commandline tool to query MDQ services for SAML metadata.
-You can do this with curl but it's a little more convenient to use `mdqt` instead.
+MDQT is small library and commandline tool to query MDQ services for SAML metadata.
+You can do this with `curl` but it's a little more convenient to use `mdqt` instead.
 
 ## MDQ?
 
@@ -9,18 +9,18 @@ MDQ is a simple HTTP-based standard for looking up individual SAML entity metada
 downloading large metadata aggregates containing thousands of entity descriptions,
 an IdP or SP can download the metadata for individual entities using MDQ when they are needed.
 
-The UK Access Management Federation have a
+The UK Access Management Federation has a
 [useful page explaining MDQ](https://www.ukfederation.org.uk/content/Documents/MDQ)
 
 ## Installation
 
-To add mdqt to a project, add this line to your application's Gemfile:
+To add mdqt to a project, add this line to your application's Gemfile
 
 ```ruby
 gem 'mdqt'
 ```
 
-And then execute:
+and then execute:
 
     $ bundle
 
@@ -62,7 +62,7 @@ Requesting all metadata from an MDQ endpoint is done by specifying `--all`
 
 ## Library Usage
 
-Don't! This gem is very early in development and the API is not stable. Later
+Please don't! This gem is very early in development and the API is not stable. Later
 releases of this gem will provide a simple library to use in other Ruby applications.
 
 ## Development
