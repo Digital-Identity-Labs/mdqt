@@ -8,13 +8,13 @@ module MDQ
 
       def run(args, options)
 
+        client = MDQ::Client.new(base_url: options.service)
 
-
-        client = MDQ::Client.new(base_url: 'http://mdq.ukfederation.org.uk/')
-
-
-        client.get_metadata(args[0])
-
+        if args.empty?
+          results = [client.get_metadata("")]
+        else
+          results = args.collect {|entity_id| client.get_metadata(entity_id)}
+        end
       end
 
     end

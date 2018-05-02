@@ -23,7 +23,7 @@ module MDQ
         entity_id = prepare_id(entity_id)
 
         connection.get do |req|
-          req.url ['/entities/', entity_id].join
+          req.url ['entities/', entity_id].join
           req.options.timeout = 100
           req.options.open_timeout = 5
           req.headers['Content-Type'] = 'application/samlmetadata+xml'
@@ -41,8 +41,6 @@ module MDQ
           CGI.escape(id.strip)
         end
       end
-
-      private
 
       def connection
         Faraday.new(:url => base_url) do |faraday|

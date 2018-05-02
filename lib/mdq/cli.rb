@@ -3,7 +3,7 @@ module MDQ
 
     require 'mdq/client'
 
-    require 'mdq/cli/configuration'
+    require 'mdq/cli/defaults'
 
     require 'mdq/cli/get'
 

@@ -5,27 +5,30 @@ require 'mdq/cli'
 require 'commander'
 
 Commander.configure do
-  program :name, 'MDQ'
+  program :name, 'mdqt'
   program :version, MDQ::VERSION
-  program :description, 'MDQ client'
+  program :description, 'MDQ SAML metadata client'
+
+  global_option '--verbose'
+
+  default_command :help
 
   command :version do |c|
     c.syntax = 'mdq version'
-    c.description = 'Shows version'
+    c.description = 'Display version information'
     c.action do |args, options|
       say "mdq version #{MDQ::VERSION}"
     end
   end
 
   command :get do |c|
-    c.syntax = 'mdq get [options]'
+    c.syntax = 'mdq get [options] [entity id] [entity id] '
     c.description = 'Download one entity record or an aggregate of entity records'
-    c.option '--prefix STRING', String, 'Adds a prefix to bar'
-    c.option '--suffix STRING', String, 'Adds a suffix to bar'
+    c.option '--service URL', String, 'MDQ service to search for entities. Defaults to MDQT_SERVICE or MDQ_BASE_URL env variables'
+    c.option '--verify-with PATH', String, 'Validate downloads using specified certificate'
+    c.option '--stdin', 'accept one or more entity ids from STDIN'
     c.action do |args, options|
-      options.default :prefix => '(', :suffix => ')'
-      puts args.inspect
-      puts options.inspect
+      options.default MDQ::CLI::Defaults.cli_defaults
       MDQ::CLI::Get.run(args, options)
     end
   end

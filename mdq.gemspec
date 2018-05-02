@@ -34,7 +34,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'faraday-http-cache'
   spec.add_dependency "typhoeus"
   spec.add_dependency "commander"
-  spec.add_dependency 'chamber'
 
 
   spec.add_development_dependency "bundler", "~> 1.13"
