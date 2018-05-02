@@ -11,12 +11,23 @@ module MDQT
         client = MDQT::Client.new(base_url: options.service)
 
         if args.empty?
-          results = [client.get_metadata("")]
+
+          if options.all
+            results = [client.get_metadata("")]
+          else
+            abort("Please specify --all if you wish to request all entities from #{options.service}")
+          end
+
         else
           results = args.collect {|entity_id| client.get_metadata(entity_id)}
         end
-      end
 
+        results.each do |result|
+          puts result.body
+        end
+
+      end
+      
     end
 
   end

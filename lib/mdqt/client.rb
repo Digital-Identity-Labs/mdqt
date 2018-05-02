@@ -14,8 +14,6 @@ module MDQT
 
       result = md_service.get(entity_id)
 
-      puts result.body
-
     end
 
     def md_service
