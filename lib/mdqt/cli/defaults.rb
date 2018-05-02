@@ -6,7 +6,7 @@ module MDQT
       class << self
 
         def base_url
-          ENV['MDQT_SERVICE'] || ENV['MDQT_BASE_URL'] || 'http://mdq.ukfederation.org.uk/'
+          ENV['MDQT_SERVICE'] || ENV['MDQ_BASE_URL'] || 'http://mdq.ukfederation.org.uk/'
         end
 
         def force_hash?

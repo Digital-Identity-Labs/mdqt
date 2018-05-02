@@ -27,7 +27,7 @@ module MDQT
         end
 
       end
-      
+
     end
 
   end
