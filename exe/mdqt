@@ -25,8 +25,9 @@ Commander.configure do
     c.syntax = 'mdqt get [options] [entity id] [entity id] '
     c.description = 'Download one entity record or an aggregate of entity records'
     c.option '--service URL', String, 'MDQ service to search for entities. Defaults to MDQT_SERVICE or MDQ_BASE_URL env variables'
-    c.option '--verify-with PATH', String, 'Validate downloads using specified certificate'
-    c.option '--stdin', 'accept one or more entity ids from STDIN'
+    #c.option '--verify-with PATH', String, 'Validate downloads using specified certificate'
+    #c.option '--stdin', 'accept one or more entity ids from STDIN'
+    c.option '--all', 'Request all entity records'
     c.action do |args, options|
       options.default MDQT::CLI::Defaults.cli_defaults
       MDQT::CLI::Get.run(args, options)

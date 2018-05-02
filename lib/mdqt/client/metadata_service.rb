@@ -33,7 +33,7 @@ module MDQT
 
       def prepare_id(id)
         case id
-        when "", nil
+        when :all, "", nil
           ""
         when /^{sha1}/i
           CGI.escape(id.downcase.strip)
