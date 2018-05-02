@@ -1,6 +1,9 @@
 module MDQ
-  class Client
+  class CLI
+
     class Configuration
+
+#'http://mdq.ukfederation.org.uk/'
 
 
     end

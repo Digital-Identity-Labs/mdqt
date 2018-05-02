@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'mdq/cli'
+
+require 'commander'
+
+Commander.configure do
+  program :name, 'MDQ'
+  program :version, MDQ::VERSION
+  program :description, 'MDQ client'
+
+  command :version do |c|
+    c.syntax = 'mdq version'
+    c.description = 'Shows version'
+    c.action do |args, options|
+      say "mdq version #{MDQ::VERSION}"
+    end
+  end
+
+  command :get do |c|
+    c.syntax = 'mdq get [options]'
+    c.description = 'Download one entity record or an aggregate of entity records'
+    c.option '--prefix STRING', String, 'Adds a prefix to bar'
+    c.option '--suffix STRING', String, 'Adds a suffix to bar'
+    c.action do |args, options|
+      options.default :prefix => '(', :suffix => ')'
+      puts args.inspect
+      puts options.inspect
+      MDQ::CLI::Get.run(args, options)
+    end
+  end
+
+end
+
