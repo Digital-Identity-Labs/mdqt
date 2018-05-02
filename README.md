@@ -4,7 +4,7 @@ MDQT is small library and commandline tool to query MDQ services for SAML metada
 You can do this with `curl` but it's a little more convenient to use `mdqt` instead.
 
 At present `mdqt` does *not* verify signed metadata, so an extra step is required to use it
-securely.
+securely. It is also not yet fully compliant with the MDQ client specification.
 
 ## MDQ?
 
