@@ -37,6 +37,8 @@ module MDQ
           ""
         when /^{sha1}/i
           CGI.escape(id.downcase.strip)
+        when /^\[sha1\]/i
+          CGI.escape(id.downcase.strip.gsub"[sha1]","{sha1}")
         else
           CGI.escape(id.strip)
         end
