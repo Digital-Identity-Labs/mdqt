@@ -67,13 +67,27 @@ module MDQT
         "#{Digest::SHA1.hexdigest(@identifier)}.xml"
       end
 
-      def error_message
+      def message
         case code
-        when 404
-          "[404] Entity metadata for '#{identifier}' could not be found at #{service}"
+        when 200
+          "[200] OK! Data for '#{identifier}' has been downloaded from #{service}"
+        when 304
+          "[200] OK! Data for '#{identifier}' is already available in a local cache"
+        when 400
+          "[400] The identifier '#{identifier}' ('#{requested_identifier}') is malformed or service URL #{service} is incorrect"
+        when 401
+          "[401] Credentials are incorrect or missing for '#{identifier}'"
         when 403
           identifier.empty? ? "[403] The MDQ service at #{service} does not support aggregate downloads" :
               "[403] You do not have access rights to '#{identifier}' at #{service}"
+        when 404
+          "[404] Entity metadata for '#{identifier}' was not found at #{service}"
+        when 405
+          "[405] The service at #{service} believes the wrong HTTP method was used. We should have used HTTP GET..."
+        when 406
+          "[406] The requested content type is not available at #{service}"
+        when 505
+          "[505] The service at #{service} claims our request was using pre-1999 web protocols, not HTTP 1.1 or later"
         else
           "[#{code}] Sorry - an unknown error has occured requesting '#{identifier}' from #{service}.\nPlease report this bug!"
         end

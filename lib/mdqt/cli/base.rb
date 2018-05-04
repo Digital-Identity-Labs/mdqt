@@ -47,9 +47,10 @@ module MDQT
 
       def output(response)
         if response.ok?
+          STDERR.puts response.message if options.verbose
           response.data + "\n"
         else
-          STDERR.puts response.error_message
+          STDERR.puts response.message
         end
 
       end
