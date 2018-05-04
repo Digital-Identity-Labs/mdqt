@@ -7,6 +7,7 @@ module MDQT
 
       def initialize(identifier, service, http_response)
 
+        @requested_identitier = identifier
         @identifier = URI.decode(identifier)
         @service = service
         @code = http_response.status || 500
@@ -19,6 +20,10 @@ module MDQT
       end
 
       def identifier
+        @identifier
+      end
+
+      def requested_identifier
         @identifier
       end
 
