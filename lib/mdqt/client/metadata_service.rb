@@ -8,6 +8,8 @@ module MDQT
       require 'typhoeus/adapters/faraday'
       require 'cgi'
 
+      require_relative './metadata_response'
+
       def initialize(base_url)
 
         @base_url = base_url
@@ -22,13 +24,16 @@ module MDQT
 
         entity_id = prepare_id(entity_id)
 
-        connection.get do |req|
+        http_response = connection.get do |req|
           req.url ['entities/', entity_id].join
           req.options.timeout = 100
           req.options.open_timeout = 5
           req.headers['Content-Type'] = 'application/samlmetadata+xml'
           req.headers['User-Agent'] = "MDQT v#{MDQT::VERSION}"
         end
+
+        MetadataResponse.new(entity_id, http_response)
+
       end
 
       def prepare_id(id)
