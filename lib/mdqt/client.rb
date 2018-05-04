@@ -12,7 +12,7 @@ module MDQT
 
     def get_metadata(entity_id)
 
-      result = md_service.get(entity_id)
+      md_service.get(entity_id)
 
     end
 
