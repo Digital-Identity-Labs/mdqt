@@ -48,7 +48,8 @@ module MDQT
       def output(response)
         if response.ok?
           STDERR.puts response.message if options.verbose
-          response.data + "\n"
+          trailer = response.data[-1] == "\n" ? "" : "\n"
+          response.data + trailer
         else
           STDERR.puts response.message
         end
