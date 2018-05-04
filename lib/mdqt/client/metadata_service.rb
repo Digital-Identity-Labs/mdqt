@@ -32,7 +32,7 @@ module MDQT
           req.headers['User-Agent'] = "MDQT v#{MDQT::VERSION}"
         end
 
-        MetadataResponse.new(entity_id, http_response)
+        MetadataResponse.new(entity_id, base_url, http_response)
 
       end
 

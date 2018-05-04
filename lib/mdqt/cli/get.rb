@@ -28,17 +28,6 @@ module MDQT
 
       end
 
-
-
-      def action(results, options)
-        case
-        when options.save
-          :save_files
-        else
-          :print_to_stdout
-        end
-      end
-
       def output_metadata(results, options)
         case action(results, options)
         when :save_files
@@ -50,8 +39,17 @@ module MDQT
         end
       end
 
+      def action(results, options)
+        case
+        when options.save
+          :save_files
+        else
+          :print_to_stdout
+        end
+      end
+
       def output_to_stdout(results, options)
-        results.each {|r| puts r.data + "\n"}
+        results.each {|r| puts output(r)}
       end
 
       def output_files(results, options)

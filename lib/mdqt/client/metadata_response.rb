@@ -5,28 +5,33 @@ module MDQT
 
       require 'digest'
 
-      def initialize(identifier, http_response)
+      def initialize(identifier, service, http_response)
 
-        @identifier    = identifier
-        @code          = http_response.status
-        @data          = http_response.body
-        @type          = http_response.headers['Content-Type']
-        @expires       = http_response.headers['Expires']
-        @etag          = http_response.headers['ETag']
+        @identifier = URI.decode(identifier)
+        @service = service
+        @code = http_response.status || 500
+        @data = http_response.body || ""
+        @type = http_response.headers['Content-Type']
+        @expires = http_response.headers['Expires']
+        @etag = http_response.headers['ETag']
         @last_modified = http_response.headers['Last-Modified']
-        @ok            = http_response.success?
+        @ok = http_response.success?
       end
 
       def identifier
         @identifier
       end
 
+      def service
+        @service
+      end
+
       def code
-        @status
+        @code
       end
 
       def data
-        @data
+        @data || ""
       end
 
       def type
@@ -55,6 +60,18 @@ module MDQT
 
       def filename
         "#{Digest::SHA1.hexdigest(@identifier)}.xml"
+      end
+
+      def error_message
+        case code
+        when 404
+          "[404] Entity metadata for '#{identifier}' could not be found at #{service}"
+        when 403
+          identifier.empty? ? "[403] The MDQ service at #{service} does not support aggregate downloads" :
+              "[403] You do not have access rights to '#{identifier}' at #{service}"
+        else
+          "[#{code}] Sorry - an unknown error has occured requesting '#{identifier}' from #{service}.\nPlease report this bug!"
+        end
       end
 
     end

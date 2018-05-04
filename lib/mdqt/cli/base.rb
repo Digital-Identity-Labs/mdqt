@@ -45,6 +45,15 @@ module MDQT
         @options
       end
 
+      def output(response)
+        if response.ok?
+          response.data + "\n"
+        else
+          STDERR.puts response.error_message
+        end
+
+      end
+
       def run
 
         abort "No action has been defined for this command!"
