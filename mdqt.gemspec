@@ -32,13 +32,15 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "faraday", "~>0.15"
+  spec.add_dependency 'commander', "~>4.4"
+  spec.add_dependency 'faraday', "~>0.15"
   spec.add_dependency 'faraday-http-cache', "~>2.0"
-  spec.add_dependency "typhoeus", "~>1.3"
-  spec.add_dependency "commander", "~>4.4"
+  spec.add_dependency 'typhoeus', "~>1.3"
+  #spec.add_dependency 'xmldsig'
 
 
   spec.add_development_dependency "bundler", "~> 1.13"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency "awesome_print"
 end
