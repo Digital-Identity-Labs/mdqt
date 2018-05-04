@@ -8,7 +8,20 @@ module MDQT
 
         #args = options.stdin ? absorb_piped_args(args) : args
 
+        check_requirements(args, options)
+        introduce(args, options)
+
         self.new(args, options).run
+      end
+
+      def self.check_requirements(args, options)
+        abort "Error: No MDQ service URL has been specified." unless options.service
+      end
+
+      def self.introduce(args, options)
+        if options.verbose
+          STDERR.puts "Using #{options.service}"
+        end
       end
 
       def self.absorb_piped_args(args)
