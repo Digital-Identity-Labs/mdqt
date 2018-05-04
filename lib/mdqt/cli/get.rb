@@ -6,9 +6,7 @@ module MDQT
 
     class Get < Base
 
-      def run(args, options)
-
-        args = absorb_piped_args(args) if options.stdin
+      def run
 
         abort("Please specify --all if you wish to request all entities from #{options.service}") if args.empty? && !options.all
 
@@ -30,9 +28,7 @@ module MDQT
 
       end
 
-      def absorb_piped_args(args)
-        args
-      end
+
 
       def action(results, options)
         case
