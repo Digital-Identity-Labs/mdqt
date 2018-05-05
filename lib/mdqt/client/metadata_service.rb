@@ -8,9 +8,17 @@ module MDQT
       require 'typhoeus/adapters/faraday'
       require 'cgi'
 
+      require 'faraday_middleware'
+      require 'faraday-http-cache'
+
+      require 'active_support/cache'
+      require 'active_support/cache/file_store'
+      require 'active_support/cache/mem_cache_store'
+      require 'active_support/logger'
+
       require_relative './metadata_response'
 
-      def initialize(base_url)
+      def initialize(base_url, options={})
 
         @base_url = base_url
 
@@ -43,7 +51,7 @@ module MDQT
         when /^{sha1}/i
           CGI.escape(id.downcase.strip)
         when /^\[sha1\]/i
-          CGI.escape(id.downcase.strip.gsub"[sha1]","{sha1}")
+          CGI.escape(id.downcase.strip.gsub "[sha1]", "{sha1}")
         else
           CGI.escape(id.strip)
         end
@@ -52,9 +60,17 @@ module MDQT
       def connection
         Faraday.new(:url => base_url) do |faraday|
           faraday.request :url_encoded
-          #faraday.response :logger                  # log requests to STDOUT
+          #faraday.use :http_cache, store: cache_store, shared_cache: false, serializer: Marshal, logger: ActiveSupport::Logger.new(STDERR)
+          #faraday.response :logger
           faraday.adapter :typhoeus
+
         end
+      end
+
+      def cache_store
+        #Dir.mktmpdir("mdqt")
+        #@cache_store ||= ActiveSupport::Cache.lookup_store(:mem_cache_store, ['localhost:11211'])
+        #@cache_store ||= ActiveSupport::Cache.lookup_store(:file_store, "/tmp/mdqt")
       end
 
     end

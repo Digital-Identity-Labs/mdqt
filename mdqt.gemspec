@@ -34,8 +34,12 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'commander', "~>4.4"
   spec.add_dependency 'faraday', "~>0.15"
+  spec.add_dependency 'faraday_middleware'
   spec.add_dependency 'faraday-http-cache', "~>2.0"
   spec.add_dependency 'typhoeus', "~>1.3"
+  spec.add_dependency 'activesupport'
+  spec.add_dependency 'dalli'
+
   #spec.add_dependency 'xmldsig'
 
 
