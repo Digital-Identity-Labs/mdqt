@@ -32,12 +32,10 @@ module MDQT
 
         entity_id = prepare_id(entity_id)
 
-        http_response = connection.get do |req|
+         http_response = connection.get do |req|
           req.url ['entities/', entity_id].join
           req.options.timeout = 100
           req.options.open_timeout = 5
-          req.headers['Content-Type'] = 'application/samlmetadata+xml'
-          req.headers['User-Agent'] = "MDQT v#{MDQT::VERSION}"
         end
 
         MetadataResponse.new(entity_id, base_url, http_response)
@@ -60,16 +58,21 @@ module MDQT
       def connection
         Faraday.new(:url => base_url) do |faraday|
           faraday.request :url_encoded
+          faraday.use FaradayMiddleware::Gzip
+          faraday.use FaradayMiddleware::FollowRedirects
           #faraday.use :http_cache, store: cache_store, shared_cache: false, serializer: Marshal, logger: ActiveSupport::Logger.new(STDERR)
-          #faraday.response :logger
+          faraday.headers['Content-Type'] = 'application/samlmetadata+xml'
+          faraday.headers['User-Agent'] = "MDQT v#{MDQT::VERSION}"
           faraday.adapter :typhoeus
+          #faraday.response :logger
+
 
         end
       end
 
       def cache_store
         #Dir.mktmpdir("mdqt")
-        #@cache_store ||= ActiveSupport::Cache.lookup_store(:mem_cache_store, ['localhost:11211'])
+        @cache_store ||= ActiveSupport::Cache.lookup_store(:mem_cache_store, ['localhost:11211'])
         #@cache_store ||= ActiveSupport::Cache.lookup_store(:file_store, "/tmp/mdqt")
       end
 
