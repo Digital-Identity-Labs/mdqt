@@ -23,7 +23,7 @@ module MDQT
       def get_results(args, options)
 
         client = MDQT::Client.new(
-            base_url: options.service,
+            options.service,
             verbose: options.verbose,
             cache_type: options.cache ? :file : :none
         )
