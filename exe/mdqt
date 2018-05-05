@@ -23,9 +23,10 @@ Commander.configure do
   end
 
   command :get do |c|
-    c.syntax = 'mdqt get [options] [entity id] [entity id] '
+    c.syntax = 'mdqt get [options] entityidentifier '
     c.description = 'Download one entity record or an aggregate of entity records'
     c.option '--service URL', String, 'MDQ service to search for entities. Defaults to MDQT_SERVICE or MDQ_BASE_URL env variables'
+    c.option '--cache', "Cache downloads and try to fetch from cache where appropriate"
     #c.option '--verify-with PATH', String, 'Validate downloads using specified certificate'
     #c.option '--stdin', 'accept one or more entity ids from STDIN'
     c.option '--all', 'Request all entity records'

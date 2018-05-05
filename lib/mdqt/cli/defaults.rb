@@ -16,6 +16,7 @@ module MDQT
         def cli_defaults
           {
             hash: force_hash?,
+            cache: false
           }
         end
 

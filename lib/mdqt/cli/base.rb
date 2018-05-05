@@ -21,6 +21,8 @@ module MDQT
       def self.introduce(args, options)
         if options.verbose
           STDERR.puts "Using #{options.service}"
+          STDERR.puts "Caching is #{options.service ? 'on' : 'off'}"
+          STDERR.puts
         end
       end
 

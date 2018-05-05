@@ -5,8 +5,11 @@ module MDQT
 
     def initialize(options={})
 
-      @base_url = options[:base_url]
-      @md_service = MetadataService.new(@base_url)
+      @base_url   = options[:base_url]
+      @verbose    = options[:verbose] || false
+      @cache_type = options[:cache_type] || :none
+
+      @md_service = MetadataService.new(@base_url, verbose: @verbose, cache_type: @cache_type)
 
     end
 

@@ -22,7 +22,11 @@ module MDQT
 
       def get_results(args, options)
 
-        client = MDQT::Client.new(base_url: options.service)
+        client = MDQT::Client.new(
+            base_url: options.service,
+            verbose: options.verbose,
+            cache_type: options.cache ? :file : :none
+        )
 
         args.empty? ? [client.get_metadata("")] : args.collect {|entity_id| client.get_metadata(entity_id)}
 
