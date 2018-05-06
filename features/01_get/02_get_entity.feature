@@ -1,14 +1,17 @@
 Feature: Get Entity
-  In order to use an SP or IdP effiently
+  In order to use an SP or IdP efficiently
   As a sysadmin or service
   I want to be able to download just its metadata
 
   Scenario: The entity exists on the MDQ service
     Given that I have defined an MDQ service
+    Given I set the environment variables to:
+      | variable           | value      |
+      | LONG_LONG_VARIABLE | long_value |
     When I run `mdqt get https://indiid.net/idp/shibboleth`
     Then the output should contain "EntityDescriptor"
 
   Scenario: The entity does not exist on the MDQ service
     Given that I have defined an MDQ service
-    When I run `mdqt get https://does.net/exist`
-    Then the output should not contain "entityDescriptor"
+    When I run `mdqt get http://example.com/does_not_exist`
+    Then the output should not contain "EntityDescriptor"
