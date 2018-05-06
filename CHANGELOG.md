@@ -10,6 +10,7 @@
 - Verbose mode will show successful connection information
 - Warnings about unspecified MDQ service
 - Default MDQ service selection (rather crude, maybe not a good idea at all)
+- Catch bad URLs for the MDQ service and fail with a better error message
 
 ### Fixes
 - Aggregates are now requested with /entities not /entities/, as per spec
@@ -17,7 +18,6 @@
 ### Other
 - First few Cucumber features to define and test the executable
 - Beginning of an RSpec suit to define the API
-
 
 ## 0.1.1
 

@@ -33,10 +33,14 @@ module MDQT
 
         entity_id = prepare_id(entity_id)
 
-        http_response = connection.get do |req|
-          req.url request_path(entity_id)
-          req.options.timeout = 100
-          req.options.open_timeout = 5
+        begin
+          http_response = connection.get do |req|
+            req.url request_path(entity_id)
+            req.options.timeout = 100
+            req.options.open_timeout = 5
+          end
+        rescue Faraday::ConnectionFailed => oops
+          abort "Error - can't connect to MDQ service at URL #{base_url}"
         end
 
         MetadataResponse.new(entity_id, base_url, http_response)
