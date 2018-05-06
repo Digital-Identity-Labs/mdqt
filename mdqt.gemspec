@@ -9,12 +9,12 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Pete Birkinshaw"]
   spec.email         = ["pete@digitalidentitylabs.com"]
 
-  spec.summary       = %q{Library and utility for accessing MDQ services}
-  spec.description   = %q{Library and utility for accessing MDQ service}
+  spec.summary       = %q{Library and commandline utility for accessing MDQ services}
+  spec.description   = %q{Library and commandline utility for downloading SAML metadata from MDQ services}
   spec.homepage      = "https://github.com/Digital-Identity-Labs/mdqt"
   spec.license       = "MIT"
 
-  spec.required_ruby_version = '>= 2.1'
+  spec.required_ruby_version = '>= 2.1.0'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
@@ -34,23 +34,20 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'commander', "~>4.4"
   spec.add_dependency 'faraday', "~>0.15"
-  spec.add_dependency 'faraday_middleware'
+  spec.add_dependency 'faraday_middleware', "~>0.12"
   spec.add_dependency 'faraday-http-cache', "~>2.0"
   spec.add_dependency 'typhoeus', "~>1.3"
-  spec.add_dependency 'activesupport'
-  spec.add_dependency 'dalli'
+  spec.add_dependency 'activesupport', "~>5.2"
+  spec.add_dependency 'dalli', "~>2.7"
 
   #spec.add_dependency 'xmldsig'
-
 
   spec.add_development_dependency "bundler", "~> 1.13"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "cucumber", "~> 3.1"
   spec.add_development_dependency "aruba", "~> 0.14"
-  spec.add_development_dependency "awesome_print"
-  spec.add_development_dependency "vcr"
-  spec.add_development_dependency "hirb"
-  spec.add_development_dependency "yard"
-  spec.add_development_dependency "yard-cucumber"
+  spec.add_development_dependency "vcr", "~>  4.0"
+  spec.add_development_dependency "yard", "~> 0.9"
+  spec.add_development_dependency "yard-cucumber", "~> 4.0"
 end
