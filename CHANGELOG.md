@@ -11,6 +11,13 @@
 - Warnings about unspecified MDQ service
 - Default MDQ service selection (rather crude, maybe not a good idea at all)
 
+### Fixes
+- Aggregates are now requested with /entities not /entities/, as per spec
+
+### Other
+- First few Cucumber features to define and test the executable
+- Beginning of an RSpec suit to define the API
+
 
 ## 0.1.1
 
