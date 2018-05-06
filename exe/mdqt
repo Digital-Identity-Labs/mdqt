@@ -32,7 +32,7 @@ Commander.configure do
     c.option '--all', 'Request all entity records'
     c.action do |args, options|
       options.default MDQT::CLI::Defaults.cli_defaults
-      options.default({service: MDQT::CLI::Defaults.guess_service }) if options.service.nil?
+      options.default({service: MDQT::CLI::Defaults.base_url }) if options.service.nil?
       MDQT::CLI::Get.run(args, options)
     end
   end

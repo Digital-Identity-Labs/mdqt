@@ -6,7 +6,7 @@ module MDQT
       class << self
 
         def base_url
-          ENV['MDQT_SERVICE'] || ENV['MDQ_BASE_URL'] || nil
+          ENV['MDQT_SERVICE'] || ENV['MDQ_BASE_URL'] || guess_service
         end
 
         def force_hash?
@@ -22,7 +22,11 @@ module MDQT
 
         def guess_service
 
-          service = case ENV['LANG']
+          locale = ENV['LANG']
+
+          #STDERR.puts("Detected locale #{locale}")
+
+          service = case locale
                     when 'en_GB.UTF-8'
                       'http://mdq.ukfederation.org.uk/'
                     when 'en_US.UTF-8'
@@ -31,7 +35,7 @@ module MDQT
                       abort "Please specify an MDQ service using --service, MDQT_SERVICE or MDQ_BASE_URL"
                     end
 
-          STDOUT.puts "MDQT is assuming that you want to use #{service}\nPlease configure this using --service, MDQT_SERVICE or MDQ_BASE_URL\n\n"
+          STDERR.puts "MDQT is assuming that you want to use #{service}\nPlease configure this using --service, MDQT_SERVICE or MDQ_BASE_URL\n\n"
 
           service
 
