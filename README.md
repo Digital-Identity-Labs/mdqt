@@ -3,23 +3,29 @@
 [![Gem Version](https://badge.fury.io/rb/mdqt.svg)](https://badge.fury.io/rb/mdqt) [![Maintainability](https://api.codeclimate.com/v1/badges/111c46aaebfe25e4a4a9/maintainability)](https://codeclimate.com/github/Digital-Identity-Labs/mdqt/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/111c46aaebfe25e4a4a9/test_coverage)](https://codeclimate.com/github/Digital-Identity-Labs/mdqt/test_coverage) [![Build Status](https://travis-ci.org/Digital-Identity-Labs/mdqt.svg?branch=master)](https://travis-ci.org/Digital-Identity-Labs/mdqt)
 
 MDQT is small library and commandline tool to query MDQ services for SAML metadata.
-You can do this with `curl` but it's a little more convenient to use `mdqt` instead.
+You could do this with `curl` but it's a little more convenient to use `mdqt` instead.
 
 At present `mdqt` does *not* verify signed metadata, so an extra step is required to use it
-securely. It is also not yet fully compliant with the MDQ client specification.
+securely.
+
+MDQ currently supports:
+
+  - Downloading single entities, lists or aggregates
+  - Caching entity metadata on disk
+  - Gzip compression
 
 ## MDQ?
 
 MDQ is a simple HTTP-based standard for looking up individual SAML entity metadata. Rather than regularly
 downloading large metadata aggregates containing thousands of entity descriptions,
-an IdP or SP can download the metadata for individual entities using MDQ when they are needed.
+an IdP or SP can download the metadata for an individual entity whenever it is needed.
 
 The UK Access Management Federation has a
 [useful page explaining MDQ](https://www.ukfederation.org.uk/content/Documents/MDQ)
 
 ## Installation
 
-To add mdqt to a project, add this line to your application's Gemfile
+To add MDQT to a project, include this line in your application's Gemfile
 
 ```ruby
 gem 'mdqt'
@@ -37,33 +43,47 @@ If using a per-user Ruby such via `rbenv` or similar, you'll just need
 
     $ gem install mdqt
 
+MDQT should work with Ruby 2.1.0 or later.
+
 ## Commandline Usage as an MDQ client
 
-You can see a list of commandline options by typing
+You can see a list of commandline options by typing:
 
     $ mdqt --help
 
-Specifying the MDQ service with a commandline option
+To see more information about a command, use the `--help` option after the command:
+
+    $ mdqt get --help
+
+Specifying the MDQ service with a commandline option:
 
     $ mdqt get --service https://mdq.example.com/mdq  http://entity.ac.uk/shibboleth
 
 It's more convenient to set an environment variable to specify a default MDQ
-service. Set MDQT_SERVICE or MDQ_BASE_URL to the base URL of your MDQ service.
+service. Set `MDQT_SERVICE` or `MDQ_BASE_URL` to the base URL of your MDQ service.
 
-Downloading entity metadata to STDOUT
+Downloading entity metadata to STDOUT:
 
     $ mdqt get https://test-idp.ukfederation.org.uk/idp/shibboleth
 
-Using sha1 hashed version of entity IDs requires quotes or escaping
+Using the sha1 hashed version of entity IDs requires quotes or escaping:
 
     $ mdqt get "{sha1}52e2065fc0d53744e8d4ee2c2f30696ebfc5def9"
 
     $ mdqt get \{sha1\}52e2065fc0d53744e8d4ee2c2f30696ebfc5def9
 
-Requesting all metadata from an MDQ endpoint is done by specifying `--all`
+Requesting all metadata from an MDQ endpoint is done by specifying `--all`:
 
     $ mdqt get --all
 
+Caching can be enabled using `--cache`. At the moment the `mdqt` executable
+only supports caching to disk. It will create a cache directory in your temporary
+directory.
+
+    $ mdqt get --cache --service https://mdq.example.com/mdq  http://entity.ac.uk/shibboleth
+
+If you don't specify an MDQ service with `--service' or `MDQT_SERVICE` then `mdqt` *might* be
+able to guess your local NREN's MDQ service. Do not do this in production.
 
 ## Library Usage
 

@@ -18,6 +18,7 @@
 ### Other
 - First few Cucumber features to define and test the executable
 - Beginning of an RSpec suit to define the API
+- Minimum version of Ruby is now 2.1, but only 2.2+ is tested using CI
 
 ## 0.1.1
 
