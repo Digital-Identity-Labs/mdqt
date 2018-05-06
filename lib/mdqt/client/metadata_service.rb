@@ -19,10 +19,10 @@ module MDQT
       require_relative './metadata_response'
 
       def initialize(base_url, options = {})
-        @base_url     = base_url
-        @cache_type   = options[:cache_type] ? options[:cache_type].to_sym : :none
+        @base_url = base_url
+        @cache_type = options[:cache_type] ? options[:cache_type].to_sym : :none
         @store_config = options[:cache_store]
-        @verbose      = options[:verbose] ? true : false
+        @verbose = options[:verbose] ? true : false
       end
 
       def base_url
@@ -34,7 +34,7 @@ module MDQT
         entity_id = prepare_id(entity_id)
 
         http_response = connection.get do |req|
-          req.url ['entities/', entity_id].join
+          req.url request_path(entity_id)
           req.options.timeout = 100
           req.options.open_timeout = 5
         end
@@ -73,6 +73,15 @@ module MDQT
       end
 
       private
+
+      def request_path(entity_id)
+        case entity_id
+        when nil, ""
+          'entities'
+        else
+          ['entities', entity_id].join('/')
+        end
+      end
 
       def connection
         Faraday.new(:url => base_url) do |faraday|
