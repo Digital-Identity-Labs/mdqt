@@ -81,6 +81,7 @@ module MDQT
           identifier.empty? ? "[403] The MDQ service at #{service} does not support aggregate downloads" :
               "[403] You do not have access rights to '#{identifier}' at #{service}"
         when 404
+          identifier.empty? ? "[404] The MDQ service at #{service} is not responding with aggregated metadata or the correct status" :
           "[404] Entity metadata for '#{identifier}' was not found at #{service}"
         when 405
           "[405] The service at #{service} believes the wrong HTTP method was used. We should have used HTTP GET..."
