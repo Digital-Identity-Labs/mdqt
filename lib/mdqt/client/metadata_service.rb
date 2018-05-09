@@ -82,7 +82,7 @@ module MDQT
       end
 
       def valid_sha1?(sha1)
-        sha1.match?(/^[{\[]sha1[\]}][0-9a-f]{40}$/i)
+        (sha1 =~ /^[{\[]sha1[\]}][0-9a-f]{40}$/i).nil? ? false : true
       end
 
       private
