@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0
+
+### Improvements
+
+- Invalid SHA1 transformed identitifiers can't be sent
+- 500 errors at the server will be shown correctly
 
 ## 0.2.1
 
