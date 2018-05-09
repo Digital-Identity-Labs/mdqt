@@ -93,8 +93,9 @@ module MDQT
           faraday.use FaradayMiddleware::Gzip
           faraday.use FaradayMiddleware::FollowRedirects
           faraday.use :http_cache, faraday_cache_config if cache?
-          faraday.headers['Accept'] = 'application/samlmetadata+xml'
-          faraday.headers['User-Agent'] = "MDQT v#{MDQT::VERSION}"
+          faraday.headers['Accept']         = 'application/samlmetadata+xml'
+          faraday.headers['Accept-Charset'] = 'utf-8'
+          faraday.headers['User-Agent']     = "MDQT v#{MDQT::VERSION}"
           faraday.adapter :typhoeus
           #faraday.response :logger
         end
