@@ -87,10 +87,12 @@ module MDQT
           "[405] The service at #{service} believes the wrong HTTP method was used. We should have used HTTP GET..."
         when 406
           "[406] The requested content type is not available at #{service}"
+        when 500
+          "[500] An error has occurred at #{service}"
         when 505
           "[505] The service at #{service} claims our request was using pre-1999 web protocols, not HTTP 1.1 or later"
         else
-          "[#{code}] Sorry - an unknown error has occured requesting '#{identifier}' from #{service}.\nPlease report this bug!"
+          "[#{code}] Sorry - an unknown error has occurred requesting '#{identifier}' from #{service}.\nPlease report this bug!"
         end
       end
 
