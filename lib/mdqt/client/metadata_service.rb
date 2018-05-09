@@ -52,9 +52,9 @@ module MDQT
         when :all, "", nil
           ""
         when /^{sha1}/i
-          CGI.escape(id.downcase.strip)
+          CGI.escape(validate_sha1!(id.downcase.strip))
         when /^\[sha1\]/i
-          CGI.escape(id.downcase.strip.gsub "[sha1]", "{sha1}")
+          CGI.escape(validate_sha1!(id.downcase.strip.gsub "[sha1]", "{sha1}"))
         else
           CGI.escape(id.strip)
         end
@@ -74,6 +74,15 @@ module MDQT
 
       def store_config
         @store_config || default_store_config
+      end
+
+      def validate_sha1!(sha1)
+        abort "Error: SHA1 identifier '#{sha1}' is malformed, halting" unless valid_sha1?(sha1)
+        sha1
+      end
+
+      def valid_sha1?(sha1)
+        sha1.match?(/^[{\[]sha1[\]}][0-9a-f]{40}$/i)
       end
 
       private
