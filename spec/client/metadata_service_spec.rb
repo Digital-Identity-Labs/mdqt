@@ -22,4 +22,6 @@ RSpec.describe MDQT::Client::MetadataService do
 
   end
 
+  ## + Add spec to make sure requests have correct Accept headers
+
 end

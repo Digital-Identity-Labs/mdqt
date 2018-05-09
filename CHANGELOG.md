@@ -1,5 +1,11 @@
 # Changelog
 
+
+## 0.2.1
+
+### Fixes
+- Send Accept header rather than Content-Type header 🙄
+
 ## 0.2.0
 
 ### Improvements
