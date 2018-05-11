@@ -85,6 +85,14 @@ module MDQT
         (sha1 =~ /^[{\[]sha1[\]}][0-9a-f]{40}$/i).nil? ? false : true
       end
 
+      def tidy_cache!
+        cache_type.cleanup
+      end
+
+      def purge_cache!
+        cache_store.clear
+      end
+
       private
 
       def request_path(entity_id)
@@ -105,8 +113,8 @@ module MDQT
           faraday.headers['Accept']         = 'application/samlmetadata+xml'
           faraday.headers['Accept-Charset'] = 'utf-8'
           faraday.headers['User-Agent']     = "MDQT v#{MDQT::VERSION}"
-          faraday.adapter :typhoeus
           #faraday.response :logger
+          faraday.adapter :typhoeus
         end
       end
 

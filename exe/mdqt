@@ -37,5 +37,15 @@ Commander.configure do
     end
   end
 
+  command :reset do |c|
+    c.syntax = 'mdqt reset'
+    c.description = 'Delete all cached data'
+    c.action do |args, options|
+      options.default MDQT::CLI::Defaults.cli_defaults
+      options.default({service: :not_required })
+      MDQT::CLI::Reset.run(args, options)
+    end
+  end
+
 end
 

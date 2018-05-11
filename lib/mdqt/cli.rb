@@ -6,6 +6,7 @@ module MDQT
     require 'mdqt/cli/defaults'
 
     require 'mdqt/cli/get'
+    require 'mdqt/cli/reset'
 
 
   end

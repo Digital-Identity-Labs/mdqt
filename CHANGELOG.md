@@ -3,7 +3,8 @@
 ## 0.3.0
 
 ### Improvements
-
+- New `reset` command to clear all cached metadata
+- Server's 304 responses for cached files are handled correctly
 - Invalid SHA1 transformed identitifiers can't be sent
 - 500 errors at the server will be shown correctly
 

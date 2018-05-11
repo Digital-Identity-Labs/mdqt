@@ -31,6 +31,10 @@ module MDQT
       @cache_type
     end
 
+    def cache_reset!
+      md_service.purge_cache!
+    end
+
     private
 
     def md_service
