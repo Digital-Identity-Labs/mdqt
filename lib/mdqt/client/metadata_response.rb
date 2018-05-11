@@ -73,7 +73,7 @@ module MDQT
           identifier.empty? ? "[200] OK! Data for aggregate has been downloaded from #{service}" :
               "[200] OK! Data for '#{identifier}' has been downloaded from #{service}"
         when 304
-          "[200] OK! Data for '#{identifier}' is already available in a local cache"
+          "[304] OK! Data for '#{identifier}' is already available in a local cache"
         when 400
           "[400] The identifier '#{identifier}' ('#{requested_identifier}') is malformed or service URL #{service} is incorrect"
         when 401
