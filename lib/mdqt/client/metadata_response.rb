@@ -70,7 +70,7 @@ module MDQT
       end
 
       def signed?
-        @data.include? "<Signature" # This is... not great
+        @data.include? "Signature" # This is... not great
       end
 
       def verified_signature?(certs = [], _ = {})
