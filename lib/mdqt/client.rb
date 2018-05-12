@@ -1,7 +1,21 @@
 module MDQT
   class Client
 
+    require 'rubygems'
     require 'mdqt/client/metadata_service'
+    require 'mdqt/client/metadata_validator'
+
+    begin
+      raise if ENV['MDQT_FAKE_MISSING_XMLSIG_GEM']
+      require 'xmldsig'
+      @xmlsig_available = true
+    rescue LoadError => oops
+      @xmlsig_available = false
+    end
+
+    def self.verification_available?
+      @xmlsig_available
+    end
 
     def initialize(base_url, options={})
 

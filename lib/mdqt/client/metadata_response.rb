@@ -63,6 +63,11 @@ module MDQT
         @data.include? "<Signature" # This is... not great
       end
 
+      def verified_signature?(certs=[], _={})
+        validator = MetadataValidator.new(certs: [certs].flatten)
+        validator.verified_signature?(self)
+      end
+
       def filename
         "#{Digest::SHA1.hexdigest(@identifier)}.xml"
       end

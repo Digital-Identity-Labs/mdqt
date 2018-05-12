@@ -10,9 +10,11 @@ module MDQT
 
         abort("Please specify --all if you wish to request all entities from #{options.service}") if args.empty? && !options.all
 
+        STDERR.puts "XML signature validation is not available. Install the 'nokogiri-xmlsec-instructure' gem if you can." unless MDQT::Client.verification_available?
+
         results = get_results(args, options)
 
-        #results = MetadataValidator.validate_responses(results) if options.validate
+        results = verify_results(results)
 
         #results = MetadataAggregator.aggregate_responses(results) if options.aggregate
 
@@ -29,6 +31,24 @@ module MDQT
         )
 
         args.empty? ? [client.get_metadata("")] : args.collect {|entity_id| client.get_metadata(entity_id)}
+
+      end
+
+      def verify_results(results)
+
+        return true unless options.verify_with
+
+        cert_path = options.verify_with
+
+        abort "Error: Cannot find certificate at '#{cert_path}'!" unless File.readable?(cert_path)
+
+        results.each do |result|
+          abort "Data from #{options.service} is not signed, cannot verify!" unless result.data.include?('<Signature')
+          abort "Error: The data for #{result.identifier} cannot be verified with certificate at #{cert_path}" unless result.verified_signature?(cert_path)
+          STDERR.puts "Data for #{result.identifier} has been verified using certificate at '#{cert_path}'" if options.verbose
+        end
+
+        true
 
       end
 
