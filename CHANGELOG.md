@@ -5,12 +5,13 @@
 ### New Features
 - Signature verification, using `--verify-with` option for get command
 - A `reset` command to clear all cached metadata
-- The `--explain` Option for `get` will show header information
+- The `--explain` option for `get` will show header information
+- The `--save-to` option for `get` will write metadata to disk
+- The `--link-id` option for `get --save-to` will create aliases
 
 ### Improvements
-
 - Coloured feedback
-- Server's 304 responses for cached files are handled correctly
+- Servers' 304 responses for cached files are handled correctly
 - Invalid SHA1 transformed identitifiers can't be sent
 - 500 errors at the server will be shown correctly
 

@@ -75,18 +75,19 @@ module MDQT
       end
 
       def output_files(results, options)
-        FileUtils.mkdir_p(options.save_to)
+        prepare_output_directory(options.save_to)
         results.each do |result|
-          full_filename = File.absolute_path(File.join([options.save_to, result.filename]))
-          open(full_filename, 'w') {|f|
+          main_file = output_file_path(result.filename)
+          open(main_file, 'w') {|f|
             f.puts result.data
           }
+          yay "Created #{main_file}"
 
           if options.link_id
-            [
-                File.absolute_path(File.join([options.save_to, "{sha1}#{result.filename.gsub(".xml","")}"])),
-            ].each do |altname|
-              FileUtils.ln_sf(full_filename, altname)
+            ["{sha1}#{result.filename.gsub(".xml", "")}"].each do |altname|
+              full_alias = output_file_path(altname)
+              FileUtils.ln_sf(main_file, full_alias)
+              yay "Linked alias #{altname} -> #{main_file}"
             end
           end
 
@@ -94,6 +95,14 @@ module MDQT
       end
 
       private
+
+      def output_file_path(filename)
+        File.absolute_path(File.join([options.save_to, filename]))
+      end
+
+      def prepare_output_directory(directory)
+        FileUtils.mkdir_p(directory)
+      end
 
       def aggregate_confirmation_check!
         halt!("Please specify --all if you wish to request all entities from #{options.service}") if args.empty? && !options.all

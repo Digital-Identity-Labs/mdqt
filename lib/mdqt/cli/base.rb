@@ -26,6 +26,7 @@ module MDQT
           STDERR.puts "Caching is #{options.cache ? 'on' : 'off'}"
           STDERR.print "Signature verification is #{MDQT::Client.verification_available? ? 'available' : 'not available'}"
           STDERR.puts  " #{options.verify_with ? "and active" : "but inactive"} for this request" if MDQT::Client.verification_available?
+          STDERR.puts "Output directory for saved files is: #{File.absolute_path(options.save_to)}"
           STDERR.puts
         end
       end
@@ -129,10 +130,11 @@ module MDQT
       def halt!(comment)
         abort pastel.red("Error: #{comment}")
       end
-
       def run
         halt! "No action has been defined for this command!"
       end
+
+      private
 
     end
 

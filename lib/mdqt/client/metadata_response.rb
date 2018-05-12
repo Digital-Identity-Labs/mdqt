@@ -5,7 +5,7 @@ module MDQT
 
       require 'digest'
 
-      def initialize(identifier, service, http_response, options={})
+      def initialize(identifier, service, http_response, options = {})
 
         @requested_identitier = identifier
         @identifier = URI.decode(identifier)
@@ -20,11 +20,11 @@ module MDQT
         @explanation = {}
 
         if options[:explain]
-          @explanation[:url]  = http_response.env.url.to_s
-          @explanation[:method]  = http_response.env.method.to_s.upcase
-          @explanation[:status]  = http_response.status
+          @explanation[:url] = http_response.env.url.to_s
+          @explanation[:method] = http_response.env.method.to_s.upcase
+          @explanation[:status] = http_response.status
           @explanation[:response_headers] = http_response.headers
-          @explanation[:request_headers]  = http_response.env.request_headers
+          @explanation[:request_headers] = http_response.env.request_headers
         end
 
       end
@@ -73,14 +73,16 @@ module MDQT
         @data.include? "<Signature" # This is... not great
       end
 
-      def verified_signature?(certs=[], _={})
+      def verified_signature?(certs = [], _ = {})
         return true unless ok?
         validator = MetadataValidator.new(certs: [certs].flatten)
         validator.verified_signature?(self)
       end
 
       def filename
-        "#{Digest::SHA1.hexdigest(@identifier)}.xml"
+        @filename ||= identifier.start_with?("{sha1}") ?
+                          "#{@identifier.gsub("{sha1}","")}.xml" :
+                          "#{Digest::SHA1.hexdigest(@identifier)}.xml"
       end
 
       def message
@@ -99,7 +101,7 @@ module MDQT
               "[403] You do not have access rights to '#{identifier}' at #{service}"
         when 404
           identifier.empty? ? "[404] The MDQ service at #{service} is not responding with aggregated metadata or the correct status" :
-          "[404] Entity metadata for '#{identifier}' was not found at #{service}"
+              "[404] Entity metadata for '#{identifier}' was not found at #{service}"
         when 405
           "[405] The service at #{service} believes the wrong HTTP method was used. We should have used HTTP GET..."
         when 406
