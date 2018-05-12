@@ -39,6 +39,7 @@ module MDQT
         cert_paths = extract_certificate_paths(options.verify_with)
 
         results.each do |result|
+          next unless result.ok?
           halt! "Data from #{options.service} is not signed, cannot verify!" unless result.data.include?('<Signature')
           halt! "The data for #{result.identifier} cannot be verified using #{cert_paths.to_sentence}" unless result.verified_signature?(cert_paths)
           btw "Data for #{result.identifier} has been verified using '#{cert_paths.to_sentence}'"

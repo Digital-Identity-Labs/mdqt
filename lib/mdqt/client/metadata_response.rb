@@ -64,6 +64,7 @@ module MDQT
       end
 
       def verified_signature?(certs=[], _={})
+        return true unless ok?
         validator = MetadataValidator.new(certs: [certs].flatten)
         validator.verified_signature?(self)
       end
