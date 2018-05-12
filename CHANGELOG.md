@@ -3,8 +3,9 @@
 ## 0.3.0
 
 ### New Features
-- New signature verification, using `--verify-with` option for get command
-- New `reset` command to clear all cached metadata
+- Signature verification, using `--verify-with` option for get command
+- A `reset` command to clear all cached metadata
+- The `--explain` Option for `get` will show header information
 
 ### Improvements
 

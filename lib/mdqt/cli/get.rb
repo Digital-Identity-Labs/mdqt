@@ -25,7 +25,8 @@ module MDQT
         client = MDQT::Client.new(
             options.service,
             verbose: options.verbose,
-            cache_type: options.cache ? :file : :none
+            explain: options.explain ? true : false,
+            cache_type: options.cache ? :file : :none,
         )
 
         args.empty? ? [client.get_metadata("")] : args.collect {|entity_id| client.get_metadata(entity_id)}
@@ -78,10 +79,6 @@ module MDQT
       end
 
       private
-
-      def format_list
-
-      end
 
       def aggregate_confirmation_check!
         halt!("Please specify --all if you wish to request all entities from #{options.service}") if args.empty? && !options.all

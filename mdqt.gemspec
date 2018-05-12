@@ -40,6 +40,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'activesupport', "~>5.2"
   spec.add_dependency 'dalli', "~>2.7"
   spec.add_dependency 'pastel', "~>0.7"
+  spec.add_dependency 'terminal-table', "~>1.8"
+
 
   #spec.add_dependency 'xmldsig'
 

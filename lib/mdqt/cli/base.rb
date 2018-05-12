@@ -67,12 +67,27 @@ module MDQT
       def output(response)
         if response.ok?
           yay response.message
+          hey explain(response) if options.explain
           trailer = response.data[-1] == "\n" ? "" : "\n"
           response.data + trailer
         else
           hey response.message
         end
 
+      end
+
+      def explain(response)
+        unless response.explanation.empty?
+          require 'terminal-table'
+          misc_rows = [['URL', response.explanation[:url]], ["Method", response.explanation[:method]], ['Status', response.explanation[:status]]]
+          req_header_rows  = response.explanation[:request_headers].map { |k, v| ['C', k, v] }
+          resp_header_rows = response.explanation[:response_headers].map { |k, v| ['S', k, v] }
+
+          btw Terminal::Table.new :title => "HTTP Misc", :rows => misc_rows
+          btw Terminal::Table.new :title => "Client Request Headers", :headings => ['C/S', 'Header', 'Value'], :rows => req_header_rows
+          btw Terminal::Table.new :title => "Server Response Headers", :headings => ['C/S', 'Header', 'Value'], :rows => resp_header_rows
+
+        end
       end
 
       def advise_on_xml_signing_support

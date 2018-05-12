@@ -23,6 +23,8 @@ module MDQT
         @cache_type = options[:cache_type] ? options[:cache_type].to_sym : :none
         @store_config = options[:cache_store]
         @verbose = options[:verbose] ? true : false
+        @explain = options[:explain] ? true : false
+
       end
 
       def base_url
@@ -43,7 +45,7 @@ module MDQT
           abort "Error - can't connect to MDQ service at URL #{base_url}"
         end
 
-        MetadataResponse.new(entity_id, base_url, http_response)
+        MetadataResponse.new(entity_id, base_url, http_response, explain: explain?)
 
       end
 
@@ -62,6 +64,10 @@ module MDQT
 
       def verbose?
         @verbose
+      end
+
+      def explain?
+        @explain
       end
 
       def cache?

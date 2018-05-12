@@ -30,6 +30,7 @@ Commander.configure do
     c.option '--verify-with PATHS', Array, 'Validate downloads using specified certificates'
     #c.option '--stdin', 'accept one or more entity ids from STDIN'
     c.option '--all', 'Request all entity records'
+    c.option '--explain', 'Show details of client request and server response'
     c.option '--save PATH', String, 'Write all data to files in the specified directory'
     c.action do |args, options|
       options.default MDQT::CLI::Defaults.cli_defaults

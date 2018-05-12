@@ -5,7 +5,7 @@ module MDQT
 
       require 'digest'
 
-      def initialize(identifier, service, http_response)
+      def initialize(identifier, service, http_response, options={})
 
         @requested_identitier = identifier
         @identifier = URI.decode(identifier)
@@ -17,6 +17,16 @@ module MDQT
         @etag = http_response.headers['ETag']
         @last_modified = http_response.headers['Last-Modified']
         @ok = http_response.success?
+        @explanation = {}
+
+        if options[:explain]
+          @explanation[:url]  = http_response.env.url.to_s
+          @explanation[:method]  = http_response.env.method.to_s.upcase
+          @explanation[:status]  = http_response.status
+          @explanation[:response_headers] = http_response.headers
+          @explanation[:request_headers]  = http_response.env.request_headers
+        end
+
       end
 
       def identifier
@@ -101,6 +111,10 @@ module MDQT
         else
           "[#{code}] Sorry - an unknown error has occurred requesting '#{identifier}' from #{service}.\nPlease report this bug!"
         end
+      end
+
+      def explanation
+        @explanation
       end
 
     end
