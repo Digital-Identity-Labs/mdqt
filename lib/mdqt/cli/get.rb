@@ -36,7 +36,7 @@ module MDQT
 
       def verify_results(results)
 
-        return true unless options.verify_with
+        return results unless options.verify_with
 
         cert_path = options.verify_with
 
@@ -48,7 +48,7 @@ module MDQT
           STDERR.puts "Data for #{result.identifier} has been verified using certificate at '#{cert_path}'" if options.verbose
         end
 
-        true
+        results
 
       end
 

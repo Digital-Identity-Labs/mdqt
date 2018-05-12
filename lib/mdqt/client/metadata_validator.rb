@@ -41,7 +41,7 @@ module MDQT
         return OpenSSL::X509::Certificate.new(cert_object) if cert_object.kind_of?(String) && cert_object.include?("-----BEGIN CERTIFICATE-----")
         OpenSSL::X509::Certificate.new(File.open(cert_object))
       rescue => oops
-        raise "Unable to process certificate: #{cert_object}"
+        raise
       end
 
     end
