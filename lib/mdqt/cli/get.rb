@@ -41,9 +41,9 @@ module MDQT
 
         results.each do |result|
           next unless result.ok?
-          halt! "Data from #{options.service} is not signed, cannot verify!" unless result.data.include?('<Signature')
+          halt! "Data from #{options.service} is not signed, cannot verify!" unless result.signed?
           halt! "The data for #{result.identifier} cannot be verified using #{cert_paths.to_sentence}" unless result.verified_signature?(cert_paths)
-          btw "Data for #{result.identifier} has been verified using '#{cert_paths.to_sentence}'"
+          btw "Data for #{result.identifier.empty? ? 'aggregate' : result.identifier } has been verified using '#{cert_paths.to_sentence}'" ## FIXME - needs constistent #label maybe?
         end
 
         results

@@ -26,7 +26,7 @@ module MDQT
           STDERR.puts "Caching is #{options.cache ? 'on' : 'off'}"
           STDERR.print "Signature verification is #{MDQT::Client.verification_available? ? 'available' : 'not available'}"
           STDERR.puts  " #{options.verify_with ? "and active" : "but inactive"} for this request" if MDQT::Client.verification_available?
-          STDERR.puts "Output directory for saved files is: #{File.absolute_path(options.save_to)}"
+          STDERR.puts "Output directory for saved files is: #{File.absolute_path(options.save_to)}" if options.save_to
           STDERR.puts
         end
       end
@@ -99,7 +99,7 @@ module MDQT
         cert_paths.collect do |cert_path|
           begin
             halt! "Cannot read certificate at '#{cert_path}'!" unless File.readable?(cert_path)
-            halt! "File at '#{cert_path} does not seem to be a PEM format certificate'" unless IO.binread(cert_path).include?("-----BEGIN CERTIFICATE-----")
+            halt! "File at '#{cert_path}' does not seem to be a PEM format certificate" unless IO.binread(cert_path).include?("-----BEGIN CERTIFICATE-----")
             cert_path
           rescue
             halt! "Unable to validate the certificate at '#{cert_path}'"
