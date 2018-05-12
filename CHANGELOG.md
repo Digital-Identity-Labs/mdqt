@@ -2,9 +2,12 @@
 
 ## 0.3.0
 
-### Improvements
+### New Features
 - New signature verification, using `--verify-with` option for get command
 - New `reset` command to clear all cached metadata
+
+### Improvements
+
 - Coloured feedback
 - Server's 304 responses for cached files are handled correctly
 - Invalid SHA1 transformed identitifiers can't be sent
@@ -12,6 +15,7 @@
 
 ### Fixes
 - Don't show empty identifier in OK message after downloading aggregate
+- Cache status in introduction text is now correct
 
 ## 0.2.1
 
@@ -20,14 +24,16 @@
 
 ## 0.2.0
 
-### Improvements
+### New Features
 - Option to cache HTTP requests to the MDQ service
 - Supports Gzip compression by default
+- Default MDQ service selection (rather crude, maybe not a good idea at all)
+
+### Improvements
 - Supports redirect responses
 - Helpful error messages and status messages
 - Verbose mode will show successful connection information
 - Warnings about unspecified MDQ service
-- Default MDQ service selection (rather crude, maybe not a good idea at all)
 - Catch bad URLs for the MDQ service and fail with a better error message
 
 ### Fixes
