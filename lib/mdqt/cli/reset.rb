@@ -16,7 +16,7 @@ module MDQT
 
         print "Removing all cached files... "
         client.cache_reset!
-        puts "done."
+        yay "done."
 
       end
 

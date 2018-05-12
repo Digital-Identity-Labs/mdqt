@@ -10,12 +10,14 @@ module MDQT
       end
 
       def verified_signature?(response)
-        signed_document = Xmldsig::SignedDocument.new(response.data)
-        return true if certificates.any? {|c| signed_document.validate(c)}
-        false
-      rescue => oops
-        STDERR.puts oops
-        false
+        begin
+          signed_document = Xmldsig::SignedDocument.new(response.data)
+          return true if certificates.any? {|c| signed_document.validate(c)}
+          false
+        rescue => oops
+          STDERR.puts oops
+          false
+        end
       end
 
       def certificates?
@@ -37,13 +39,14 @@ module MDQT
       end
 
       def normalize_cert(cert_object)
-        return cert_object if cert_object.kind_of?(OpenSSL::X509::Certificate)
-        return OpenSSL::X509::Certificate.new(cert_object) if cert_object.kind_of?(String) && cert_object.include?("-----BEGIN CERTIFICATE-----")
-        OpenSSL::X509::Certificate.new(File.open(cert_object))
-      rescue => oops
-        raise
+        begin
+          return cert_object if cert_object.kind_of?(OpenSSL::X509::Certificate)
+          return OpenSSL::X509::Certificate.new(cert_object) if cert_object.kind_of?(String) && cert_object.include?("-----BEGIN CERTIFICATE-----")
+          OpenSSL::X509::Certificate.new(File.open(cert_object))
+        rescue => oops
+          raise
+        end
       end
-
     end
 
   end

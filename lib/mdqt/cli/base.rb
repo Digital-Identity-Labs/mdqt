@@ -78,14 +78,15 @@ module MDQT
       end
 
       def extract_certificate_paths(cert_paths = options.verify_with)
-        cert_paths.collect do |cert_path|
-          halt! "Cannot read certificate at '#{cert_path}'!" unless File.readable?(cert_path)
-          halt! "File at '#{cert_path} does not seem to be a PEM format certificate'" unless IO.binread(cert_path).include?("-----BEGIN CERTIFICATE-----")
-          cert_path
-        rescue
-          halt! "Unable to validate the certificate at '#{cert_path}'"
+        begin
+          cert_paths.collect do |cert_path|
+            halt! "Cannot read certificate at '#{cert_path}'!" unless File.readable?(cert_path)
+            halt! "File at '#{cert_path} does not seem to be a PEM format certificate'" unless IO.binread(cert_path).include?("-----BEGIN CERTIFICATE-----")
+            cert_path
+          rescue
+            halt! "Unable to validate the certificate at '#{cert_path}'"
+          end
         end
-
       end
 
       def colour_shell?
