@@ -63,7 +63,7 @@ module MDQT
 
       def action(results, options)
         case
-        when options.save
+        when options.save_to
           :save_files
         else
           :print_to_stdout
@@ -75,7 +75,22 @@ module MDQT
       end
 
       def output_files(results, options)
-        halt! "Unimplemented feature"
+        FileUtils.mkdir_p(options.save_to)
+        results.each do |result|
+          full_filename = File.absolute_path(File.join([options.save_to, result.filename]))
+          open(full_filename, 'w') {|f|
+            f.puts result.data
+          }
+
+          if options.link_id
+            [
+                File.absolute_path(File.join([options.save_to, "{sha1}#{result.filename.gsub(".xml","")}"])),
+            ].each do |altname|
+              FileUtils.ln_sf(full_filename, altname)
+            end
+          end
+
+        end
       end
 
       private
