@@ -39,6 +39,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'typhoeus', "~>1.3"
   spec.add_dependency 'activesupport', "~>5.2"
   spec.add_dependency 'dalli', "~>2.7"
+  spec.add_dependency 'pastel', "~>0.7"
 
   #spec.add_dependency 'xmldsig'
 

@@ -8,13 +8,11 @@ module MDQT
 
       def run
 
-        abort("Please specify --all if you wish to request all entities from #{options.service}") if args.empty? && !options.all
+        aggregate_confirmation_check!
 
-        STDERR.puts "XML signature validation is not available. Install the 'nokogiri-xmlsec-instructure' gem if you can." unless MDQT::Client.verification_available?
+        advise_on_xml_signing_support
 
-        results = get_results(args, options)
-
-        results = verify_results(results)
+        results = verify_results(get_responses)
 
         #results = MetadataAggregator.aggregate_responses(results) if options.aggregate
 
@@ -22,7 +20,7 @@ module MDQT
 
       end
 
-      def get_results(args, options)
+      def get_responses
 
         client = MDQT::Client.new(
             options.service,
@@ -38,14 +36,12 @@ module MDQT
 
         return results unless options.verify_with
 
-        cert_path = options.verify_with
-
-        abort "Error: Cannot find certificate at '#{cert_path}'!" unless File.readable?(cert_path)
+        cert_paths = extract_certificate_paths(options.verify_with)
 
         results.each do |result|
-          abort "Data from #{options.service} is not signed, cannot verify!" unless result.data.include?('<Signature')
-          abort "Error: The data for #{result.identifier} cannot be verified with certificate at #{cert_path}" unless result.verified_signature?(cert_path)
-          STDERR.puts "Data for #{result.identifier} has been verified using certificate at '#{cert_path}'" if options.verbose
+          halt! "Data from #{options.service} is not signed, cannot verify!" unless result.data.include?('<Signature')
+          halt! "The data for #{result.identifier} cannot be verified with certificates at #{cert_paths.to_sentence}" unless result.verified_signature?(cert_paths)
+          btw "Data for #{result.identifier} has been verified using certificates at '#{cert_paths.to_sentence}'"
         end
 
         results
@@ -59,7 +55,7 @@ module MDQT
         when :print_to_stdout
           output_to_stdout(results, options)
         else
-          abort "Error - can't determine output type"
+          halt! "Can't determine output type"
         end
       end
 
@@ -77,7 +73,17 @@ module MDQT
       end
 
       def output_files(results, options)
-        abort "Unimplemented feature"
+        halt! "Unimplemented feature"
+      end
+
+      private
+
+      def format_list
+
+      end
+
+      def aggregate_confirmation_check!
+        halt!("Please specify --all if you wish to request all entities from #{options.service}") if args.empty? && !options.all
       end
 
     end

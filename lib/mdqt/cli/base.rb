@@ -4,6 +4,8 @@ module MDQT
 
     class Base
 
+      require 'pastel'
+
       def self.run(args, options)
 
         #args = options.stdin ? absorb_piped_args(args) : args
@@ -36,7 +38,7 @@ module MDQT
       end
 
       def self.parse_stdin
-        STDIN.gsub("\s", "\n").each_line.collect {|l| l.strip }
+        STDIN.gsub("\s", "\n").each_line.collect {|l| l.strip}
       end
 
       def initialize(args, options)
@@ -62,19 +64,56 @@ module MDQT
 
       def output(response)
         if response.ok?
-          STDERR.puts response.message if options.verbose
+          yay response.message
           trailer = response.data[-1] == "\n" ? "" : "\n"
           response.data + trailer
         else
-          STDERR.puts response.message
+          hey response.message
         end
 
       end
 
+      def advise_on_xml_signing_support
+        hey "XML signature validation is not available. Install the 'nokogiri-xmlsec-instructure' gem if you can." unless MDQT::Client.verification_available?
+      end
+
+      def extract_certificate_paths(cert_paths = options.verify_with)
+        cert_paths.collect do |cert_path|
+          halt! "Cannot read certificate at '#{cert_path}'!" unless File.readable?(cert_path)
+          halt! "File at '#{cert_path} does not seem to be a PEM format certificate'" unless IO.binread(cert_path).include?("-----BEGIN CERTIFICATE-----")
+          cert_path
+        rescue
+          halt! "Unable to validate the certificate at '#{cert_path}'"
+        end
+
+      end
+
+      def colour_shell?
+        TTY::Color.color?
+      end
+
+      def pastel
+        @pastel ||= Pastel.new
+      end
+
+      def hey(comment)
+        STDERR.puts(comment)
+      end
+
+      def btw(comment)
+        STDERR.puts(comment) if options.verbose
+      end
+
+      def yay(comment)
+        btw pastel.green(comment)
+      end
+
+      def halt!(comment)
+        abort pastel.red("Error: #{comment}")
+      end
+
       def run
-
-        abort "No action has been defined for this command!"
-
+        halt! "No action has been defined for this command!"
       end
 
     end
