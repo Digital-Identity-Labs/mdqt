@@ -4,6 +4,7 @@ module MDQT
     require 'rubygems'
     require 'mdqt/client/metadata_service'
     require 'mdqt/client/metadata_validator'
+    require 'mdqt/client/identifier_utils'
 
     begin
       raise if ENV['MDQT_FAKE_MISSING_XMLSIG_GEM']
@@ -32,6 +33,10 @@ module MDQT
 
       md_service.get(entity_id)
 
+    end
+
+    def transform_uri(uri)
+      MDQT::Client::IdentifierUtils.transform_uri(uri)
     end
 
     def base_url
