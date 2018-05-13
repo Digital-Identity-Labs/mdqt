@@ -93,7 +93,7 @@ module MDQT
       end
 
       def advise_on_xml_signing_support
-        hey "XML signature validation is not available. Install the 'nokogiri-xmlsec-instructure' gem if you can." unless MDQT::Client.verification_available?
+        hey "XML signature validation is not available. Install the 'xmldsig' gem if you can." unless MDQT::Client.verification_available?
       end
 
       def extract_certificate_paths(cert_paths = options.verify_with)

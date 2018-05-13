@@ -3,7 +3,7 @@
 ## 0.3.0
 
 ### New Features
-- Signature verification, using `--verify-with` option for get command
+- Signature verification (at last!) using `--verify-with` option for get command
 - A `reset` command to clear all cached metadata
 - A `transform` command to convert entityID URIs to {sha1} identifiers
 - The `--explain` option for `get` will show header information
