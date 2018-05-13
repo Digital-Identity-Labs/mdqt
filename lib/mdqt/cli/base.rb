@@ -18,6 +18,17 @@ module MDQT
 
       def self.check_requirements(args, options)
         abort "Error: No MDQ service URL has been specified." unless options.service
+        if options.save_to
+          dir = options.save_to
+          begin
+            FileUtils.mkdir_p(dir) unless File.exist?(dir)
+          rescue
+            abort "Error: Directory #{dir} did not exist, and we can't create it"
+          end
+          abort "Error: '#{dir}' is not a writable directory!" if (File.directory?(dir) && ! File.writable?(dir))
+          abort "Error: '#{dir}' is not a directory!" unless File.directory?(dir)
+        end
+
       end
 
       def self.introduce(args, options)
