@@ -5,12 +5,11 @@
 MDQT is small library and commandline tool to query MDQ services for SAML metadata.
 You could do this with `curl` but it's a little more convenient to use `mdqt` instead.
 
-At present `mdqt` does *not* verify signed metadata, so an extra step is required to use it
-securely.
-
 MDQ currently supports:
 
   - Downloading single entities, lists or aggregates
+  - Signature verification
+  - Saving metadata to disk
   - Caching entity metadata on disk
   - Gzip compression
 
@@ -25,7 +24,22 @@ The UK Access Management Federation has a
 
 ## Installation
 
-To add MDQT to a project, include this line in your application's Gemfile
+MDQT is tested on recent MacOS and Linux, and should work with
+ Ruby 2.1.0 or later and recent JRuby releases.
+
+### As a gem for general use
+
+To install system-wide on your default Ruby, use
+
+    $ sudo gem install mdqt
+
+If using a per-user Ruby via `rbenv` or similar, you'll just need
+
+    $ gem install mdqt
+
+### As part of a Ruby project
+
+To add MDQT to a Ruby project include this line in your application's `Gemfile`
 
 ```ruby
 gem 'mdqt'
@@ -35,25 +49,36 @@ and then execute:
 
     $ bundle
 
-To install system-wide on your default Ruby, use
+### Extra steps for verifying signed metadata
 
-    $ sudo gem install mdqt
+MDQT can check that metadata has not been tampered with by verifying its
+signature. Some MDQ services use unencrypted HTTP connections and rely
+ on signed metadata.
 
-If using a per-user Ruby such via `rbenv` or similar, you'll just need
+MDQT supports signature verification but requires a Ruby library called
+Nokogiri to do the hard work. Nokogiri is fast and useful but can sometimes
+be awkward to install for non-developers (it requires a C development
+environment and various XML libraries). To make it easier to install a basic MDQT we've made
+XML signature verification an optional feature.
 
-    $ gem install mdqt
+To enable signature verification, you must also install the `xmdsig` gem:
 
-MDQT should work with Ruby 2.1.0 or later.
+    $ sudo gem install xmldsig
+
+The `xmldsig` gem will install Nokogiri, and Nokogiri will try to build itself.
+If you encounter any problems installing Nokogiri, the
+[Installing Nokogiri](http://www.nokogiri.org/tutorials/installing_nokogiri.html)
+documentation is very helpful.
 
 ## Commandline Usage as an MDQ client
 
 You can see a list of commandline options by typing:
 
-    $ mdqt --help
+    $ mdqt help
 
-To see more information about a command, use the `--help` option after the command:
+To see more information about a command, use the `--help` option after the command or type `help <command>`:
 
-    $ mdqt get --help
+    $ mdqt help get
 
 Specifying the MDQ service with a commandline option:
 
@@ -61,6 +86,8 @@ Specifying the MDQ service with a commandline option:
 
 It's more convenient to set an environment variable to specify a default MDQ
 service. Set `MDQT_SERVICE` or `MDQ_BASE_URL` to the base URL of your MDQ service.
+
+### Downloading entity metadata
 
 Downloading entity metadata to STDOUT:
 
@@ -76,14 +103,65 @@ Requesting all metadata from an MDQ endpoint is done by specifying `--all`:
 
     $ mdqt get --all
 
+If you don't specify an MDQ service with `--service' or `MDQT_SERVICE` then `mdqt` *might* be
+able to guess your local NREN's MDQ service. Do not do this in production.
+
+### Caching metadata
+
 Caching can be enabled using `--cache`. At the moment the `mdqt` executable
 only supports caching to disk. It will create a cache directory in your temporary
 directory.
 
-    $ mdqt get --cache --service https://mdq.example.com/mdq  http://entity.ac.uk/shibboleth
+    $ mdqt get --cache --service https://mdq.example.com/mdq http://entity.ac.uk/shibboleth
 
-If you don't specify an MDQ service with `--service' or `MDQT_SERVICE` then `mdqt` *might* be
-able to guess your local NREN's MDQ service. Do not do this in production.
+You can clear the cache by using the `reset` command:
+
+    $ mdqt reset
+
+
+### Verifying metadata
+
+If you have enabled verification by installing `xmldsig` and have downloaded and checked a suitable
+certificate for your MDQ server, you can require verification by passing
+they `verify-with` flag and the path of your certificate
+
+    $ mdqt get --verify-with myfederation.pem https://indiid.net/idp/shibboleth
+
+It's possible to pass more than one certificate by separating them with commas
+
+    $ mdqt get --verify-with myfederation.pem,previous.pem https://indiid.net/idp/shibboleth
+
+### Saving metadata as files
+
+The simplest way to save metadata is to redirect output from the `get` command:
+
+    $ mdqt get http://entity.ac.uk/shibboleth > metadata.xml
+
+MDQT also offers the `--save-to` option to write all metadata into a directory
+
+   $ mdqt get http://entity.ac.uk/shibboleth --save-to metadata_directory
+
+The  `--save-to` option requires a directory to be specified. All files will be saved
+with a name based on their transformed identifier (sha1 hash), such as
+`77603e0cbda1e00d50373ca8ca20a375f5d1f171.xml`
+
+By adding the `--link-id' flag you can have alternative filenames linked to the
+original file (this is currently a little experimental) to make it easier
+to look up the correct file using other identifiers.
+
+### Other features
+
+To convert normal URI entity IDs into MDQ SHA1 hashed transformed identifiers, use the `transform` command:
+
+    $ mdqt transform http://example.org/service
+
+Transforming identifiers that have already been transformed should not re-transform them.
+
+To see more details of what is being sent and received by a `get` command add the `--explain` flag
+
+    $ mdqt get --explain --service https://mdq.example.com/mdq  http://entity.ac.uk/shibboleth
+
+MDQT will then show a table of sent and recieved headers which may be useful when debugging servers.
 
 ## Library Usage
 
