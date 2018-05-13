@@ -93,7 +93,7 @@ service. Set `MDQT_SERVICE` or `MDQ_BASE_URL` to the base URL of your MDQ servic
     $ mdqt get http://entity.ac.uk/shibboleth
     $ mdqt get http://example.org/service
 
-Finally, if you don't specify an MDQ service with `--service' or `MDQT_SERVICE` then `mdqt` *might* be
+Finally, if you don't specify an MDQ service with `--service` or `MDQT_SERVICE` then `mdqt` *might* be
 able to guess your local NREN's MDQ service. Do not do this in production!
 
 ### Downloading entity metadata
@@ -102,7 +102,7 @@ Downloading entity metadata to STDOUT:
 
     $ mdqt get https://test-idp.ukfederation.org.uk/idp/shibboleth
 
-Using the sha1 hashed version of entity IDs requires quotes or escaping:
+Using the sha1 hashed version of entity IDs requires quotes or escaping in some shells:
 
     $ mdqt get "{sha1}52e2065fc0d53744e8d4ee2c2f30696ebfc5def9"
 
