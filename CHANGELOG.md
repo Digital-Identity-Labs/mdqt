@@ -5,6 +5,7 @@
 ### New Features
 - Signature verification, using `--verify-with` option for get command
 - A `reset` command to clear all cached metadata
+- A `transform` command to convert entityID URIs to {sha1} identifiers
 - The `--explain` option for `get` will show header information
 - The `--save-to` option for `get` will write metadata to disk
 - The `--link-id` option for `get --save-to` will create aliases
@@ -14,6 +15,7 @@
 - Servers' 304 responses for cached files are handled correctly
 - Invalid SHA1 transformed identitifiers can't be sent
 - 500 errors at the server will be shown correctly
+- Verbose mode shows MDQT version
 
 ### Fixes
 - Don't show empty identifier in OK message after downloading aggregate
