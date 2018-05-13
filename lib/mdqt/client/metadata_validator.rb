@@ -3,8 +3,6 @@ module MDQT
 
     class MetadataValidator
 
-      require 'xmldsig'
-
       def initialize(options = {})
         @certs = options[:certs] || []
       end

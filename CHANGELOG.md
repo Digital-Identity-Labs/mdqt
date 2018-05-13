@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.1
+
+### Fixes
+- A missing xmldsig gem is now handled properly *everywhere*. Hopefully.
+
 ## 0.3.0
 
 ### New Features
