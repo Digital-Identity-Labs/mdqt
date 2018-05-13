@@ -10,8 +10,8 @@ Feature: Verify Metadata Signature
 
   Scenario: The signed aggregate metadata is verified against the correct certificate
     Given that I have appropriate certificates
-    When I run `mdqt get --cache --verbose --service http://mdq.ukfederation.org.uk/ --verify-with ukfederation.pem --all --save-to out`
-    Then the output should contain "Data for aggregate has been verified using 'ukfederation.pem'"
+    When I run `mdqt get --cache --verbose --service http://mdq-beta.incommon.org/global --verify-with incommon.pem --all --save-to out`
+    Then the output should contain "Data for aggregate has been verified using 'incommon.pem'"
 
   Scenario: The signed metadata is verified against an incorrect certificate
     Given that I have appropriate certificates
