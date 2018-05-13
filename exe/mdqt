@@ -16,9 +16,11 @@ Commander.configure do
 
   command :version do |c|
     c.syntax = 'mdqt version'
-    c.description = 'Display version information'
+    c.description = 'Show version of MDQT'
     c.action do |args, options|
-      say "mdqt version #{MDQT::VERSION}"
+      options.default MDQT::CLI::Defaults.cli_defaults
+      options.default({service: :not_required })
+      MDQT::CLI::Version.run(args, options)
     end
   end
 
@@ -47,6 +49,16 @@ Commander.configure do
       options.default MDQT::CLI::Defaults.cli_defaults
       options.default({service: :not_required })
       MDQT::CLI::Reset.run(args, options)
+    end
+  end
+
+  command :transform do |c|
+    c.syntax = 'mdqt transform ENTITYIDS'
+    c.description = 'Show transformed entity IDs'
+    c.action do |args, options|
+      options.default MDQT::CLI::Defaults.cli_defaults
+      options.default({service: :not_required })
+      MDQT::CLI::Transform.run(args, options)
     end
   end
 
