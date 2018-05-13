@@ -3,7 +3,7 @@
 [![Gem Version](https://badge.fury.io/rb/mdqt.svg)](https://badge.fury.io/rb/mdqt) [![Maintainability](https://api.codeclimate.com/v1/badges/111c46aaebfe25e4a4a9/maintainability)](https://codeclimate.com/github/Digital-Identity-Labs/mdqt/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/111c46aaebfe25e4a4a9/test_coverage)](https://codeclimate.com/github/Digital-Identity-Labs/mdqt/test_coverage) [![Build Status](https://travis-ci.org/Digital-Identity-Labs/mdqt.svg?branch=master)](https://travis-ci.org/Digital-Identity-Labs/mdqt)
 
 MDQT is small library and commandline tool to query MDQ services for SAML metadata.
-You could do this with `curl` but it's a little more convenient to use `mdqt` instead.
+You could do this with `curl` and `xmlsec1` but it's a little more convenient to use `mdqt` instead.
 
 MDQ currently supports:
 
@@ -61,12 +61,12 @@ be awkward to install for non-developers (it requires a C development
 environment and various XML libraries). To make it easier to install a basic MDQT we've made
 XML signature verification an optional feature.
 
-To enable signature verification, you must also install the `xmdsig` gem:
+To enable signature verification you must also install the `xmdsig` gem:
 
     $ sudo gem install xmldsig
 
 The `xmldsig` gem will install Nokogiri, and Nokogiri will try to build itself.
-If you encounter any problems installing Nokogiri, the
+If you encounter any problems installing Nokogiri the
 [Installing Nokogiri](http://www.nokogiri.org/tutorials/installing_nokogiri.html)
 documentation is very helpful.
 
@@ -80,12 +80,21 @@ To see more information about a command, use the `--help` option after the comma
 
     $ mdqt help get
 
-Specifying the MDQ service with a commandline option:
+### Selecting an MDQ service to access
+
+You can specify the MDQ service with a commandline option:
 
     $ mdqt get --service https://mdq.example.com/mdq  http://entity.ac.uk/shibboleth
 
 It's more convenient to set an environment variable to specify a default MDQ
 service. Set `MDQT_SERVICE` or `MDQ_BASE_URL` to the base URL of your MDQ service.
+
+    $ export MDQT_SERVICE=https://mdq.example.com/mdq
+    $ mdqt get http://entity.ac.uk/shibboleth
+    $ mdqt get http://example.org/service
+
+Finally, if you don't specify an MDQ service with `--service' or `MDQT_SERVICE` then `mdqt` *might* be
+able to guess your local NREN's MDQ service. Do not do this in production!
 
 ### Downloading entity metadata
 
@@ -103,8 +112,6 @@ Requesting all metadata from an MDQ endpoint is done by specifying `--all`:
 
     $ mdqt get --all
 
-If you don't specify an MDQ service with `--service' or `MDQT_SERVICE` then `mdqt` *might* be
-able to guess your local NREN's MDQ service. Do not do this in production.
 
 ### Caching metadata
 
@@ -121,9 +128,9 @@ You can clear the cache by using the `reset` command:
 
 ### Verifying metadata
 
-If you have enabled verification by installing `xmldsig` and have downloaded and checked a suitable
-certificate for your MDQ server, you can require verification by passing
-they `verify-with` flag and the path of your certificate
+If you have enabled verification by installing `xmldsig` (and have downloaded and checked a suitable
+certificate for your MDQ server) you can require verification by passing
+they `verify-with` flag with the path of your certificate.
 
     $ mdqt get --verify-with myfederation.pem https://indiid.net/idp/shibboleth
 
@@ -139,19 +146,24 @@ The simplest way to save metadata is to redirect output from the `get` command:
 
 MDQT also offers the `--save-to` option to write all metadata into a directory
 
-   $ mdqt get http://entity.ac.uk/shibboleth --save-to metadata_directory
+    $ mdqt get http://entity.ac.uk/shibboleth --save-to metadata_directory
 
 The  `--save-to` option requires a directory to be specified. All files will be saved
-with a name based on their transformed identifier (sha1 hash), such as
+with a name based on their transformed identifier (sha1 hash) such as
 `77603e0cbda1e00d50373ca8ca20a375f5d1f171.xml`
 
-By adding the `--link-id' flag you can have alternative filenames linked to the
+By adding the `--link-id' flag alternative filenames will be linked to the
 original file (this is currently a little experimental) to make it easier
 to look up the correct file using other identifiers.
 
 ### Other features
 
-To convert normal URI entity IDs into MDQ SHA1 hashed transformed identifiers, use the `transform` command:
+For more information about current settings, download results, and so on, add
+`--verbose` to commands.
+
+    $mdqt get --verbose http://entity.ac.uk/shibboleth
+
+To convert normal URI entity IDs into MDQ SHA1 hashed transformed identifiers just use the `transform` command:
 
     $ mdqt transform http://example.org/service
 

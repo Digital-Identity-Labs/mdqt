@@ -12,6 +12,7 @@
 
 ### Improvements
 - Coloured feedback
+- Improved README documentation
 - Servers' 304 responses for cached files are handled correctly
 - Invalid SHA1 transformed identitifiers can't be sent
 - 500 errors at the server will be shown correctly
