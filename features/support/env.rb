@@ -7,5 +7,5 @@ end
 
 Before('@slow_process') do
   aruba.config.exit_timeout = 90
-  aruba.config.io_wait_timeout = 20
+  aruba.config.io_wait_timeout = 60
 end
