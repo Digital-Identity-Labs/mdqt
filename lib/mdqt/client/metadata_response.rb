@@ -80,9 +80,13 @@ module MDQT
       end
 
       def filename
-        @filename ||= identifier.start_with?("{sha1}") ?
-                          "#{@identifier.gsub("{sha1}","")}.xml" :
-                          "#{Digest::SHA1.hexdigest(@identifier)}.xml"
+        if identifier.empty?
+          @filename = "aggregate-#{Digest::SHA1.hexdigest(@service)}.xml"
+        else
+          @filename ||= identifier.start_with?("{sha1}") ?
+                            "#{@identifier.gsub("{sha1}","")}.xml" :
+                            "#{Digest::SHA1.hexdigest(@identifier)}.xml"
+        end
       end
 
       def message
