@@ -22,6 +22,7 @@ module MDQT
 
       def self.introduce(args, options)
         if options.verbose
+          STDERR.puts "MDQT version #{MDQT::VERSION}"
           STDERR.puts "Using #{options.service}"
           STDERR.puts "Caching is #{options.cache ? 'on' : 'off'}"
           STDERR.print "Signature verification is #{MDQT::Client.verification_available? ? 'available' : 'not available'}"
