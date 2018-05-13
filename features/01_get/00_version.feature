@@ -1,4 +1,4 @@
-Feature: Display Of Version
+Feature: Display Version
   In order to use the desired version of MDQT
   As any user of MDQT
   I want to see the version of the current library and application

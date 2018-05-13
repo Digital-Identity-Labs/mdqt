@@ -6,21 +6,24 @@ module MDQT
 
     class Transform < Base
 
-      def run
+      IdentifierUtils = MDQT::Client::IdentifierUtils
 
-        client = MDQT::Client.new(
-            options.service,
-            verbose: options.verbose,
-            explain: options.explain ? true : false,
-            cache_type: options.cache ? :file : :none,
-            )
+      def run
 
         halt!("No entityIDs have been specified!") if args.empty?
 
         args.each do |arg|
-          puts client.transform_uri(arg)
+          puts transform(arg)
         end
 
+      end
+
+      def transform(arg)
+        arg = arg.strip
+        return arg if IdentifierUtils.valid_transformed?(arg)
+        return IdentifierUtils.correct_lazy_transformed(arg) if IdentifierUtils.lazy_transformed?(arg)
+        return IdentifierUtils.correct_fish_transformed(arg) if IdentifierUtils.fish_transformed?(arg)
+        IdentifierUtils.transform_uri(arg)
       end
 
     end

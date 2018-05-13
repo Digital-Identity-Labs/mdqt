@@ -3,7 +3,6 @@ Feature: Get Entity
   As a sysadmin or service
   I want to be able to download just its metadata
 
-  @vcr
   Scenario: The entity exists on the MDQ service
     Given that I have defined an MDQ service
     When I run `mdqt get https://indiid.net/idp/shibboleth`
