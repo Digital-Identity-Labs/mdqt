@@ -49,6 +49,11 @@ and then execute:
 
     $ bundle
 
+### As a Docker container
+
+(Experimental)
+See the instructions at [MDQT-Container](https://github.com/Digital-Identity-Labs/mdqt-container)
+
 ### Extra steps for verifying signed metadata
 
 MDQT can check that metadata has not been tampered with by verifying its
