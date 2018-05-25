@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.0
+
+### New Features
+- A `--validate` switch forces XML validation, using basic SAML2 metadata schema
+
 ## 0.3.1
 
 ### Fixes

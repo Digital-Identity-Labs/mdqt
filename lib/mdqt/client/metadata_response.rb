@@ -74,9 +74,19 @@ module MDQT
       end
 
       def verified_signature?(certs = [], _ = {})
-        return true unless ok?
+        return true unless ok?  # CHECK ?
         validator = MetadataValidator.new(certs: [certs].flatten)
         validator.verified_signature?(self)
+      end
+
+      def valid?
+        validator = MetadataValidator.new
+        validator.valid?(self)
+      end
+
+      def validation_error
+        validator = MetadataValidator.new
+        validator.validation_error(self)
       end
 
       def filename
@@ -122,6 +132,9 @@ module MDQT
       def explanation
         @explanation
       end
+
+      private
+
 
     end
 

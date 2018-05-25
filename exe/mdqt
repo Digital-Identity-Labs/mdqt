@@ -30,6 +30,7 @@ Commander.configure do
     c.option '--service URL', String, 'MDQ service to search for entities. Defaults to MDQT_SERVICE or MDQ_BASE_URL env variables'
     c.option '--cache', "Cache downloads and try to fetch from cache where appropriate"
     c.option '--verify-with PATHS', Array, 'Validate downloads using specified certificates'
+    c.option '--validate', 'Validate downloaded metadata against SAML2 schema (not normally needed)'
     #c.option '--stdin', 'accept one or more entity ids from STDIN'
     c.option '--all', 'Request all entity records'
     c.option '--explain', 'Show details of client request and server response'

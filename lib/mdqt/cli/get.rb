@@ -35,6 +35,14 @@ module MDQT
 
       def verify_results(results)
 
+        if options.validate
+          results.each do |result|
+            next unless result.ok?
+            halt! "The data for #{result.identifier} is not valid when checked against schema:\n#{result.validation_error}" unless result.valid?
+            btw "Data for #{result.identifier.empty? ? 'aggregate' : result.identifier } has been validated against schema" ## FIXME - needs constistent #label maybe?
+          end
+        end
+
         return results unless options.verify_with
 
         cert_paths = extract_certificate_paths(options.verify_with)

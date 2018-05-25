@@ -33,7 +33,7 @@ To install system-wide on your default Ruby, use
 
     $ sudo gem install mdqt
 
-If using a per-user Ruby via `rbenv` or similar, you'll just need
+If using a per-user Ruby via `rbenv` or similar, you'll need
 
     $ gem install mdqt
 
@@ -143,6 +143,11 @@ It's possible to pass more than one certificate by separating them with commas
 
     $ mdqt get --verify-with myfederation.pem,previous.pem https://indiid.net/idp/shibboleth
 
+Basic XML correctness and validation against SAML2 Metadata schema can be enabled with the
+`--validate` switch:
+
+    $ mdqt get --validate https://indiid.net/idp/shibboleth
+
 ### Saving metadata as files
 
 The simplest way to save metadata is to redirect output from the `get` command:
@@ -168,7 +173,7 @@ For more information about current settings, download results, and so on, add
 
     $mdqt get --verbose http://entity.ac.uk/shibboleth
 
-To convert normal URI entity IDs into MDQ SHA1 hashed transformed identifiers just use the `transform` command:
+To convert normal URI entity IDs into MDQ SHA1 hashed transformed identifiers use the `transform` command:
 
     $ mdqt transform http://example.org/service
 

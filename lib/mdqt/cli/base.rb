@@ -36,6 +36,7 @@ module MDQT
           STDERR.puts "MDQT version #{MDQT::VERSION}"
           STDERR.puts "Using #{options.service}"
           STDERR.puts "Caching is #{options.cache ? 'on' : 'off'}"
+          STDERR.print "XML validation is #{MDQT::Client.verification_available? ? 'available' : 'not available'}"
           STDERR.print "Signature verification is #{MDQT::Client.verification_available? ? 'available' : 'not available'}"
           STDERR.puts  " #{options.verify_with ? "and active" : "but inactive"} for this request" if MDQT::Client.verification_available?
           STDERR.puts "Output directory for saved files is: #{File.absolute_path(options.save_to)}" if options.save_to

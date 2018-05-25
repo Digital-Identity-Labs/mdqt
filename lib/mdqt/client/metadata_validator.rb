@@ -18,6 +18,26 @@ module MDQT
         end
       end
 
+      def valid?(response)
+        begin
+          errors = schema.validate(Nokogiri::XML(response.data))
+          return false unless errors.length.zero?
+          true
+        rescue => oops
+          false
+        end
+      end
+
+      def validation_error(response)
+        begin
+          errors = schema.validate(Nokogiri::XML(response.data))
+          return nil if errors.empty?
+          errors.join("\n")
+        rescue => oops
+          return "Invalid XML! #{oops.to_s}"
+        end
+      end
+
       def certificates?
         certificates.present?
       end
@@ -45,6 +65,15 @@ module MDQT
           raise
         end
       end
+
+      def schema
+        @schema ||= Nokogiri::XML::Schema(schema_data_fh)
+      end
+
+      def schema_data_fh
+        File.open(File.join(__dir__, '../schema/saml-schema-metadata-2.0.xsd'))
+      end
+
     end
 
   end
