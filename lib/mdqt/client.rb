@@ -20,12 +20,13 @@ module MDQT
 
     def initialize(base_url, options={})
 
-      @base_url   = base_url
-      @verbose    = options[:verbose] || false
-      @explain    = options[:explain] || false
+      @base_url        = base_url
+      @verbose         = options[:verbose] || false
+      @explain         = options[:explain] || false
+      @tls_cert_check  = options[:tls_risky] ? false : true
       @cache_type = options[:cache_type] || :none
 
-      @md_service = MetadataService.new(@base_url, verbose: @verbose, cache_type: @cache_type, explain: @explain)
+      @md_service = MetadataService.new(@base_url, verbose: @verbose, cache_type: @cache_type, explain: @explain, tls_cert_check: tls_cert_check?)
 
     end
 
@@ -49,6 +50,10 @@ module MDQT
 
     def explain?
       @explain
+    end
+
+    def tls_cert_check?
+      @tls_cert_check
     end
 
     def cache_type

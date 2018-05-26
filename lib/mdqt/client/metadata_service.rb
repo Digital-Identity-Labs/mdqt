@@ -24,7 +24,7 @@ module MDQT
         @store_config = options[:cache_store]
         @verbose = options[:verbose] ? true : false
         @explain = options[:explain] ? true : false
-
+        @tls_cert_check  = options[:tls_cert_check] ? true : false
       end
 
       def base_url
@@ -42,7 +42,7 @@ module MDQT
             req.options.open_timeout = 5
           end
         rescue Faraday::ConnectionFailed => oops
-          abort "Error - can't connect to MDQ service at URL #{base_url}"
+          abort "Error - can't connect to MDQ service at URL #{base_url}: #{oops.to_s}"
         end
 
         MetadataResponse.new(entity_id, base_url, http_response, explain: explain?)
@@ -68,6 +68,10 @@ module MDQT
 
       def explain?
         @explain
+      end
+
+      def tls_cert_check?
+        @tls_cert_check
       end
 
       def cache?
@@ -116,6 +120,7 @@ module MDQT
           faraday.use FaradayMiddleware::Gzip
           faraday.use FaradayMiddleware::FollowRedirects
           faraday.use :http_cache, faraday_cache_config if cache?
+          faraday.ssl.verify = tls_cert_check?
           faraday.headers['Accept']         = 'application/samlmetadata+xml'
           faraday.headers['Accept-Charset'] = 'utf-8'
           faraday.headers['User-Agent']     = "MDQT v#{MDQT::VERSION}"

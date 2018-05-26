@@ -41,6 +41,7 @@ module MDQT
           STDERR.print "Signature verification is #{MDQT::Client.verification_available? ? 'available' : 'not available'}"
           STDERR.puts  " #{options.verify_with ? "and active" : "but inactive"} for this request" if MDQT::Client.verification_available?
           STDERR.puts "Output directory for saved files is: #{File.absolute_path(options.save_to)}" if options.save_to
+          STDERR.puts("Warning! TLS certificate verification has been disabled!") if options.tls_risky
           STDERR.puts
         end
       end
@@ -106,7 +107,7 @@ module MDQT
       end
 
       def advise_on_xml_signing_support
-        hey "XML signature validation is not available. Install the 'xmldsig' gem if you can." unless MDQT::Client.verification_available?
+        hey "XML signature verification and XML validation are not available. Install the 'xmldsig' gem if you can." unless MDQT::Client.verification_available?
       end
 
       def extract_certificate_paths(cert_paths = options.verify_with)
