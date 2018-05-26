@@ -15,3 +15,4 @@
 /mdq-beta-cert.pem
 /out
 /xout
+out*.xml
