@@ -9,6 +9,7 @@ module MDQT
     require 'mdqt/cli/reset'
     require 'mdqt/cli/version'
     require 'mdqt/cli/transform'
+    require 'mdqt/cli/check'
 
 
   end

@@ -3,6 +3,7 @@
 ## 0.4.0
 
 ### New Features
+- The `check` command will validate XML files against SAML metadata schema and verify signatures
 - A `--validate` switch for `get` forces XML validation, using basic SAML2 metadata schema
 - A `--tls-risky` switch for `get` disables verification of TLS certificates
 
@@ -10,7 +11,7 @@
 - Connection failures now show an explanation (such as TLS problems)
 
 ### Fixes
-
+- "Not Required" was shown when using commands that don't interact with an MDQ server
 
 ## 0.3.1
 

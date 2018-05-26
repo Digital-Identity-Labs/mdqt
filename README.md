@@ -148,7 +148,13 @@ Basic XML correctness and validation against SAML2 Metadata schema can be enable
 
     $ mdqt get --validate https://indiid.net/idp/shibboleth
 
-You won't need to *validate* XML from a trusted MDQ service such as one run by a
+If you need to check metadata that has already been downloaded then try the `check`
+command:
+
+    $ mdqt check metadata.xml # Just validate
+    $ mdqt check --verify-with myfederation.pem metadata.xml # Verify signature too
+
+You shouldn't need to *validate* XML from a trusted MDQ service such as one run by a
 national federation. You should however always *verify* the signature of XML sent over an unencrypyted HTTP connection,
 and probably even over HTTPS. MDQT's validation check is mostly for use when writing
 or debugging your own MDQ service.

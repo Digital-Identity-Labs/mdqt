@@ -4,6 +4,7 @@ module MDQT
 
     class Base
 
+      require 'mdqt/cli'
       require 'pastel'
 
       def self.run(args, options)
@@ -34,7 +35,7 @@ module MDQT
       def self.introduce(args, options)
         if options.verbose
           STDERR.puts "MDQT version #{MDQT::VERSION}"
-          STDERR.puts "Using #{options.service}"
+          STDERR.puts "Using #{options.service}" unless options.service == :not_required
           STDERR.puts "Caching is #{options.cache ? 'on' : 'off'}"
           STDERR.print "XML validation is #{MDQT::Client.verification_available? ? 'available' : 'not available'}"
           STDERR.puts  " #{options.validate ? "and active" : "but inactive"} for this request" if MDQT::Client.verification_available?

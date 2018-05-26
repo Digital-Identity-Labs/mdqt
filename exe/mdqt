@@ -34,6 +34,7 @@ Commander.configure do
     #c.option '--stdin', 'accept one or more entity ids from STDIN'
     c.option '--all', 'Request all entity records'
     c.option '--explain', 'Show details of client request and server response'
+    c.option '--tls-risky', "Don't check certificate used for TLS (usually a bad idea)"
     c.option '--save-to PATH', String, 'Write all data to files in the specified directory'
     c.option '--link-id', 'If saving files, save files with aliases (requires `--save-to`)'
     c.action do |args, options|
@@ -60,6 +61,17 @@ Commander.configure do
       options.default MDQT::CLI::Defaults.cli_defaults
       options.default({service: :not_required })
       MDQT::CLI::Transform.run(args, options)
+    end
+  end
+
+  command :check do |c|
+    c.syntax = 'mdqt check XML_FILENAME CERTIFICATE_FILENAME'
+    c.description = 'Validate XML and check signatures'
+    c.option '--verify-with PATHS', Array, 'Validate file using specified certificates'
+    c.action do |args, options|
+      options.default MDQT::CLI::Defaults.cli_defaults
+      options.default({service: :not_required, validate: true })
+      MDQT::CLI::Check.run(args, options)
     end
   end
 

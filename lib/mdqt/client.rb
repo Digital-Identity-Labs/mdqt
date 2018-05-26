@@ -4,6 +4,7 @@ module MDQT
     require 'rubygems'
     require 'mdqt/client/metadata_service'
     require 'mdqt/client/metadata_validator'
+    require 'mdqt/client/metadata_file'
     require 'mdqt/client/identifier_utils'
 
     begin
@@ -30,10 +31,12 @@ module MDQT
 
     end
 
+    def open_metadata(filename)
+      MetadataFile.new(filename, verbose: @verbose)
+    end
+
     def get_metadata(entity_id)
-
       md_service.get(entity_id)
-
     end
 
     def transform_uri(uri)
