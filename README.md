@@ -148,6 +148,11 @@ Basic XML correctness and validation against SAML2 Metadata schema can be enable
 
     $ mdqt get --validate https://indiid.net/idp/shibboleth
 
+You won't need to *validate* XML from a trusted MDQ service such as one run by a
+national federation. You should however always *verify* the signature of XML sent over an unencrypyted HTTP connection,
+and probably even over HTTPS. MDQT's validation check is mostly for use when writing
+or debugging your own MDQ service.
+
 ### Saving metadata as files
 
 The simplest way to save metadata is to redirect output from the `get` command:
