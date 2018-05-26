@@ -3,7 +3,14 @@
 ## 0.4.0
 
 ### New Features
-- A `--validate` switch forces XML validation, using basic SAML2 metadata schema
+- A `--validate` switch for `get` forces XML validation, using basic SAML2 metadata schema
+- A `--tls-risky` switch for `get` disables verification of TLS certificates
+
+### Improvements
+- Connection failures now show an explanation (such as TLS problems)
+
+### Fixes
+
 
 ## 0.3.1
 
