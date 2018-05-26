@@ -9,6 +9,7 @@ MDQ currently supports:
 
   - Downloading single entities, lists or aggregates
   - Signature verification
+  - Validating metadata against SAML2 schema
   - Saving metadata to disk
   - Caching entity metadata on disk
   - Gzip compression
