@@ -20,7 +20,7 @@ module MDQT
 
       def valid?(response)
         begin
-          errors = schema.validate(Nokogiri::XML(response.data))
+          errors = schema.validate(Nokogiri::XML(response.data)  { |config| config.strict } )
           return false unless errors.length.zero?
           true
         rescue => oops
@@ -30,7 +30,7 @@ module MDQT
 
       def validation_error(response)
         begin
-          errors = schema.validate(Nokogiri::XML(response.data))
+          errors = schema.validate(Nokogiri::XML(response.data)  { |config| config.strict } )
           return nil if errors.empty?
           errors.join("\n")
         rescue => oops
