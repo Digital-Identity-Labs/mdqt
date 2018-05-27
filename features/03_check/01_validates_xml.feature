@@ -28,11 +28,11 @@ Feature: Validate Metadata XML Files
     When I run `mdqt check bad.xml`
     Then the exit status should not be 0
     And the output should contain "Error: XML validation failed"
-    And the output should contain "Premature end of data in tag EntityDescriptor line 1"
+    And the output should match /(Premature end of data in tag EntityDescriptor line 1|must be terminated by the matching end-tag)/
 
   Scenario: Metadata XML with missing mandatory attributes is checked
     Given that I have a file with missing attributes
     When I run `mdqt check missing.xml`
     Then the exit status should not be 0
     And the output should contain "Error: XML validation failed"
-    And the output should contain "The attribute 'entityID' is required but missing"
+    And the output should match /(The attribute 'entityID' is required but missing|Attribute 'entityID' must appear on element 'EntityDescriptor')/
