@@ -49,6 +49,6 @@ Feature: Verify Metadata Signature
 
   Scenario: Verification is requested with more than one certificate, one of which is correct
     Given that I have appropriate certificates
-    When I run `mdqt get --cache --verbose --service http://mdq.ukfederation.org.uk/ --verify-with ukfederation.pem https://indiid.net/idp/shibboleth https://www.jiscmail.ac.uk/shibboleth`
-    Then the output should contain "Data for https://indiid.net/idp/shibboleth has been verified using 'ukfederation.pem'"
-    Then the output should contain "Data for https://www.jiscmail.ac.uk/shibboleth has been verified using 'ukfederation.pem'"
+    When I run `mdqt get --cache --verbose --service http://mdq.ukfederation.org.uk/ --verify-with ukfederation.pem,incommon.pem https://indiid.net/idp/shibboleth https://www.jiscmail.ac.uk/shibboleth`
+    Then the output should contain "Data for https://indiid.net/idp/shibboleth has been verified using 'ukfederation.pem and incommon.pem'"
+    Then the output should contain "Data for https://www.jiscmail.ac.uk/shibboleth has been verified using 'ukfederation.pem and incommon.pem'"
