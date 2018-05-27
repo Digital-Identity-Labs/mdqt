@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" ID="_" cacheDuration="PT6H0M0.000S" entityID="https://indiid.net/idp/shibboleth" validUntil="2018-06-09T15:17:36.931Z"><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/><SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/><Reference URI="#_"><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><DigestValue>MVE/9KlHYrSX2Ny3/Ia04v1l+K7f099wwgyEjQPkwEk=</DigestValue></Reference></SignedInfo><SignatureValue>dOPfDiixpTRi26LYWUIqT/wGeVUva/OS6xJ+osUokjylwWQlL+Yg7PZVpkIdYkRUDQmZPgopHq16
+Aa5uO5AaxMo309+cEA5JPUqf16on9qiXHGmY3MdWWjrNu+opm/JWZl1KV/UnJWZGL9XNhpGGSolZ
+k3AYgSikJX29Id2z3weB6ej4AJqwEzpWfy2R8SQJVIxVwE58Kr/qG9BIRtOrGlycWn7uX++yO/gG
+LOb3YiSu+pViLcfTqsnihbuc5yIHHnM9Gbr1WrGw5Sdnl6b//vq1OzL2uoIhkrSW+tJTP9csy8D8
+V6n+E6XfwwLG4CybcqmkTBDpqKWadzHWlGIvavmTkouMHcCqSksoGHAFNmN5/WsHvpRV2TrE6Ffg
+tLVUiEPt9UrekxqlOrQs3E2HM/aGyBaTOveRbblxhTr6FhuKcZBXjZmEWdqiNj1NwFsM5PsumAwP
+gSFzQM8mxWIOyhYqBGayLD2KILPAjc6iGvZ6jomR/I0PzEHdfkBkLAS91y0QssguwUT3pSFhoNY6
+/PL1Lg47ZRshWY1iIaVj12BrejuaH2Bcg3arnaQ2h8d3Z09nsWZx4aENQy20x/9AwFYxjzKqtMXG
+Nl74zUSQD3nyZDFhkV0Bu1++VS8tqEQcNOcJYD20OLphLj62wNHLesQ2MRfJiPTbsBIyj1mZdFc=</SignatureValue></Signature>
+	<!--
+		This is a Shibboleth IdP for Digital Identity Ltd.
+	-->
+	<Extensions>
+		<shibmd:Scope xmlns:shibmd="urn:mace:shibboleth:metadata:1.0" regexp="false">indiid.net</shibmd:Scope>
+		
+		<ukfedlabel:AccountableUsers xmlns:ukfedlabel="http://ukfederation.org.uk/2006/11/label"/>
+
+		<mdrpi:RegistrationInfo xmlns:mdrpi="urn:oasis:names:tc:SAML:metadata:rpi" registrationAuthority="http://ukfederation.org.uk" registrationInstant="2014-11-07T16:35:40Z">
+			<mdrpi:RegistrationPolicy xml:lang="en">http://ukfederation.org.uk/doc/mdrps-20130902</mdrpi:RegistrationPolicy>
+		</mdrpi:RegistrationInfo>
+	</Extensions>
+	<IDPSSODescriptor protocolSupportEnumeration="urn:mace:shibboleth:1.0 urn:oasis:names:tc:SAML:1.1:protocol urn:oasis:names:tc:SAML:2.0:protocol">
+		<Extensions>
+			<shibmd:Scope xmlns:shibmd="urn:mace:shibboleth:metadata:1.0" regexp="false">indiid.net</shibmd:Scope>
+			<mdui:UIInfo xmlns:mdui="urn:oasis:names:tc:SAML:metadata:ui">
+				<mdui:DisplayName xml:lang="en">Indiid</mdui:DisplayName>
+				<mdui:Logo height="16" width="16">https://indiid.net/assets/images/logo-compact-tiny.png</mdui:Logo>
+				<mdui:Logo height="60" width="80">https://indiid.net/assets/images/logo-compact-medium.png</mdui:Logo>
+			</mdui:UIInfo>
+		</Extensions>
+		<KeyDescriptor>
+			<ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+				<ds:X509Data>
+					<ds:X509Certificate>
+						MIIDEzCCAfugAwIBAgIUT6jU1lE/HRPejPdsm8epM0vUa7EwDQYJKoZIhvcNAQEF
+						BQAwFTETMBEGA1UEAxMKaW5kaWlkLm5ldDAeFw0xNDExMTAxMjM3MzVaFw0zNDEx
+						MTAxMjM3MzVaMBUxEzARBgNVBAMTCmluZGlpZC5uZXQwggEiMA0GCSqGSIb3DQEB
+						AQUAA4IBDwAwggEKAoIBAQCoEvnN/TSYW1WcwzIT0VDek73vOEF+P/ruM3VXsn50
+						u1yGJO/I2u7mj4uB6z4/c2GlnG/bk1lPm2udxgQvsfQLefSudhUXE6I1+5z2BeKh
+						ItywlU7axKJ3yDkttnF91zoLdcWlb1G25bQG1KCeU5MOEJIwEi6AgNemEWcGyUDN
+						JhL5mu6deaMchpHpZcg/ANi8xoqcTAIMhZUQwwLWeocz7Wcp63dO6fXy0lY05udD
+						lldxFpPgnZFJC2Ip1PETDch3peze6UJPDypsnSMuq4d05OU8Ys2bXe5nnTxUFUMf
+						uUPWDSFLn0kIpYO4n710AUJ/IXYBp7ilWnNRu8MlOLfTAgMBAAGjWzBZMDgGA1Ud
+						EQQxMC+CCmluZGlpZC5uZXSGIWh0dHBzOi8vaW5kaWlkLm5ldC9pZHAvc2hpYmJv
+						bGV0aDAdBgNVHQ4EFgQUVeUalccl0Ln3ZVxeQvuTCxr5v8swDQYJKoZIhvcNAQEF
+						BQADggEBAE4Ge6J/gCDnFxv32olly4khj+O4ubmdWHggfwIhQmlizGzTgVhN/0hD
+						/KttRlKIcJRvt/aGg/r3Ykyv4P9x34t5cxztPutjiQefe8QC7Lnxo+OW1Tu+1xKq
+						pbsZDh1R/gdDjSzpAtEoXZWUFM4hrYAzGuRc/8AelXVRS1kFfyi61ZsfduaimShu
+						KWGyy5xzC8UqFyDtOLUnJicnPOfmZWzGEjnWYZWCYseTmdxPAZRDIlB+z+ZXQu41
+						+pwjmhLlMoHc/E1WZD8jEIzp0tVhjA9xS85X1UyJxLPnBcWnf0f24DNnPPCywlcz
+						7PimycEKJ5Gu+L53LzzM6aMlPyWhm8Y=
+					</ds:X509Certificate>
+				</ds:X509Data>
+			</ds:KeyInfo>
+		</KeyDescriptor>
+		<ArtifactResolutionService Binding="urn:oasis:names:tc:SAML:1.0:bindings:SOAP-binding" Location="https://indiid.net:8443/idp/profile/SAML1/SOAP/ArtifactResolution" index="1"/>
+		<ArtifactResolutionService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://indiid.net:8443/idp/profile/SAML2/SOAP/ArtifactResolution" index="2"/>
+		<NameIDFormat>urn:mace:shibboleth:1.0:nameIdentifier</NameIDFormat>
+		<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+		<SingleSignOnService Binding="urn:mace:shibboleth:1.0:profiles:AuthnRequest" Location="https://indiid.net/idp/profile/Shibboleth/SSO"/>
+		<SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://indiid.net/idp/profile/SAML2/POST/SSO"/>
+		<SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign" Location="https://indiid.net/idp/profile/SAML2/POST-SimpleSign/SSO"/>
+		<SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://indiid.net/idp/profile/SAML2/Redirect/SSO"/>
+	</IDPSSODescriptor>
+	<AttributeAuthorityDescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:1.1:protocol urn:oasis:names:tc:SAML:2.0:protocol">
+		<Extensions>
+			<shibmd:Scope xmlns:shibmd="urn:mace:shibboleth:metadata:1.0" regexp="false">indiid.net</shibmd:Scope>
+		</Extensions>
+		<KeyDescriptor>
+			<ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+				<ds:X509Data>
+					<ds:X509Certificate>
+						MIIDEzCCAfugAwIBAgIUT6jU1lE/HRPejPdsm8epM0vUa7EwDQYJKoZIhvcNAQEF
+						BQAwFTETMBEGA1UEAxMKaW5kaWlkLm5ldDAeFw0xNDExMTAxMjM3MzVaFw0zNDEx
+						MTAxMjM3MzVaMBUxEzARBgNVBAMTCmluZGlpZC5uZXQwggEiMA0GCSqGSIb3DQEB
+						AQUAA4IBDwAwggEKAoIBAQCoEvnN/TSYW1WcwzIT0VDek73vOEF+P/ruM3VXsn50
+						u1yGJO/I2u7mj4uB6z4/c2GlnG/bk1lPm2udxgQvsfQLefSudhUXE6I1+5z2BeKh
+						ItywlU7axKJ3yDkttnF91zoLdcWlb1G25bQG1KCeU5MOEJIwEi6AgNemEWcGyUDN
+						JhL5mu6deaMchpHpZcg/ANi8xoqcTAIMhZUQwwLWeocz7Wcp63dO6fXy0lY05udD
+						lldxFpPgnZFJC2Ip1PETDch3peze6UJPDypsnSMuq4d05OU8Ys2bXe5nnTxUFUMf
+						uUPWDSFLn0kIpYO4n710AUJ/IXYBp7ilWnNRu8MlOLfTAgMBAAGjWzBZMDgGA1Ud
+						EQQxMC+CCmluZGlpZC5uZXSGIWh0dHBzOi8vaW5kaWlkLm5ldC9pZHAvc2hpYmJv
+						bGV0aDAdBgNVHQ4EFgQUVeUalccl0Ln3ZVxeQvuTCxr5v8swDQYJKoZIhvcNAQEF
+						BQADggEBAE4Ge6J/gCDnFxv32olly4khj+O4ubmdWHggfwIhQmlizGzTgVhN/0hD
+						/KttRlKIcJRvt/aGg/r3Ykyv4P9x34t5cxztPutjiQefe8QC7Lnxo+OW1Tu+1xKq
+						pbsZDh1R/gdDjSzpAtEoXZWUFM4hrYAzGuRc/8AelXVRS1kFfyi61ZsfduaimShu
+						KWGyy5xzC8UqFyDtOLUnJicnPOfmZWzGEjnWYZWCYseTmdxPAZRDIlB+z+ZXQu41
+						+pwjmhLlMoHc/E1WZD8jEIzp0tVhjA9xS85X1UyJxLPnBcWnf0f24DNnPPCywlcz
+						7PimycEKJ5Gu+L53LzzM6aMlPyWhm8Y=
+					</ds:X509Certificate>
+				</ds:X509Data>
+			</ds:KeyInfo>
+		</KeyDescriptor>
+		<AttributeService Binding="urn:oasis:names:tc:SAML:1.0:bindings:SOAP-binding" Location="https://indiid.net:8443/idp/profile/SAML1/SOAP/AttributeQuery"/>
+		<AttributeService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://indiid.net:8443/idp/profile/SAML2/SOAP/AttributeQuery"/>
+		<NameIDFormat>urn:mace:shibboleth:1.0:nameIdentifier</NameIDFormat>
+		<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+	</AttributeAuthorityDescriptor>
+	<Organization>
+		<OrganizationName xml:lang="en">Digital Identity Ltd</OrganizationName>
+		<OrganizationDisplayName xml:lang="en">Indiid</OrganizationDisplayName>
+		<OrganizationURL xml:lang="en">https://indiid.net/</OrganizationURL>
+	</Organization>
+	<ContactPerson contactType="support">
+		<GivenName>Support</GivenName>
+		<EmailAddress>mailto:support@digitalidentitylabs.com</EmailAddress>
+	</ContactPerson>
+	<ContactPerson contactType="technical">
+		<GivenName>Support</GivenName>
+		<EmailAddress>mailto:support@digitalidentitylabs.com</EmailAddress>
+	</ContactPerson>
+
+</EntityDescriptor>
