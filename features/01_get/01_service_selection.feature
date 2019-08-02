@@ -35,5 +35,5 @@ Feature: Selection Of MDQ Service
 
   Scenario: A service has been specified on the commandline *and* as an environment variable
     Given that I have defined an MDQ service as "http://mdq.example.com/" using "MDQT_SERVICE"
-    When I run `mdqt get --service http://mdq-beta.incommon.org/global http://example.com/does_not_exist --verbose`
-    Then the output should contain "Using http://mdq-beta.incommon.org/global"
+    When I run `mdqt get --service https://mdq.incommon.org/ http://example.com/does_not_exist --verbose`
+    Then the output should contain "Using https://mdq.incommon.org/"

@@ -8,7 +8,7 @@ Then("the output to stdout should not include {string}") do |string|
 end
 
 Given("that I have defined an MDQ service that supports aggregates") do
-  ENV["MDQT_SERVICE"] = "http://mdq-beta.incommon.org/global"
+  ENV["MDQT_SERVICE"] = "https://mdq.incommon.org/"
 end
 
 Given("that I have defined an MDQ service that does not support aggregates") do
@@ -16,7 +16,7 @@ Given("that I have defined an MDQ service that does not support aggregates") do
 end
 
 Given("that I have defined an MDQ service that does not handle aggregate downloads properly") do
-  ENV["MDQT_SERVICE"] = "http://mdq-beta.incommon.org/global"
+  ENV["MDQT_SERVICE"] = "https://mdq.incommon.org/"
 end
 
 Given("that I have defined an MDQ service") do

@@ -10,7 +10,7 @@ Feature: Verify Metadata Signature
 
 #  Scenario: The signed aggregate metadata is verified against the correct certificate  ## FIXME: Why is this timing out?
 #    Given that I have appropriate certificates
-#    When I run `mdqt get --cache --verbose --service http://mdq-beta.incommon.org/global --verify-with incommon.pem --all --save-to out`
+#    When I run `mdqt get --cache --verbose --service https://mdq.incommon.org/ --verify-with incommon.pem --all --save-to out`
 #    Then the output should contain "Data for aggregate has been verified using 'incommon.pem'"
 
 #  @slow_process

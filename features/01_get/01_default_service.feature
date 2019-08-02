@@ -13,8 +13,8 @@ Feature: Automatic Selection Of MDQ Service
 
   Examples:
   | locale | service |
-  | en_GB.UTF-8 | http://mdq.ukfederation.org.uk/  |
-  | en_US.UTF-8 | http://mdq-beta.incommon.org/global  |
+  | en_GB.UTF-8 | http://mdq.ukfederation.org.uk/ |
+  | en_US.UTF-8 | https://mdq.incommon.org/ |
 
   Scenario Outline: No service is specified, and the user has a locale with no associated MDQ service
     Given that I have not defined an MDQ service
@@ -36,8 +36,8 @@ Feature: Automatic Selection Of MDQ Service
 
     Examples:
       | env_var | service |
-      | MDQT_SERVICE | http://mdq.ukfederation.org.uk/  |
-      | MDQ_BASE_URL | http://mdq.ukfederation.org.uk/  |
+      | MDQT_SERVICE | http://mdq.ukfederation.org.uk/ |
+      | MDQ_BASE_URL | http://mdq.ukfederation.org.uk/ |
 
   Scenario: The user has a known service in their locale but a service has been specified on the commandline
     And  I have a known service in the locale "en_US.UTF-8"
