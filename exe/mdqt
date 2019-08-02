@@ -10,7 +10,7 @@ Commander.configure do
   program :version, MDQT::VERSION
   program :description, 'MDQ SAML metadata client'
 
-  global_option '--verbose'
+  #global_option '--verbose'
 
   default_command :help
 
@@ -37,9 +37,10 @@ Commander.configure do
     c.option '--tls-risky', "Don't check certificate used for TLS (usually a bad idea)"
     c.option '--save-to PATH', String, 'Write all data to files in the specified directory'
     c.option '--link-id', 'If saving files, save files with aliases (requires `--save-to`)'
+    c.option '--verbose', 'Display extra information on stderr'
     c.action do |args, options|
       options.default MDQT::CLI::Defaults.cli_defaults
-      options.default({service: MDQT::CLI::Defaults.base_url }) if options.service.nil?
+      options.default({service: MDQT::CLI::Defaults.base_url }) if options.service.to_s == ''
       MDQT::CLI::Get.run(args, options)
     end
   end
@@ -47,6 +48,7 @@ Commander.configure do
   command :reset do |c|
     c.syntax = 'mdqt reset'
     c.description = 'Delete all cached data'
+    c.option '--verbose', 'Display extra information on stderr'
     c.action do |args, options|
       options.default MDQT::CLI::Defaults.cli_defaults
       options.default({service: :not_required })
@@ -57,6 +59,7 @@ Commander.configure do
   command :transform do |c|
     c.syntax = 'mdqt transform ENTITYIDS'
     c.description = 'Show transformed entity IDs'
+    c.option '--verbose', 'Display extra information on stderr'
     c.action do |args, options|
       options.default MDQT::CLI::Defaults.cli_defaults
       options.default({service: :not_required })
@@ -67,6 +70,7 @@ Commander.configure do
   command :check do |c|
     c.syntax = 'mdqt check XML_FILENAME CERTIFICATE_FILENAME'
     c.description = 'Validate XML and check signatures'
+    c.option '--verbose', 'Display extra information on stderr'
     c.option '--verify-with PATHS', Array, 'Validate file using specified certificates'
     c.action do |args, options|
       options.default MDQT::CLI::Defaults.cli_defaults
