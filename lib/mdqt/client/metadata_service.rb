@@ -15,6 +15,7 @@ module MDQT
       require 'active_support/cache/file_store'
       require 'active_support/cache/mem_cache_store'
       require 'active_support/logger'
+      require 'active_support/notifications'
 
       require_relative './metadata_response'
 
