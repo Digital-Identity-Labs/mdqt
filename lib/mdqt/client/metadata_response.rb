@@ -4,11 +4,12 @@ module MDQT
     class MetadataResponse
 
       require 'digest'
+      require 'uri'
 
       def initialize(identifier, service, http_response, options = {})
 
         @requested_identitier = identifier
-        @identifier = URI.decode(identifier)
+        @identifier = URI.decode_www_form_component(identifier)
         @service = service
         @code = http_response.status || 500
         @data = http_response.body || ""
