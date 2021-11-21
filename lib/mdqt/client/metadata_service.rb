@@ -15,6 +15,7 @@ module MDQT
       require 'active_support/cache/file_store'
       require 'active_support/cache/mem_cache_store'
       require 'active_support/logger'
+      require 'active_support/notifications'
 
       require_relative './metadata_response'
 
@@ -24,7 +25,7 @@ module MDQT
         @store_config = options[:cache_store]
         @verbose = options[:verbose] ? true : false
         @explain = options[:explain] ? true : false
-        @tls_cert_check  = options[:tls_cert_check] ? true : false
+        @tls_cert_check = options[:tls_cert_check] ? true : false
       end
 
       def base_url
@@ -38,11 +39,13 @@ module MDQT
         begin
           http_response = connection.get do |req|
             req.url request_path(entity_id)
-            req.options.timeout = 100
-            req.options.open_timeout = 5
+            req.options.timeout = 1000
+            req.options.open_timeout = 60
           end
         rescue Faraday::ConnectionFailed => oops
           abort "Error - can't connect to MDQ service at URL #{base_url}: #{oops.to_s}"
+        rescue Faraday::TimeoutError => oops
+          abort "Error - connection to #{base_url} timed out!"
         end
 
         MetadataResponse.new(entity_id, base_url, http_response, explain: explain?)
@@ -119,11 +122,17 @@ module MDQT
           faraday.request :url_encoded
           faraday.use FaradayMiddleware::Gzip
           faraday.use FaradayMiddleware::FollowRedirects
-          faraday.use :http_cache, faraday_cache_config if cache?
+          if cache?
+            faraday.use :http_cache,
+                        store: cache_store,
+                        shared_cache: false,
+                        serializer: Marshal,
+                        instrumenter: ActiveSupport::Notifications
+          end
           faraday.ssl.verify = tls_cert_check?
-          faraday.headers['Accept']         = 'application/samlmetadata+xml'
+          faraday.headers['Accept'] = 'application/samlmetadata+xml'
           faraday.headers['Accept-Charset'] = 'utf-8'
-          faraday.headers['User-Agent']     = "MDQT v#{MDQT::VERSION}"
+          faraday.headers['User-Agent'] = "MDQT v#{MDQT::VERSION}"
           #faraday.response :logger
           faraday.adapter :typhoeus
         end
@@ -138,16 +147,6 @@ module MDQT
         when :memcached, :memcache
           'localhost:11211'
         end
-      end
-
-      def faraday_cache_config
-        {
-            store: cache_store,
-            shared_cache: false,
-            serializer: Marshal,
-            #logger: cache_logger,
-            instrumenter: ActiveSupport::Notifications
-        }
       end
 
       def cache_logger

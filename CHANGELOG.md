@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.0
+
+### Fixes
+
+- Compatible with Ruby 3
+- Updated dependencies to latest versions
+- Improved test reliability
+- Extended timeouts to better handle slow networks
+
 ## 0.4.0
 
 ### New Features
