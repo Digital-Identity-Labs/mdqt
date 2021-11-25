@@ -131,6 +131,10 @@ module MDQT
         @pastel ||= Pastel.new
       end
 
+      def say(text)
+        STDOUT.puts(text)
+      end
+
       def hey(comment)
         STDERR.puts(comment)
       end
