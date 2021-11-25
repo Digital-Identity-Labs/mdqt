@@ -31,6 +31,8 @@ module MDQT
                       'http://mdq.ukfederation.org.uk/'
                     when 'en_US.UTF-8'
                       'https://mdq.incommon.org/'
+                    when 'de_utf8', 'de_du_utf8'
+                      'https://mdq.aai.dfn.de'
                     else
                       abort "Please specify an MDQ service using --service, MDQT_SERVICE or MDQ_BASE_URL"
                     end
