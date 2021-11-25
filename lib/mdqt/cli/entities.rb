@@ -29,7 +29,10 @@ module MDQT
           halt!("XML validation failed for #{filename}:\n#{file.validation_error}") unless file.valid?
 
           doc = Nokogiri::XML.parse(file.data).remove_namespaces!
-          doc.xpath("//EntityDescriptor/@entityID").map(&:text).each {|e| say e }
+          doc.xpath("//EntityDescriptor/@entityID").map(&:text).each do |id|
+            id = options.sha1 ? [id, MDQT::Client::IdentifierUtils.transform_uri(id)].join(" ") : id
+            say(id)
+          end
 
         end
 
@@ -38,8 +41,7 @@ module MDQT
     end
 
     private
-
-
+    
   end
 
 end

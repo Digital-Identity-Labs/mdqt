@@ -87,6 +87,7 @@ Commander.configure do
   command :entities do |c|
     c.syntax = 'mdqt entities XML_FILENAME'
     c.description = 'Extract entity IDs from a metadata file'
+    c.option '--sha1', 'include the sha1 hash for each entity ID'
     c.action do |args, options|
       options.default MDQT::CLI::Defaults.cli_defaults
       options.default({service: :not_required })
