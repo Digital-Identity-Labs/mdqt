@@ -10,6 +10,7 @@ module MDQT
     require 'mdqt/cli/version'
     require 'mdqt/cli/transform'
     require 'mdqt/cli/check'
+    require 'mdqt/cli/entities'
 
 
   end
