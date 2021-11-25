@@ -5,6 +5,11 @@ require 'mdqt/version'
 
 require 'commander'
 
+Signal.trap('SIGINT') do
+  puts 'Received signal, halting'
+  exit 1
+end
+
 Commander.configure do
   program :name, 'mdqt'
   program :version, MDQT::VERSION
