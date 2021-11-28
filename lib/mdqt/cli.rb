@@ -11,6 +11,7 @@ module MDQT
     require 'mdqt/cli/transform'
     require 'mdqt/cli/check'
     require 'mdqt/cli/entities'
+    require 'mdqt/cli/ln'
 
 
   end

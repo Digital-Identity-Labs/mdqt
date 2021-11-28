@@ -17,3 +17,5 @@
 /xout
 out*.xml
 /.idea
+/*.xml
+/bt

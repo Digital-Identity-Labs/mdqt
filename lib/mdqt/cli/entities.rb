@@ -41,7 +41,7 @@ module MDQT
     end
 
     private
-    
+
   end
 
 end
