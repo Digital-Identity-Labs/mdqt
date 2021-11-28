@@ -6,8 +6,7 @@ module MDQT
       require 'digest'
 
       def initialize(filename, options = {})
-        @filename = filename
-        @identifier = nil
+        @filename = File.absolute_path(filename)
         @data = nil
         @expires = nil
         @etag = nil
@@ -19,8 +18,21 @@ module MDQT
         @filename
       end
 
+      def basename
+        File.basename(filename)
+      end
+
       def identifier
-        @identifier
+        entity_id
+      end
+
+      def entity_id
+        raise "Incorrect metadata file type - aggregate" if aggregate?
+        @entity_id ||= extract_entity_id
+      end
+
+      def entity_ids
+        @entity_ids ||= extract_entity_ids
       end
 
       def data
@@ -32,7 +44,11 @@ module MDQT
       end
 
       def type
-        @type
+        @type ||= calculate_type
+      end
+
+      def aggregate?
+        type == :aggregate
       end
 
       def expires
@@ -75,12 +91,45 @@ module MDQT
           @filename = "aggregate-#{Digest::SHA1.hexdigest(@service)}.xml"
         else
           @filename ||= identifier.start_with?("{sha1}") ?
-                            "#{@identifier.gsub("{sha1}","")}.xml" :
-                            "#{Digest::SHA1.hexdigest(@identifier)}.xml"
+                          "#{@identifier.gsub("{sha1}", "")}.xml" :
+                          "#{Digest::SHA1.hexdigest(@identifier)}.xml"
         end
       end
 
+      def linkname
+        if aggregate?
+          raise "Not supported for aggregates"
+        else
+          "#{Digest::SHA1.hexdigest(entity_id)}.xml"
+        end
+      end
+
+      def symlink?
+        File.symlink?(filename)
+      end
+
       private
+
+      def calculate_type
+        return :aggregate if data.include?("<EntitiesDescriptor")
+        if data.include?("EntityDescriptor")
+          return :alias if symlink?
+          return :entity
+        end
+        :unknown
+      end
+
+      def xml_doc
+        Nokogiri::XML.parse(data).remove_namespaces!
+      end
+
+      def extract_entity_id
+        xml_doc.xpath("/EntityDescriptor/@entityID").text
+      end
+
+      def extract_entity_ids
+        xml_doc.xpath("//EntityDescriptor/@entityID").map(&:text)
+      end
 
     end
 

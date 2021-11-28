@@ -12,6 +12,7 @@ module MDQT
     require 'mdqt/cli/check'
     require 'mdqt/cli/entities'
     require 'mdqt/cli/ln'
+    require 'mdqt/cli/ls'
 
 
   end

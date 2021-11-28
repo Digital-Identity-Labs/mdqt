@@ -21,22 +21,19 @@ module MDQT
 
         args.each do |filename|
 
-          filename = File.absolute_path(filename)
-
           next if File.symlink?(filename)
 
           file = client.open_metadata(filename)
 
           halt!("Cannot access file #{filename}") unless file.readable?
-          halt!("File #{filename} is a metadata aggregate, cannot create entityID hashed link!") if file.data.include?("EntitiesDescriptor")
+          halt!("File #{filename} is a metadata aggregate, cannot create entityID hashed link!") if file.aggregate?
           halt!("XML validation failed for #{filename}:\n#{file.validation_error}") unless file.valid?
 
-          doc = Nokogiri::XML.parse(file.data).remove_namespaces!
-          id = doc.xpath("/EntityDescriptor/@entityID").text || nil
-          halt!("Cannot find entityID for #{filename}") unless id
+          halt!("Cannot find entityID for #{filename}") unless file.entity_id
 
-          sha1 = MDQT::Client::IdentifierUtils.uri_to_sha1(id)
-          linkname = "#{sha1}.xml"
+          linkname = file.linkname
+          halt!("Cannot link file to itself! #{filename}") if filename == linkname
+
           message = ""
 
           if File.exists?(linkname)
@@ -45,13 +42,13 @@ module MDQT
             else
               old_target = File.readlink(linkname)
               message = old_target == filename ? "File exists" : "Conflicts with #{filename}!"
-              halt!("#{linkname} -> #{old_target} [#{id}] #{message}. Use --force to override")
+              halt!("#{linkname} -> #{old_target} [#{file.entity_id}] #{message}. Use --force to override")
               next
             end
           end
 
           File.symlink(filename, linkname)
-          hey("#{linkname} -> #{filename} [#{id}] #{message}") if options.verbose
+          hey("#{linkname} -> #{filename} [#{file.entity_id}] #{message}") if options.verbose
         end
 
       end

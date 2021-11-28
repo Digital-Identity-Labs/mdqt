@@ -89,6 +89,7 @@ Commander.configure do
     c.description = 'Extract entity IDs from a metadata file'
     c.option '--sha1', 'include the sha1 hash for each entity ID'
     c.action do |args, options|
+      args = Dir.glob("*.xml") unless args && !args.empty?
       options.default MDQT::CLI::Defaults.cli_defaults
       options.default({service: :not_required })
       MDQT::CLI::Entities.run(args, options)
@@ -101,9 +102,22 @@ Commander.configure do
     c.option '--force', 'Overwrite any existing links'
     c.option '--verbose', 'Display extra information on stderr'
     c.action do |args, options|
+      args = Dir.glob("*.xml") unless args && !args.empty?
       options.default MDQT::CLI::Defaults.cli_defaults
       options.default({service: :not_required })
       MDQT::CLI::Ln.run(args, options)
+    end
+  end
+
+  command :ls do |c|
+    c.syntax = 'mdqt ls XML_FILENAME/DIRECTORY'
+    c.description = 'List valid metadata files in directory'
+    c.option '--verbose', 'Display extra information on stderr'
+    c.action do |args, options|
+      args = Dir.glob("*.xml") unless args && !args.empty?
+      options.default MDQT::CLI::Defaults.cli_defaults
+      options.default({service: :not_required })
+      MDQT::CLI::Ls.run(args, options)
     end
   end
 
