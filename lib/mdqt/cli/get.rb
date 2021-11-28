@@ -27,7 +27,7 @@ module MDQT
             verbose: options.verbose,
             explain: options.explain ? true : false,
             tls_risky: options.tls_risky ? true : false,
-            cache_type: options.cache ? :file : :none,
+            cache_type: MDQT::CLI::CacheControl.cache_type(options),
         )
 
         args.empty? ? [client.get_metadata("")] : args.collect {|entity_id| client.get_metadata(entity_id)}

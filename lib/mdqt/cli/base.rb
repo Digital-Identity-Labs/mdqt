@@ -36,7 +36,7 @@ module MDQT
         if options.verbose
           STDERR.puts "MDQT version #{MDQT::VERSION}"
           STDERR.puts "Using #{options.service}" unless options.service == :not_required
-          STDERR.puts "Caching is #{options.cache ? 'on' : 'off'}"
+          STDERR.puts "Caching is #{MDQT::CLI::CacheControl.caching_on?(options) ? 'on' : 'off'}"
           STDERR.print "XML validation is #{MDQT::Client.verification_available? ? 'available' : 'not available'}"
           STDERR.puts  " #{options.validate ? "and active" : "but inactive"} for this request" if MDQT::Client.verification_available?
           STDERR.print "Signature verification is #{MDQT::Client.verification_available? ? 'available' : 'not available'}"
@@ -150,6 +150,7 @@ module MDQT
       def halt!(comment)
         abort pastel.red("Error: #{comment}")
       end
+
       def run
         halt! "No action has been defined for this command!"
       end

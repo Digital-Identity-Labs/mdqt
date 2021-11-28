@@ -4,6 +4,7 @@ module MDQT
     require 'mdqt/client'
 
     require 'mdqt/cli/defaults'
+    require 'mdqt/cli/cache_control'
 
     require 'mdqt/cli/get'
     require 'mdqt/cli/reset'
