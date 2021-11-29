@@ -24,7 +24,7 @@ Commander.configure do
     c.description = 'Show version of MDQT'
     c.action do |args, options|
       options.default MDQT::CLI::Defaults.cli_defaults
-      options.default({service: :not_required })
+      options.default({ service: :not_required })
       MDQT::CLI::Version.run(args, options)
     end
   end
@@ -46,7 +46,7 @@ Commander.configure do
     c.option '--verbose', 'Display extra information on stderr'
     c.action do |args, options|
       options.default MDQT::CLI::Defaults.cli_defaults
-      options.default({service: MDQT::CLI::Defaults.base_url }) if options.service.to_s == ''
+      options.default({ service: MDQT::CLI::Defaults.base_url }) if options.service.to_s == ''
       MDQT::CLI::Get.run(args, options)
     end
   end
@@ -57,7 +57,7 @@ Commander.configure do
     c.option '--verbose', 'Display extra information on stderr'
     c.action do |args, options|
       options.default MDQT::CLI::Defaults.cli_defaults
-      options.default({service: :not_required })
+      options.default({ service: :not_required })
       MDQT::CLI::Reset.run(args, options)
     end
   end
@@ -68,7 +68,7 @@ Commander.configure do
     c.option '--verbose', 'Display extra information on stderr'
     c.action do |args, options|
       options.default MDQT::CLI::Defaults.cli_defaults
-      options.default({service: :not_required })
+      options.default({ service: :not_required })
       MDQT::CLI::Transform.run(args, options)
     end
   end
@@ -80,7 +80,7 @@ Commander.configure do
     c.option '--verify-with PATHS', Array, 'Validate file using specified certificates'
     c.action do |args, options|
       options.default MDQT::CLI::Defaults.cli_defaults
-      options.default({service: :not_required, validate: true })
+      options.default({ service: :not_required, validate: true })
       MDQT::CLI::Check.run(args, options)
     end
   end
@@ -92,7 +92,7 @@ Commander.configure do
     c.action do |args, options|
       args = Dir.glob("*.xml") unless args && !args.empty?
       options.default MDQT::CLI::Defaults.cli_defaults
-      options.default({service: :not_required })
+      options.default({ service: :not_required })
       MDQT::CLI::Entities.run(args, options)
     end
   end
@@ -105,7 +105,7 @@ Commander.configure do
     c.action do |args, options|
       args = Dir.glob("*.xml") unless args && !args.empty?
       options.default MDQT::CLI::Defaults.cli_defaults
-      options.default({service: :not_required })
+      options.default({ service: :not_required })
       MDQT::CLI::Ln.run(args, options)
     end
   end
@@ -117,8 +117,23 @@ Commander.configure do
     c.action do |args, options|
       args = Dir.glob("*.xml") unless args && !args.empty?
       options.default MDQT::CLI::Defaults.cli_defaults
-      options.default({service: :not_required })
+      options.default({ service: :not_required })
       MDQT::CLI::Ls.run(args, options)
+    end
+  end
+
+  command :list do |c|
+    c.syntax = 'mdqt list [options]'
+    c.description = 'List entities available at the MDQ service'
+    c.option '--service URL', String, 'MDQ service to search for entities. Defaults to MDQT_SERVICE or MDQ_BASE_URL env variables'
+    c.option '--cache', "Cache downloads and try to fetch from cache where appropriate (deprecated)"
+    c.option '--refresh', "Never cache (will prevent --cache)"
+    #c.option '--stdin', 'accept one or more entity ids from STDIN'
+    c.option '--verbose', 'Display extra information on stderr'
+    c.action do |args, options|
+      options.default MDQT::CLI::Defaults.cli_defaults
+      options.default({ service: MDQT::CLI::Defaults.base_url }) if options.service.to_s == ''
+      MDQT::CLI::List.run(args, options)
     end
   end
 
