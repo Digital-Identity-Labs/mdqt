@@ -34,9 +34,20 @@ module MDQT
         @identifier
       end
 
+
       def requested_identifier
         @identifier
       end
+
+      def entity_id
+        raise "Incorrect metadata file type - aggregate" if aggregate?
+        @entity_id ||= extract_entity_id
+      end
+
+      def entity_ids
+        @entity_ids ||= extract_entity_ids
+      end
+
 
       def service
         @service
@@ -136,6 +147,26 @@ module MDQT
 
       private
 
+      def calculate_type
+        return :aggregate if data.include?("<EntitiesDescriptor")
+        if data.include?("EntityDescriptor")
+          return :alias if symlink?
+          return :entity
+        end
+        :unknown
+      end
+
+      def xml_doc
+        Nokogiri::XML.parse(data).remove_namespaces!
+      end
+
+      def extract_entity_id
+        xml_doc.xpath("/EntityDescriptor/@entityID").text
+      end
+
+      def extract_entity_ids
+        xml_doc.xpath("//EntityDescriptor/@entityID").map(&:text)
+      end
 
     end
 
