@@ -15,6 +15,7 @@ module MDQT
     require 'mdqt/cli/ln'
     require 'mdqt/cli/ls'
     require 'mdqt/cli/list'
+    require 'mdqt/cli/services'
 
   end
 
