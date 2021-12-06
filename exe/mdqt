@@ -137,5 +137,15 @@ Commander.configure do
     end
   end
 
+  command :services do |c|
+    c.syntax = 'mdqt services'
+    c.description = 'List URLs and aliases for known MDQ services'
+    c.action do |args, options|
+      options.default MDQT::CLI::Defaults.cli_defaults
+      options.default({ service: :not_required })
+      MDQT::CLI::Services.run(args, options)
+    end
+  end
+
 end
 
