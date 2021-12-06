@@ -13,7 +13,8 @@ module MDQT
         @service = service
         @code = http_response.status || 500
         @data = http_response.body || ""
-        @type = http_response.headers['Content-Type']
+        @type = nil
+        @content_type = http_response.headers['Content-Type']
         @expires = http_response.headers['Expires']
         @etag = http_response.headers['ETag']
         @last_modified = http_response.headers['Last-Modified']
@@ -62,7 +63,11 @@ module MDQT
       end
 
       def type
-        @type
+        @type ||= calculate_type
+      end
+
+      def content_type
+        @content_type
       end
 
       def expires
@@ -148,8 +153,10 @@ module MDQT
       private
 
       def calculate_type
-        return :aggregate if data.include?("<EntitiesDescriptor")
-        if data.include?("EntityDescriptor")
+
+        return :html if data[0,1000].include?('<!doctype html>')
+        return :aggregate if data[0,5000].include?("EntitiesDescriptor")
+        if data[0,5000].include?("EntityDescriptor")
           return :alias if symlink?
           return :entity
         end
