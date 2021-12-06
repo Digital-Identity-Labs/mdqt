@@ -19,3 +19,4 @@ out*.xml
 /.idea
 /*.xml
 /bt
+*.html
