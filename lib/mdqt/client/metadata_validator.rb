@@ -20,6 +20,7 @@ module MDQT
 
       def valid?(response)
         begin
+          raise "Received HTML!" if response.type == :html
           errors = schema.validate(Nokogiri::XML(response.data)  { |config| config.strict } )
           return false unless errors.length.zero?
           true
