@@ -24,7 +24,7 @@ module MDQT
       def get_response
 
         client = MDQT::Client.new(
-          options.service,
+          service_url(options),
           verbose: options.verbose,
           explain: options.explain ? true : false,
           tls_risky: options.tls_risky ? true : false,

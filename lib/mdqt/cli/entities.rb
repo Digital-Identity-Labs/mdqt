@@ -14,10 +14,10 @@ module MDQT
         halt!("Cannot check a metadata file without XML support: please install additional gems") unless MDQT::Client.verification_available?
 
         client = MDQT::Client.new(
-            options.service,
-            verbose: options.verbose,
-            explain: options.explain ? true : false,
-            )
+          service_url(options),
+          verbose: options.verbose,
+          explain: options.explain ? true : false,
+        )
 
         args.each do |filename|
 

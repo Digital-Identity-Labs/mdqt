@@ -23,14 +23,14 @@ module MDQT
       def get_responses
 
         client = MDQT::Client.new(
-            options.service,
-            verbose: options.verbose,
-            explain: options.explain ? true : false,
-            tls_risky: options.tls_risky ? true : false,
-            cache_type: MDQT::CLI::CacheControl.cache_type(options),
+          service_url(options),
+          verbose: options.verbose,
+          explain: options.explain ? true : false,
+          tls_risky: options.tls_risky ? true : false,
+          cache_type: MDQT::CLI::CacheControl.cache_type(options),
         )
 
-        args.empty? ? [client.get_metadata("")] : args.collect {|entity_id| client.get_metadata(entity_id)}
+        args.empty? ? [client.get_metadata("")] : args.collect { |entity_id| client.get_metadata(entity_id) }
 
       end
 
@@ -80,14 +80,14 @@ module MDQT
       end
 
       def output_to_stdout(results, options)
-        results.each {|r| puts output(r)}
+        results.each { |r| puts output(r) }
       end
 
       def output_files(results, options)
         prepare_output_directory(options.save_to)
         results.each do |result|
           main_file = output_file_path(result.filename)
-          open(main_file, 'w') {|f|
+          open(main_file, 'w') { |f|
             f.puts result.data
           }
           yay "Created #{main_file}"

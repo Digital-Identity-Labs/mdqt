@@ -35,7 +35,7 @@ module MDQT
       def self.introduce(args, options)
         if options.verbose
           STDERR.puts "MDQT version #{MDQT::VERSION}"
-          STDERR.puts "Using #{options.service}" unless options.service == :not_required
+          STDERR.puts "Using #{service_url(options)}" unless options.service == :not_required
           STDERR.puts "Caching is #{MDQT::CLI::CacheControl.caching_on?(options) ? 'on' : 'off'}"
           STDERR.print "XML validation is #{MDQT::Client.verification_available? ? 'available' : 'not available'}"
           STDERR.puts  " #{options.validate ? "and active" : "but inactive"} for this request" if MDQT::Client.verification_available?
@@ -79,6 +79,26 @@ module MDQT
 
       def options
         @options
+      end
+
+      def self.service_url(options)
+
+        choice = options.service
+
+        if choice.start_with? "http:"
+          url = choice
+        else
+          url = Defaults.lookup_service_alias(choice)
+        end
+
+        abort "Please specify an MDQ service using --service, MDQT_SERVICE or MDQ_BASE_URL" unless url
+
+        url
+
+      end
+
+      def service_url(options)
+        self.class.service_url(options)
       end
 
       def output(response)
