@@ -39,6 +39,10 @@ module MDQT
       md_service.get(entity_id)
     end
 
+    def exists?(entity_id)
+      md_service.exists?(entity_id)
+    end
+
     def transform_uri(uri)
       MDQT::Client::IdentifierUtils.transform_uri(uri)
     end
