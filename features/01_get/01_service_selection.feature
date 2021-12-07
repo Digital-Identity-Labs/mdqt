@@ -18,7 +18,7 @@ Feature: Selection Of MDQ Service
     Given that I have not defined an MDQ service
     And  I am in the locale en_XX.UTF-8
     When I run `mdqt get  http://example.com/does_not_exist --verbose`
-    Then it should fail with "Please specify an MDQ service using --service, MDQT_SERVICE or MDQ_BASE_URL"
+    Then it should fail with "No MDQ service URL has been specified. Please use --service, MDQT_SERVICE or MDQ_BASE_URL"
 
   Scenario Outline: The user has specified a service using an ENV variable
     Given that I have defined an MDQ service as "<service>" using "<env_var>"
