@@ -28,12 +28,15 @@ module MDQT
           locale = ENV['LANG']
 
           service = services.find { |s| s[:locale] == locale }
+          #service ||= services.first
 
-          url = service ? service[:url] : nil
-
-          STDERR.puts "MDQT is assuming that you want to use #{url}\nPlease configure this using --service, MDQT_SERVICE or MDQ_BASE_URL\n\n"
-
-          url
+          if service
+            url = service[:url]
+            STDERR.puts "MDQT is assuming that you want to use #{url}\nPlease configure this using --service, MDQT_SERVICE or MDQ_BASE_URL\n\n"
+            url
+          else
+            nil
+          end
 
         end
 

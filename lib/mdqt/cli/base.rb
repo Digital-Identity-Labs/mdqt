@@ -18,7 +18,11 @@ module MDQT
       end
 
       def self.check_requirements(args, options)
-        abort "Error: No MDQ service URL has been specified." unless options.service
+        
+        unless options.service == :not_required
+          abort "No MDQ service URL has been specified. Please use --service, MDQT_SERVICE or MDQ_BASE_URL" unless service_url(options).to_s.start_with?("http")
+        end
+
         if options.save_to
           dir = options.save_to
           begin
@@ -83,17 +87,15 @@ module MDQT
 
       def self.service_url(options)
 
-        choice = options.service
+        return nil if options.service == :not_required
 
-        if choice.start_with? "http:"
-          url = choice
+        choice = options.service.to_s.strip
+
+        if choice.downcase.start_with? "http"
+          choice
         else
-          url = Defaults.lookup_service_alias(choice)
+          Defaults.lookup_service_alias(choice)
         end
-
-        abort "Please specify an MDQ service using --service, MDQT_SERVICE or MDQ_BASE_URL" unless url
-
-        url
 
       end
 
