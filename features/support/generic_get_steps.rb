@@ -23,6 +23,10 @@ Given("that I have defined an MDQ service") do
   ENV["MDQT_SERVICE"] = "http://mdq.ukfederation.org.uk/"
 end
 
+Given("that I have defined the MDQ service as {word}") do |service|
+  set_environment_variable("MDQT_SERVICE", service)
+end
+
 Given("that I have defined an MDQ service as {string} using {string}") do |service, var|
   set_environment_variable(var, service)
 end
