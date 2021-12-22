@@ -1,7 +1,3 @@
-# Will add new link
-# Link matches the hash
-# will not overwrite existing link
-# Will not link if file already has sha1 name
 Feature: Create sha1 alias to a metadata file
   In order to use individual metadata files with Shibboleth IdP or SP
   As a lazy sysadmin with other things to do
