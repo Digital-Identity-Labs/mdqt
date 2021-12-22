@@ -32,7 +32,17 @@ module MDQT
           halt!("Cannot find entityID for #{filename}") unless file.entity_id
 
           linkname = file.linkname
-          halt!("Cannot link file to itself! #{filename}") if filename == linkname
+
+          if filename == linkname
+            if options.force
+              hey("Warning: Cannot link file to itself, skipping! #{filename}")
+              next
+            else
+              halt!("Cannot link file to itself! #{filename}")
+              next
+            end
+            btw("Cannot link file to itself! #{filename}")
+          end
 
           message = ""
 
