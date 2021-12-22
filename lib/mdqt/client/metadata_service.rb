@@ -71,6 +71,7 @@ module MDQT
         http_response.status == 200
 
       end
+
       def prepare_id(id)
         case id
         when :all, "", nil

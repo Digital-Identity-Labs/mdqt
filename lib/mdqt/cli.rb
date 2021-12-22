@@ -17,6 +17,7 @@ module MDQT
     require 'mdqt/cli/list'
     require 'mdqt/cli/services'
     require 'mdqt/cli/rename'
+    require 'mdqt/cli/url'
 
   end
 

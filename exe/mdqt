@@ -160,5 +160,16 @@ Commander.configure do
     end
   end
 
+  command :url do |c|
+    c.syntax = 'mdqt url ENTITYIDS'
+    c.description = 'List URLs for each entity ID at the MDQ service'
+    c.option '--verbose', 'Display extra information on stderr'
+    c.action do |args, options|
+      options.default MDQT::CLI::Defaults.cli_defaults
+      options.default({ service: MDQT::CLI::Defaults.base_url }) if options.service.to_s == ''
+      MDQT::CLI::URL.run(args, options)
+    end
+  end
+
 end
 
