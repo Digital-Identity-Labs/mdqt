@@ -41,7 +41,7 @@ module MDQT
               File.delete(linkname)
             else
               old_target = File.readlink(linkname)
-              message = old_target == filename ? "File exists" : "Conflicts with #{filename}!"
+              message = old_target == filename ? "File exists" : "Conflicts with #{filename}"
               halt!("#{linkname} -> #{old_target} [#{file.entity_id}] #{message}. Use --force to override")
               next
             end
