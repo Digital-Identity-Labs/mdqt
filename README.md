@@ -5,14 +5,21 @@
 MDQT is small library and commandline tool to query MDQ services for SAML metadata.
 You could do this with `curl` and `xmlsec1` but it's a little more convenient to use `mdqt` instead.
 
-MDQ currently supports:
+MDQT also has features for managing local metadata files, to help when running an MDQ service or a Shibboleth IdP or SP.
+
+MDQ currently provides these features:
 
   - Downloading single entities, lists or aggregates
   - Signature verification
   - Validating metadata against SAML2 schema
   - Saving metadata to disk
-  - Caching entity metadata on disk
-  - Gzip compression
+  - Extracting entity IDs from both aggregate and individual metadata files
+  - Renaming metadata files to their entity ID sha1 hashes
+  - Creating sha1 hash symlinks to metadata files
+  - Listing the entity IDs of downloaded metadata files
+  - Showing the full URL of an entity
+  - Caching entity metadata and using Gzip compression
+
 
 ## MDQ?
 
@@ -34,7 +41,7 @@ To install system-wide on your default Ruby, use
 
     $ sudo gem install mdqt
 
-If using a per-user Ruby via `rbenv` or similar, you'll need
+If using a per-user Ruby via `rbenv`, `asdf` or similar, you'll need
 
     $ gem install mdqt
 
@@ -63,7 +70,7 @@ signature. Some MDQ services use unencrypted HTTP connections and rely
 
 MDQT supports signature verification but requires a Ruby library called
 Nokogiri to do the hard work. Nokogiri is fast and useful but can sometimes
-be awkward to install for non-developers (it requires a C development
+be awkward to install for non-developers (it can sometimes require a C development
 environment and various XML libraries). To make it easier to install a basic MDQT we've made
 XML signature verification an optional feature.
 
@@ -102,6 +109,12 @@ service. Set `MDQT_SERVICE` or `MDQ_BASE_URL` to the base URL of your MDQ servic
 Finally, if you don't specify an MDQ service with `--service` or `MDQT_SERVICE` then `mdqt` *might* be
 able to guess your local NREN's MDQ service. Do not do this in production!
 
+If an MDQ service is known to MDQT it can be selected using an alias:
+
+    $ mdqt get --service incommon  http://entity.edu/shibboleth
+
+You can see known services and their aliases using `mdqt services`
+
 ### Downloading entity metadata
 
 Downloading entity metadata to STDOUT:
@@ -113,6 +126,8 @@ Using the sha1 hashed version of entity IDs requires quotes or escaping in some 
     $ mdqt get "{sha1}52e2065fc0d53744e8d4ee2c2f30696ebfc5def9"
 
     $ mdqt get \{sha1\}52e2065fc0d53744e8d4ee2c2f30696ebfc5def9
+
+    $ mdqt get [sha1]52e2065fc0d53744e8d4ee2c2f30696ebfc5def9
 
 Requesting all metadata from an MDQ endpoint is done by specifying `--all`:
 
@@ -126,6 +141,10 @@ only supports caching to disk. It will create a cache directory in your temporar
 directory.
 
     $ mdqt get --cache --service https://mdq.example.com/mdq http://entity.ac.uk/shibboleth
+
+Caching is now on by default. To force a single command to *not* use the cache, include `--reset`
+
+    $ mdqt get --reset --service https://mdq.example.com/mdq http://entity.ac.uk/shibboleth
 
 You can clear the cache by using the `reset` command:
 
@@ -170,7 +189,7 @@ MDQT also offers the `--save-to` option to write all metadata into a directory
 
     $ mdqt get http://entity.ac.uk/shibboleth --save-to metadata_directory
 
-The  `--save-to` option requires a directory to be specified. All files will be saved
+The `--save-to` option requires a directory to be specified. All files will be saved
 with a name based on their transformed identifier (sha1 hash) such as
 `77603e0cbda1e00d50373ca8ca20a375f5d1f171.xml`
 
@@ -178,10 +197,10 @@ By adding the `--link-id' flag alternative filenames will be linked to the
 original file (this is currently a little experimental) to make it easier
 to look up the correct file using other identifiers.
 
-### Other features
+### Other Features
 
 For more information about current settings, download results, and so on, add
-`--verbose` to commands.
+`--verbose` to commands:
 
     $mdqt get --verbose http://entity.ac.uk/shibboleth
 
@@ -195,11 +214,42 @@ To see more details of what is being sent and received by a `get` command add th
 
     $ mdqt get --explain --service https://mdq.example.com/mdq  http://entity.ac.uk/shibboleth
 
-MDQT will then show a table of sent and recieved headers which may be useful when debugging servers.
+MDQT will then show a table of sent and received headers which may be useful when debugging servers.
+
+To extract a list of all entity IDs from a file:
+
+    $ mdqt entities metadata.xml
+
+    $ mdqt entities --sha1 metadata.xml
+
+To create sha1 symlinks to a metadata file:
+
+    $ mdqt ln example_idp.xml
+
+To rename a file to its entity ID sha1 has:
+
+    $ mdqt rename example_idp.xml
+
+To list the entity IDs of files in a directory:
+
+    $ mdqt ls
+
+To list all entities available at an MDQ service:
+
+    $ mdqt list
+
+To show the MDQ services known to MDQT, and their aliases:
+
+    $ mdqt services
+
+To show the full MDQ URL of an entity
+
+    $ mdqt url http://entity.ac.uk/shibboleth
+
 
 ## Library Usage
 
-Please don't! This gem is very early in development and the API is not stable. Later
+Please don't! This gem is early in development and the API is not stable. Later
 releases of this gem will provide a simple library to use in other Ruby applications.
 
 ## Development

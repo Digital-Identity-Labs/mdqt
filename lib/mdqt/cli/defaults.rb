@@ -6,7 +6,9 @@ module MDQT
       class << self
 
         def base_url
+
           ENV['MDQT_SERVICE'] || ENV['MDQ_BASE_URL'] || guess_service
+
         end
 
         def force_hash?
@@ -16,7 +18,8 @@ module MDQT
         def cli_defaults
           {
             hash: force_hash?,
-            cache: false
+            cache: true,
+            refresh: false
           }
         end
 
@@ -24,21 +27,39 @@ module MDQT
 
           locale = ENV['LANG']
 
-          #STDERR.puts("Detected locale #{locale}")
+          service = services.find { |s| s[:locale] == locale }
+          #service ||= services.first
 
-          service = case locale
-                    when 'en_GB.UTF-8'
-                      'http://mdq.ukfederation.org.uk/'
-                    when 'en_US.UTF-8'
-                      'https://mdq.incommon.org/'
-                    else
-                      abort "Please specify an MDQ service using --service, MDQT_SERVICE or MDQ_BASE_URL"
-                    end
+          if service
+            url = service[:url]
+            STDERR.puts "MDQT is assuming that you want to use #{url}\nPlease configure this using --service, MDQT_SERVICE or MDQ_BASE_URL\n\n"
+            url
+          else
+            nil
+          end
 
-          STDERR.puts "MDQT is assuming that you want to use #{service}\nPlease configure this using --service, MDQT_SERVICE or MDQ_BASE_URL\n\n"
+        end
 
-          service
+        def lookup_service_alias(srv_alias)
+          service = services.find { |s| s[:alias].to_s.downcase.to_sym == srv_alias.to_s.downcase.to_sym }
+          service ? service[:url] : nil
+        end
 
+        def services
+          [
+            { alias: "ukamf",
+              locale: "en_GB.UTF-8",
+              url: "http://mdq.ukfederation.org.uk/"
+            },
+            { alias: "incommon",
+              locale: "en_US.UTF-8",
+              url: "https://mdq.incommon.org/"
+            },
+            { alias: "dfn",
+              locale: "de_utf8",
+              url: "https://mdq.aai.dfn.de"
+            },
+          ]
         end
 
       end

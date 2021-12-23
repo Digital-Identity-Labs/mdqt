@@ -5,6 +5,11 @@ require 'mdqt/version'
 
 require 'commander'
 
+Signal.trap('SIGINT') do
+  puts 'Received signal, halting'
+  exit 1
+end
+
 Commander.configure do
   program :name, 'mdqt'
   program :version, MDQT::VERSION
@@ -19,7 +24,7 @@ Commander.configure do
     c.description = 'Show version of MDQT'
     c.action do |args, options|
       options.default MDQT::CLI::Defaults.cli_defaults
-      options.default({service: :not_required })
+      options.default({ service: :not_required })
       MDQT::CLI::Version.run(args, options)
     end
   end
@@ -28,7 +33,8 @@ Commander.configure do
     c.syntax = 'mdqt get [options] entityidentifier '
     c.description = 'Download one entity record or an aggregate of entity records'
     c.option '--service URL', String, 'MDQ service to search for entities. Defaults to MDQT_SERVICE or MDQ_BASE_URL env variables'
-    c.option '--cache', "Cache downloads and try to fetch from cache where appropriate"
+    c.option '--cache', "Cache downloads and try to fetch from cache where appropriate (deprecated)"
+    c.option '--refresh', "Never cache (will prevent --cache)"
     c.option '--verify-with PATHS', Array, 'Validate downloads using specified certificates'
     c.option '--validate', 'Validate downloaded metadata against SAML2 schema (not normally needed)'
     #c.option '--stdin', 'accept one or more entity ids from STDIN'
@@ -40,7 +46,7 @@ Commander.configure do
     c.option '--verbose', 'Display extra information on stderr'
     c.action do |args, options|
       options.default MDQT::CLI::Defaults.cli_defaults
-      options.default({service: MDQT::CLI::Defaults.base_url }) if options.service.to_s == ''
+      options.default({ service: MDQT::CLI::Defaults.base_url }) if options.service.to_s == ''
       MDQT::CLI::Get.run(args, options)
     end
   end
@@ -51,7 +57,7 @@ Commander.configure do
     c.option '--verbose', 'Display extra information on stderr'
     c.action do |args, options|
       options.default MDQT::CLI::Defaults.cli_defaults
-      options.default({service: :not_required })
+      options.default({ service: :not_required })
       MDQT::CLI::Reset.run(args, options)
     end
   end
@@ -62,7 +68,7 @@ Commander.configure do
     c.option '--verbose', 'Display extra information on stderr'
     c.action do |args, options|
       options.default MDQT::CLI::Defaults.cli_defaults
-      options.default({service: :not_required })
+      options.default({ service: :not_required })
       MDQT::CLI::Transform.run(args, options)
     end
   end
@@ -74,8 +80,95 @@ Commander.configure do
     c.option '--verify-with PATHS', Array, 'Validate file using specified certificates'
     c.action do |args, options|
       options.default MDQT::CLI::Defaults.cli_defaults
-      options.default({service: :not_required, validate: true })
+      options.default({ service: :not_required, validate: true })
       MDQT::CLI::Check.run(args, options)
+    end
+  end
+
+  command :entities do |c|
+    c.syntax = 'mdqt entities XML_FILENAME'
+    c.description = 'Extract entity IDs from a metadata file'
+    c.option '--sha1', 'include the sha1 hash for each entity ID'
+    c.action do |args, options|
+      args = Dir.glob("*.xml") unless args && !args.empty?
+      options.default MDQT::CLI::Defaults.cli_defaults
+      options.default({ service: :not_required })
+      MDQT::CLI::Entities.run(args, options)
+    end
+  end
+
+  command :ln do |c|
+    c.syntax = 'mdqt ln XML_FILENAME'
+    c.description = 'Create a soft link to the file using an sha1 hash of the entityID'
+    c.option '--force', 'Overwrite any existing links'
+    c.option '--verbose', 'Display extra information on stderr'
+    c.action do |args, options|
+      args = Dir.glob("*.xml") unless args && !args.empty?
+      options.default MDQT::CLI::Defaults.cli_defaults
+      options.default({ service: :not_required })
+      MDQT::CLI::Ln.run(args, options)
+    end
+  end
+
+  command :ls do |c|
+    c.syntax = 'mdqt ls XML_FILENAME/DIRECTORY'
+    c.description = 'List valid metadata files in directory'
+    c.option '--verbose', 'Display extra information on stderr'
+    c.action do |args, options|
+      args = Dir.glob("*.xml") unless args && !args.empty?
+      options.default MDQT::CLI::Defaults.cli_defaults
+      options.default({ service: :not_required })
+      MDQT::CLI::Ls.run(args, options)
+    end
+  end
+
+  command :list do |c|
+    c.syntax = 'mdqt list [options]'
+    c.description = 'List entities available at the MDQ service'
+    c.option '--service URL', String, 'MDQ service to search for entities. Defaults to MDQT_SERVICE or MDQ_BASE_URL env variables'
+    c.option '--cache', "Cache downloads and try to fetch from cache where appropriate (deprecated)"
+    c.option '--refresh', "Never cache (will prevent --cache)"
+    #c.option '--stdin', 'accept one or more entity ids from STDIN'
+    c.option '--verbose', 'Display extra information on stderr'
+    c.action do |args, options|
+      options.default MDQT::CLI::Defaults.cli_defaults
+      options.default({ service: MDQT::CLI::Defaults.base_url }) if options.service.to_s == ''
+      MDQT::CLI::List.run(args, options)
+    end
+  end
+
+  command :services do |c|
+    c.syntax = 'mdqt services'
+    c.description = 'List URLs and aliases for known MDQ services'
+    c.action do |args, options|
+      options.default MDQT::CLI::Defaults.cli_defaults
+      options.default({ service: :not_required })
+      MDQT::CLI::Services.run(args, options)
+    end
+  end
+
+  command :rename do |c|
+    c.syntax = 'mdqt rename XML_FILENAME'
+    c.description = 'Rename a file using the sha1 hash of its entityID'
+    c.option '--force', 'Overwrite any existing files with that name'
+    c.option '--verbose', 'Display extra information on stderr'
+    c.action do |args, options|
+      args = Dir.glob("*.xml") unless args && !args.empty?
+      options.default MDQT::CLI::Defaults.cli_defaults
+      options.default({ service: :not_required })
+      MDQT::CLI::Rename.run(args, options)
+    end
+  end
+
+  command :url do |c|
+    c.syntax = 'mdqt url ENTITYIDS'
+    c.description = 'List URLs for each entity ID at the MDQ service'
+    c.option '--verbose', 'Display extra information on stderr'
+    c.option '--service URL', String, 'MDQ service to search for entities. Defaults to MDQT_SERVICE or MDQ_BASE_URL env variables'
+    c.action do |args, options|
+      options.default MDQT::CLI::Defaults.cli_defaults
+      options.default({ service: MDQT::CLI::Defaults.base_url }) if options.service.to_s == ''
+      MDQT::CLI::URL.run(args, options)
     end
   end
 

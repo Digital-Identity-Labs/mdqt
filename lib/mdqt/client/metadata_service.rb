@@ -52,6 +52,26 @@ module MDQT
 
       end
 
+      def exists?(entity_id)
+
+        entity_id = prepare_id(entity_id)
+
+        begin
+          http_response = connection.head do |req|
+            req.url request_path(entity_id)
+            req.options.timeout = 1000
+            req.options.open_timeout = 60
+          end
+        rescue Faraday::ConnectionFailed => oops
+          abort "Error - can't connect to MDQ service at URL #{base_url}: #{oops.to_s}"
+        rescue Faraday::TimeoutError => oops
+          abort "Error - connection to #{base_url} timed out!"
+        end
+
+        http_response.status == 200
+
+      end
+
       def prepare_id(id)
         case id
         when :all, "", nil
@@ -99,10 +119,12 @@ module MDQT
       end
 
       def tidy_cache!
-        cache_type.cleanup
+        return unless cache_store
+        cache_store.cleanup
       end
 
       def purge_cache!
+        return unless cache_store
         cache_store.clear
       end
 

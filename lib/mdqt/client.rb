@@ -28,6 +28,7 @@ module MDQT
       @cache_type = options[:cache_type] || :none
 
       @md_service = MetadataService.new(@base_url, verbose: @verbose, cache_type: @cache_type, explain: @explain, tls_cert_check: tls_cert_check?)
+      @md_service.tidy_cache!
 
     end
 
@@ -37,6 +38,10 @@ module MDQT
 
     def get_metadata(entity_id)
       md_service.get(entity_id)
+    end
+
+    def exists?(entity_id)
+      md_service.exists?(entity_id)
     end
 
     def transform_uri(uri)

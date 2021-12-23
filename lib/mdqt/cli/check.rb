@@ -14,10 +14,10 @@ module MDQT
         halt!("Cannot check a metadata file without XML support: please install additional gems") unless MDQT::Client.verification_available?
 
         client = MDQT::Client.new(
-            options.service,
-            verbose: options.verbose,
-            explain: options.explain ? true : false,
-            )
+          service_url(options),
+          verbose: options.verbose,
+          explain: options.explain ? true : false,
+        )
 
         cert_paths = options.verify_with ? extract_certificate_paths(options.verify_with) : []
 
@@ -29,8 +29,7 @@ module MDQT
           halt!("Cannot access file #{filename}") unless file.readable?
 
           halt!("XML validation failed for #{filename}:\n#{file.validation_error}") unless file.valid?
-          btw"File #{filename} is valid SAML Metadata XML"
-
+          btw "File #{filename} is valid SAML Metadata XML"
 
           if options.verify_with
             halt! "XML in #{filename} is not signed, cannot verify!" unless file.signed?
@@ -41,9 +40,7 @@ module MDQT
           yay "#{filename} OK"
         end
 
-
       end
-
 
       def verify_results(results)
 
@@ -73,7 +70,6 @@ module MDQT
     end
 
     private
-
 
   end
 

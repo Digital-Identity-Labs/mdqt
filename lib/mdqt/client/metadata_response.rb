@@ -13,7 +13,8 @@ module MDQT
         @service = service
         @code = http_response.status || 500
         @data = http_response.body || ""
-        @type = http_response.headers['Content-Type']
+        @type = nil
+        @content_type = http_response.headers['Content-Type']
         @expires = http_response.headers['Expires']
         @etag = http_response.headers['ETag']
         @last_modified = http_response.headers['Last-Modified']
@@ -34,9 +35,20 @@ module MDQT
         @identifier
       end
 
+
       def requested_identifier
         @identifier
       end
+
+      def entity_id
+        raise "Incorrect metadata file type - aggregate" if aggregate?
+        @entity_id ||= extract_entity_id
+      end
+
+      def entity_ids
+        @entity_ids ||= extract_entity_ids
+      end
+
 
       def service
         @service
@@ -51,7 +63,11 @@ module MDQT
       end
 
       def type
-        @type
+        @type ||= calculate_type
+      end
+
+      def content_type
+        @content_type
       end
 
       def expires
@@ -136,6 +152,28 @@ module MDQT
 
       private
 
+      def calculate_type
+
+        return :html if data[0,1000].include?('<!doctype html>')
+        return :aggregate if data[0,5000].include?("EntitiesDescriptor")
+        if data[0,5000].include?("EntityDescriptor")
+          return :alias if symlink?
+          return :entity
+        end
+        :unknown
+      end
+
+      def xml_doc
+        Nokogiri::XML.parse(data).remove_namespaces!
+      end
+
+      def extract_entity_id
+        xml_doc.xpath("/EntityDescriptor/@entityID").text
+      end
+
+      def extract_entity_ids
+        xml_doc.xpath("//EntityDescriptor/@entityID").map(&:text)
+      end
 
     end
 

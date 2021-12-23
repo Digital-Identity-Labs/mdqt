@@ -18,7 +18,11 @@ module MDQT
       end
 
       def self.check_requirements(args, options)
-        abort "Error: No MDQ service URL has been specified." unless options.service
+        
+        unless options.service == :not_required
+          abort "No MDQ service URL has been specified. Please use --service, MDQT_SERVICE or MDQ_BASE_URL" unless service_url(options).to_s.start_with?("http")
+        end
+
         if options.save_to
           dir = options.save_to
           begin
@@ -35,8 +39,8 @@ module MDQT
       def self.introduce(args, options)
         if options.verbose
           STDERR.puts "MDQT version #{MDQT::VERSION}"
-          STDERR.puts "Using #{options.service}" unless options.service == :not_required
-          STDERR.puts "Caching is #{options.cache ? 'on' : 'off'}"
+          STDERR.puts "Using #{service_url(options)}" unless options.service == :not_required
+          STDERR.puts "Caching is #{MDQT::CLI::CacheControl.caching_on?(options) ? 'on' : 'off'}"
           STDERR.print "XML validation is #{MDQT::Client.verification_available? ? 'available' : 'not available'}"
           STDERR.puts  " #{options.validate ? "and active" : "but inactive"} for this request" if MDQT::Client.verification_available?
           STDERR.print "Signature verification is #{MDQT::Client.verification_available? ? 'available' : 'not available'}"
@@ -79,6 +83,24 @@ module MDQT
 
       def options
         @options
+      end
+
+      def self.service_url(options)
+
+        return nil if options.service == :not_required
+
+        choice = options.service.to_s.strip
+
+        if choice.downcase.start_with? "http"
+          choice
+        else
+          Defaults.lookup_service_alias(choice)
+        end
+
+      end
+
+      def service_url(options)
+        self.class.service_url(options)
       end
 
       def output(response)
@@ -131,6 +153,10 @@ module MDQT
         @pastel ||= Pastel.new
       end
 
+      def say(text)
+        STDOUT.puts(text)
+      end
+
       def hey(comment)
         STDERR.puts(comment)
       end
@@ -146,6 +172,7 @@ module MDQT
       def halt!(comment)
         abort pastel.red("Error: #{comment}")
       end
+
       def run
         halt! "No action has been defined for this command!"
       end

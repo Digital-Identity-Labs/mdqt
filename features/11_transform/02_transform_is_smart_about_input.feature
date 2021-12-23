@@ -1,7 +1,7 @@
-Feature: Transform Entity ID URI
+Feature: Transform Entity ID URI when input varies
   In order to work with MDQ requests
-  As a sysadmin
-  I want to be able to convert entity URI identifiers to the transformed {sha1} format
+  As a sysadmin who might have a mixture of ID values
+  I want to consistently convert input to the transformed {sha1} format
 
   Scenario: The example from the specification
     When I run `mdqt transform http://example.org/service`

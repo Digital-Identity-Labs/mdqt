@@ -20,7 +20,7 @@ Feature: Automatic Selection Of MDQ Service
     Given that I have not defined an MDQ service
     And  I am in the locale <locale>
     When I run `mdqt get http://example.com/does_not_exist`
-    Then it should fail with "Please specify an MDQ service using --service, MDQT_SERVICE or MDQ_BASE_URL"
+    Then it should fail with "No MDQ service URL has been specified. Please use --service, MDQT_SERVICE or MDQ_BASE_URL"
 
     Examples:
       | locale |
