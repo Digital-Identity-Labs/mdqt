@@ -119,7 +119,7 @@ module MDQT
       end
 
       def tidy_cache!
-        cache_type.cleanup
+        cache_store.cleanup
       end
 
       def purge_cache!
