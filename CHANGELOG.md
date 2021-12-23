@@ -2,11 +2,30 @@
 
 ## 0.5.0
 
+### New Features
+
+- New `entities` command extracts entity IDs and sha1 hashes from metadata files on disk
+- New `ln` command will create symlinks to files using their sha1 hashes
+- New `ls` command will list the entity IDs of metadata files
+- New `list` command lists all entity IDs available from the MDQ service
+- New `services` command shows known MDQ services and aliases
+- New `rename` command renames metadata files to use their sha1 hash as a name 
+- New `url` command shows the full url for an entity at the MDQ service
+
+### Improvements
+
+- Known MDQ services can be specified using simple aliases as well as URLs
+- Caching is now on by default
+- `--refresh` options forces downloads and ignores cached data
+- Cache is cleaned whenever `get` is used, to remove expired files
+- Added default service details for DFN
+- Tidier output when stopped with ctrl-c
+
 ### Fixes
 
 - Compatible with Ruby 3
 - Updated dependencies to latest versions
-- Improved test reliability
+- Improved test reliability and added more tests
 - Extended timeouts to better handle slow networks
 
 ## 0.4.0
