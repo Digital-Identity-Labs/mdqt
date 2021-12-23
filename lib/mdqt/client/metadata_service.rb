@@ -119,10 +119,12 @@ module MDQT
       end
 
       def tidy_cache!
+        return unless cache_store
         cache_store.cleanup
       end
 
       def purge_cache!
+        return unless cache_store
         cache_store.clear
       end
 
