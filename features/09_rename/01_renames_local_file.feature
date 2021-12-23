@@ -7,7 +7,7 @@ Feature: Rename metadata files to their sha1 entity ID hash
     Given that I have defined an MDQ service
     And I have downloaded the metadata for <entity> to <file>
     When I run `mdqt rename <file>`
-    Then the file should be renamed to <new_name>
+    Then the file for <entity> should be renamed to <new_name>
     And the exit status should be 0
 
     Examples:
