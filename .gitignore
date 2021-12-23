@@ -20,3 +20,6 @@ out*.xml
 /*.xml
 /bt
 *.html
+/t/aggregate.xml
+/t/indiid.xml
+/t/uom.xml
