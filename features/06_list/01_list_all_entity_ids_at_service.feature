@@ -7,7 +7,7 @@ Feature: Lists all entity IDs at the specified service
     Given that I have defined the MDQ service as <service>
     When I run `mdqt list`
     Then the output should contain "<fragment>"
-    Then the output should be over <lines> long
+    And the output should be over <lines> long
     And the exit status should be 0
 
     Examples:
