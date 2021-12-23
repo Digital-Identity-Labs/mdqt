@@ -14,7 +14,7 @@ module MDQT
           puts "#{service[:alias]}: #{service[:url]}"
         end
         puts
-        puts "Specify these in commands using the --service option, or set for a session with mdqt use [url]"
+        puts "Specify these in commands using the --service option or MDQ_BASE_URL environment variable"
         puts
       end
 
