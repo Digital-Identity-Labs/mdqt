@@ -246,6 +246,10 @@ To show the full MDQ URL of an entity
 
     $ mdqt url http://entity.ac.uk/shibboleth
 
+## Alternatives
+
+  * [SAML Library](https://github.com/trscavo/saml-library) is a set of scripts to help with metadata-related tasks, written
+by Tom Scavo of Internet2. Some of the scripts provide similar functionality to MDQT, and are designed to be piped together.
 
 ## Library Usage
 
