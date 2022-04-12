@@ -19,6 +19,8 @@ module MDQT
           explain: options.explain ? true : false,
         )
 
+        halt!("Please specify a file to rename!") if args.empty?
+
         args.each do |filename|
 
           file = client.open_metadata(filename)
