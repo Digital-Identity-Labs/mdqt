@@ -103,7 +103,6 @@ Commander.configure do
     c.option '--force', 'Overwrite any existing links'
     c.option '--verbose', 'Display extra information on stderr'
     c.action do |args, options|
-      args = Dir.glob("*.xml") unless args && !args.empty?
       options.default MDQT::CLI::Defaults.cli_defaults
       options.default({ service: :not_required })
       MDQT::CLI::Ln.run(args, options)
