@@ -17,12 +17,6 @@ Feature: Pipelined entity arguments
     And  the output should contain "[404]"
 
   @uses_pipes
-  Scenario: A single entity ID that exists on the MDQ service
-    Given that I have defined an MDQ service
-    When I run `bash -c "echo 'https://indiid.net/idp/shibboleth' | mdqt get"`
-    Then the output should contain "EntityDescriptor"
-
-  @uses_pipes
   Scenario: A list of entity IDs, one per line, that exists on the MDQ service
     Given that I have defined an MDQ service
     When I run `bash -c "echo -e 'https://indiid.net/idp/shibboleth\nhttps://test.ukfederation.org.uk/entity' | mdqt get"`
