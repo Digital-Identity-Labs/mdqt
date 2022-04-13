@@ -43,6 +43,12 @@ module MDQT
         File.readable?(filename)
       end
 
+      def turd?
+        return true if basename.end_with?("~")
+        return true if basename.end_with?(".bak")
+        false
+      end
+
       def type
         @type ||= calculate_type
       end

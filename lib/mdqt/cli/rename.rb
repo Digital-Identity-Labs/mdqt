@@ -36,6 +36,11 @@ module MDQT
           newname = file.linkname # Using the same name as the link, not super-obvious
           next if filename == newname
 
+          if file.turd?
+            hey "Warning: will not process backup/turd files"
+            next
+          end
+
           message = ""
 
           if File.exists?(newname)

@@ -46,6 +46,11 @@ module MDQT
             btw("Cannot link file to itself! #{filename}")
           end
 
+          if file.turd?
+            hey "Warning: will not process backup/turd files"
+            next
+          end
+
           message = ""
 
           if File.exists?(linkname)
