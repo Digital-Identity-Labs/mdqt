@@ -151,6 +151,7 @@ Commander.configure do
     c.description = 'Rename a file using the sha1 hash of its entityID'
     c.option '--force', 'Overwrite any existing files with that name'
     c.option '--verbose', 'Display extra information on stderr'
+    c.option '--link', 'Add a symlink with the original filename'
     c.action do |args, options|
       options.default MDQT::CLI::Defaults.cli_defaults
       options.default({ service: :not_required })

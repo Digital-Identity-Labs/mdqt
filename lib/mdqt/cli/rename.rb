@@ -23,6 +23,8 @@ module MDQT
 
         args.each do |filename|
 
+          next if File.symlink?(filename)
+
           file = client.open_metadata(filename)
 
           halt!("Cannot access file #{filename}") unless file.readable?
@@ -46,6 +48,12 @@ module MDQT
           end
 
           File.rename(filename, newname)
+
+          if options.link
+            File.delete(filename) if options.force && File.exists?(filename)
+            File.symlink(newname, filename) unless newname == filename
+          end
+
           hey("#{filename} renamed to #{newname} [#{file.entity_id}] #{message}") if options.verbose
         end
 
