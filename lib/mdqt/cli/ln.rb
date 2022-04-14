@@ -19,6 +19,8 @@ module MDQT
           explain: options.explain ? true : false,
         )
 
+        halt!("Please specify a file to link to!") if args.empty?
+
         args.each do |filename|
 
           next if File.symlink?(filename)
@@ -42,6 +44,11 @@ module MDQT
               next
             end
             btw("Cannot link file to itself! #{filename}")
+          end
+
+          if file.turd?
+            hey "Warning: will not process backup/turd files"
+            next
           end
 
           message = ""

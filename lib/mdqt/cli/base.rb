@@ -6,19 +6,18 @@ module MDQT
 
       require 'mdqt/cli'
       require 'pastel'
+      require 'pathname'
 
       def self.run(args, options)
 
-        #args = options.stdin ? absorb_piped_args(args) : args
-
-        check_requirements(args, options)
-        introduce(args, options)
+        check_requirements(options)
+        introduce(options)
 
         self.new(args, options).run
       end
 
-      def self.check_requirements(args, options)
-        
+      def self.check_requirements(options)
+
         unless options.service == :not_required
           abort "No MDQ service URL has been specified. Please use --service, MDQT_SERVICE or MDQ_BASE_URL" unless service_url(options).to_s.start_with?("http")
         end
@@ -30,47 +29,41 @@ module MDQT
           rescue
             abort "Error: Directory #{dir} did not exist, and we can't create it"
           end
-          abort "Error: '#{dir}' is not a writable directory!" if (File.directory?(dir) && ! File.writable?(dir))
+          abort "Error: '#{dir}' is not a writable directory!" if (File.directory?(dir) && !File.writable?(dir))
           abort "Error: '#{dir}' is not a directory!" unless File.directory?(dir)
         end
 
       end
 
-      def self.introduce(args, options)
+      def self.introduce(options)
         if options.verbose
           STDERR.puts "MDQT version #{MDQT::VERSION}"
           STDERR.puts "Using #{service_url(options)}" unless options.service == :not_required
           STDERR.puts "Caching is #{MDQT::CLI::CacheControl.caching_on?(options) ? 'on' : 'off'}"
           STDERR.print "XML validation is #{MDQT::Client.verification_available? ? 'available' : 'not available'}"
-          STDERR.puts  " #{options.validate ? "and active" : "but inactive"} for this request" if MDQT::Client.verification_available?
+          STDERR.puts " #{options.validate ? "and active" : "but inactive"} for this request" if MDQT::Client.verification_available?
           STDERR.print "Signature verification is #{MDQT::Client.verification_available? ? 'available' : 'not available'}"
-          STDERR.puts  " #{options.verify_with ? "and active" : "but inactive"} for this request" if MDQT::Client.verification_available?
+          STDERR.puts " #{options.verify_with ? "and active" : "but inactive"} for this request" if MDQT::Client.verification_available?
           STDERR.puts "Output directory for saved files is: #{File.absolute_path(options.save_to)}" if options.save_to
           STDERR.puts("Warning! TLS certificate verification has been disabled!") if options.tls_risky
           STDERR.puts
         end
       end
 
-      def self.absorb_piped_args(args)
-        piped = piped? ? parse_stdin : []
-        args + piped
-      end
-
-      def self.piped?
-        !STDIN.tty? && !STDIN.closed?
-      end
-
-      def self.parse_stdin
-        STDIN.gsub("\s", "\n").each_line.collect {|l| l.strip}
-      end
-
-      def initialize(args, options)
-        @args = args
+      def initialize(cli_args, options)
+        piped_input = get_stdin
+        @args = cli_args.concat(piped_input)
         @options = options
       end
 
-      def args=(new_args)
-        @args = new_args
+      def get_stdin
+        return $stdin.readlines.map(&:split).flatten.map(&:strip) if pipeable?
+        []
+      end
+
+      def pipeable?
+        return false if ENV["MDQT_STDIN"].to_s.strip.downcase == "off" # Workaround Aruba testing weirdness?
+        !STDIN.tty? && !$stdin.closed? && $stdin.stat.pipe?
       end
 
       def args
@@ -119,7 +112,7 @@ module MDQT
         unless response.explanation.empty?
           require 'terminal-table'
           misc_rows = [['URL', response.explanation[:url]], ["Method", response.explanation[:method]], ['Status', response.explanation[:status]]]
-          req_header_rows  = response.explanation[:request_headers].map { |k, v| ['C', k, v] }
+          req_header_rows = response.explanation[:request_headers].map { |k, v| ['C', k, v] }
           resp_header_rows = response.explanation[:response_headers].map { |k, v| ['S', k, v] }
 
           btw Terminal::Table.new :title => "HTTP Misc", :rows => misc_rows
@@ -182,6 +175,7 @@ module MDQT
     end
 
   end
-#
+
+  #
 end
 

@@ -31,3 +31,11 @@ Feature: Rename metadata files to their sha1 entity ID hash
     Then the exit status should be 1
     And the output should contain "Error: "
     And the output should contain "File aggregate.xml is a metadata aggregate, cannot rename to hashed entityID!"
+
+  Scenario: No file is specified
+    Given that I have defined an MDQ service
+    And I have downloaded the metadata for Indiid to file1.xml
+    When I run `mdqt rename`
+    Then the exit status should be 1
+    And the output should contain "Error: "
+    And the output should contain "Please specify a file to rename!"

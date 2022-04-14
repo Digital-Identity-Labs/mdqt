@@ -84,21 +84,27 @@ module MDQT
       end
 
       def output_files(results, options)
+        pwd = Pathname.getwd
         prepare_output_directory(options.save_to)
         results.each do |result|
           main_file = output_file_path(result.filename)
           open(main_file, 'w') { |f|
             f.puts result.data
           }
+
+          if options.list
+            puts Pathname.new(main_file).relative_path_from(pwd)
+          end
+
           yay "Created #{main_file}"
 
-          if options.link_id
-            ["{sha1}#{result.filename.gsub(".xml", "")}"].each do |altname|
-              full_alias = output_file_path(altname)
-              FileUtils.ln_sf(main_file, full_alias)
-              yay "Linked alias #{altname} -> #{main_file}"
-            end
-          end
+          # if options.link_id
+          #   ["{sha1}#{result.filename.gsub(".xml", "")}"].each do |altname|
+          #     full_alias = output_file_path(altname)
+          #     FileUtils.ln_sf(main_file, full_alias)
+          #     yay "Linked alias #{altname} -> #{main_file}"
+          #   end
+          # end
 
         end
       end

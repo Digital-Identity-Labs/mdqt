@@ -19,7 +19,11 @@ module MDQT
           explain: options.explain ? true : false,
         )
 
+        halt!("Please specify a file to rename!") if args.empty?
+
         args.each do |filename|
+
+          next if File.symlink?(filename)
 
           file = client.open_metadata(filename)
 
@@ -31,6 +35,11 @@ module MDQT
 
           newname = file.linkname # Using the same name as the link, not super-obvious
           next if filename == newname
+
+          if file.turd?
+            hey "Warning: will not process backup/turd files"
+            next
+          end
 
           message = ""
 
@@ -44,6 +53,12 @@ module MDQT
           end
 
           File.rename(filename, newname)
+
+          if options.link
+            File.delete(filename) if options.force && File.exists?(filename)
+            File.symlink(newname, filename) unless newname == filename
+          end
+
           hey("#{filename} renamed to #{newname} [#{file.entity_id}] #{message}") if options.verbose
         end
 

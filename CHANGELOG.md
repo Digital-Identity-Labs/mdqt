@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.6.0
+
+### New Features
+
+- STDIN and pipes: Arguments (such as filenames and entity IDs) can now be piped into mdqt. This 
+  enables pipelining, so you can chain commands together.
+- The `rename` command now has a `--link` option that creates a symlink from the original
+  filename to the renamed file.
+- The `get` command now has a `--list` option that works when `--save-to` is used, to list filenames being
+  written to disk. 
+
+### Improvements
+
+- Emacs backup files (so called turd files) ending with ~ and files ending with .bak 
+  are now ignored.
+
+### Removed features
+
+- `link` and `rename` now require files to be specified: you now *cannot* run `mdqt rename`
+  to rename everything in the current directory.
+
+- The `--link_id` option for `get` saved a link to each downloaded file that is almost the same as the 
+  filename - maybe this made sense in mdqt 0.1.0 but it's quite useless now. If anyone can remember what it was
+  actually for I'll put it back.
+
 ## 0.5.0
 
 ### New Features

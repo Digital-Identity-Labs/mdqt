@@ -42,7 +42,8 @@ Commander.configure do
     c.option '--explain', 'Show details of client request and server response'
     c.option '--tls-risky', "Don't check certificate used for TLS (usually a bad idea)"
     c.option '--save-to PATH', String, 'Write all data to files in the specified directory'
-    c.option '--link-id', 'If saving files, save files with aliases (requires `--save-to`)'
+    #c.option '--link-id', 'If saving files, save files with aliases (requires `--save-to`)'
+    c.option '--list', 'If saving files, print the names of files written to disk (requires `--save-to`)'
     c.option '--verbose', 'Display extra information on stderr'
     c.action do |args, options|
       options.default MDQT::CLI::Defaults.cli_defaults
@@ -103,7 +104,6 @@ Commander.configure do
     c.option '--force', 'Overwrite any existing links'
     c.option '--verbose', 'Display extra information on stderr'
     c.action do |args, options|
-      args = Dir.glob("*.xml") unless args && !args.empty?
       options.default MDQT::CLI::Defaults.cli_defaults
       options.default({ service: :not_required })
       MDQT::CLI::Ln.run(args, options)
@@ -115,7 +115,6 @@ Commander.configure do
     c.description = 'List valid metadata files in directory'
     c.option '--verbose', 'Display extra information on stderr'
     c.action do |args, options|
-      args = Dir.glob("*.xml") unless args && !args.empty?
       options.default MDQT::CLI::Defaults.cli_defaults
       options.default({ service: :not_required })
       MDQT::CLI::Ls.run(args, options)
@@ -128,7 +127,6 @@ Commander.configure do
     c.option '--service URL', String, 'MDQ service to search for entities. Defaults to MDQT_SERVICE or MDQ_BASE_URL env variables'
     c.option '--cache', "Cache downloads and try to fetch from cache where appropriate (deprecated)"
     c.option '--refresh', "Never cache (will prevent --cache)"
-    #c.option '--stdin', 'accept one or more entity ids from STDIN'
     c.option '--verbose', 'Display extra information on stderr'
     c.action do |args, options|
       options.default MDQT::CLI::Defaults.cli_defaults
@@ -152,8 +150,8 @@ Commander.configure do
     c.description = 'Rename a file using the sha1 hash of its entityID'
     c.option '--force', 'Overwrite any existing files with that name'
     c.option '--verbose', 'Display extra information on stderr'
+    c.option '--link', 'Add a symlink with the original filename'
     c.action do |args, options|
-      args = Dir.glob("*.xml") unless args && !args.empty?
       options.default MDQT::CLI::Defaults.cli_defaults
       options.default({ service: :not_required })
       MDQT::CLI::Rename.run(args, options)
