@@ -6,6 +6,7 @@ module MDQT
 
       require 'mdqt/cli'
       require 'pastel'
+      require 'pathname'
 
       def self.run(args, options)
 
