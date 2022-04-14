@@ -21,7 +21,9 @@ module MDQT
 
         results = []
 
-        args.each do |filename|
+        p_args = args.empty? ? Dir.glob("*.xml") : args
+
+        p_args.each do |filename|
 
           file = client.open_metadata(filename)
 
