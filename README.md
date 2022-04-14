@@ -248,7 +248,7 @@ To show the full MDQ URL of an entity
 
 MDQT can accept input on stdin, allowing composition and pipelining
 
-    $ cat list_of_ids.txt | bundle exec mdqt url
+    $ cat list_of_ids.txt | mdqt url
 
     $ mdqt list | grep cern.ch | mdqt get --save-to cern_metadata/ --list  | mdqt ls
 
