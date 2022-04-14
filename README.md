@@ -246,6 +246,12 @@ To show the full MDQ URL of an entity
 
     $ mdqt url http://entity.ac.uk/shibboleth
 
+MDQT can accept input on stdin, allowing composition and pipelining
+
+    $ cat list_of_ids.txt | bundle exec mdqt url
+
+    $ mdqt list | grep cern.ch | mdqt get --save-to cern_metadata/ --list  | mdqt ls
+
 ## Alternatives
 
   * [SAML Library](https://github.com/trscavo/saml-library) is a set of scripts to help with metadata-related tasks, written
