@@ -193,10 +193,6 @@ The `--save-to` option requires a directory to be specified. All files will be s
 with a name based on their transformed identifier (sha1 hash) such as
 `77603e0cbda1e00d50373ca8ca20a375f5d1f171.xml`
 
-By adding the `--link-id' flag alternative filenames will be linked to the
-original file (this is currently a little experimental) to make it easier
-to look up the correct file using other identifiers.
-
 ### Other Features
 
 For more information about current settings, download results, and so on, add
