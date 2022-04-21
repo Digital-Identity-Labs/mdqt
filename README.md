@@ -14,8 +14,8 @@ MDQ currently provides these features:
   - Validating metadata against SAML2 schema
   - Saving metadata to disk
   - Extracting entity IDs from both aggregate and individual metadata files
-  - Renaming metadata files to their entity ID sha1 hashes
-  - Creating sha1 hash symlinks to metadata files
+  - Renaming metadata files to their entity ID sha1 hashes (for use with LocalDynamicMetadataProvider)
+  - Creating sha1 hash symlinks to metadata files (also for use with Local Dynamic Metadata)
   - Listing the entity IDs of downloaded metadata files
   - Showing the full URL of an entity
   - Caching entity metadata and using Gzip compression
