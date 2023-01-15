@@ -75,7 +75,7 @@ Commander.configure do
   end
 
   command :check do |c|
-    c.syntax = 'mdqt check XML_FILENAME CERTIFICATE_FILENAME'
+    c.syntax = 'mdqt check XML_FILENAME [--verify-with ./CERTIFICATE_FILENAME]'
     c.description = 'Validate XML and check signatures'
     c.option '--verbose', 'Display extra information on stderr'
     c.option '--verify-with PATHS', Array, 'Validate file using specified certificates'
