@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.7.0
+
+### Improvements
+
+- `mdqt check` can now (I think) cope with SAML metadata from Microsoft AD/ADFS services full of WS-* extensions.
+- Tested with Ruby 3.2.0: `File.exists?` has been removed from 3.2.0 (it's been deprecated for years and I used it out of habit) 
+  so this has been replaced in MDQT with `File.exist?` - as a result Ruby 3.2.0 onwards will work, but Ruby older than v2.2
+  will no longer work.
+
+### Fixes
+
+- The inline help synopsis for `mdqt check` has been corrected.
+
+### Known issues
+
+- Running mdqt without STDIN available (outside of a normal shell environment) can cause it to freeze unless 
+  `export MDQT_STDIN=off` is set. See [Issue 8](https://github.com/Digital-Identity-Labs/mdqt/issues/8)
+- Checking signatures on very large aggregate XML files can sometimes fail on M1/M2 MacOS and trying to work out why 
+  has made me slightly balder and a lot more puzzled. See [Issue 9](https://github.com/Digital-Identity-Labs/mdqt/issues/9) 
+
 ## 0.6.0
 
 ### New Features
