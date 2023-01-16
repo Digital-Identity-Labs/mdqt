@@ -53,7 +53,7 @@ module MDQT
 
           message = ""
 
-          if File.exists?(linkname)
+          if File.exist?(linkname)
             if options.force
               File.delete(linkname)
             else

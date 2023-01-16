@@ -43,7 +43,7 @@ module MDQT
 
           message = ""
 
-          if File.exists?(newname)
+          if File.exist?(newname)
             if options.force
               File.delete(newname)
             else
@@ -55,7 +55,7 @@ module MDQT
           File.rename(filename, newname)
 
           if options.link
-            File.delete(filename) if options.force && File.exists?(filename)
+            File.delete(filename) if options.force && File.exist?(filename)
             File.symlink(newname, filename) unless newname == filename
           end
 

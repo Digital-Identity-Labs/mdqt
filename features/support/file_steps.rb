@@ -5,7 +5,7 @@ Then("a symlink named {word} should be created") do |link_name|
 end
 
 Then("the file for {word} should be renamed to {word}") do |entity, new_name|
-  expect(File.exists?("tmp/aruba/#{new_name}")).to be true
+  expect(File.exist?("tmp/aruba/#{new_name}")).to be true
   step("I have downloaded the metadata for #{entity} to old_file.xml")
   expect(FileUtils.identical?("tmp/aruba/old_file.xml", "tmp/aruba/#{new_name}"))
 end
