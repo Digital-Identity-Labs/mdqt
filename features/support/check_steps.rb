@@ -2,6 +2,10 @@ Given("that I have a valid SAML metadata file") do
   FileUtils.copy_file('features/fixtures/valid.xml', 'tmp/aruba/valid.xml')
 end
 
+Given("that I have a valid ADFS SAML metadata file") do
+  FileUtils.copy_file('features/fixtures/adfs.xml', 'tmp/aruba/adfs.xml')
+end
+
 Given("that I have a tampered SAML metadata file") do
   FileUtils.copy_file('features/fixtures/tampered.xml', 'tmp/aruba/tampered.xml')
 end

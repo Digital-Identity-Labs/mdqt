@@ -71,7 +71,7 @@ module MDQT
       end
 
       def schema_data_fh
-        File.open(File.join(__dir__, '../schema/saml-schema-metadata-2.0.xsd'))
+        File.open(File.join(__dir__, '../schema/mdqt_check_schema.xsd'))
       end
 
     end

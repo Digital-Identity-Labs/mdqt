@@ -36,3 +36,8 @@ Feature: Validate Metadata XML Files
     Then the exit status should not be 0
     And the output should contain "Error: XML validation failed"
     And the output should match /(The attribute 'entityID' is required but missing|Attribute 'entityID' must appear on element 'EntityDescriptor')/
+
+  Scenario: Valid, schema-compliant huge WS-federation-bloated ADFS metadata is checked, without verbosity enabled
+    Given that I have a valid ADFS SAML metadata file
+    When I run `mdqt check adfs.xml`
+    Then the exit status should be 0
