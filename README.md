@@ -33,7 +33,7 @@ The UK Access Management Federation has a
 ## Installation
 
 MDQT is tested on recent MacOS and Linux, and should work with
- Ruby 2.1.0 or later and recent JRuby releases.
+ Ruby 2.2.0 or later and recent JRuby releases.
 
 ### As a gem for general use
 
