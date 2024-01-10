@@ -3,14 +3,15 @@ module MDQT
 
     class MetadataService
 
-      require 'faraday'
-      require 'typhoeus'
-      require 'typhoeus/adapters/faraday'
       require 'cgi'
 
-      require 'faraday_middleware'
+      require 'faraday'
       require 'faraday-http-cache'
+      require 'faraday/follow_redirects'
+      require 'faraday/gzip'
 
+      require 'active_support'
+      require 'active_support/core_ext'
       require 'active_support/cache'
       require 'active_support/cache/file_store'
       require 'active_support/cache/mem_cache_store'
@@ -18,6 +19,9 @@ module MDQT
       require 'active_support/notifications'
 
       require_relative './metadata_response'
+
+      #Rails.application.config.active_support.cache_format_version = 7.0
+      ActiveSupport::Deprecation.behavior = :silence
 
       def initialize(base_url, options = {})
         @base_url = base_url
@@ -142,8 +146,8 @@ module MDQT
       def connection
         Faraday.new(:url => base_url) do |faraday|
           faraday.request :url_encoded
-          faraday.use FaradayMiddleware::Gzip
-          faraday.use FaradayMiddleware::FollowRedirects
+          faraday.request :gzip
+          faraday.response :follow_redirects
           if cache?
             faraday.use :http_cache,
                         store: cache_store,
@@ -156,7 +160,7 @@ module MDQT
           faraday.headers['Accept-Charset'] = 'utf-8'
           faraday.headers['User-Agent'] = "MDQT v#{MDQT::VERSION}"
           #faraday.response :logger
-          faraday.adapter :typhoeus
+          faraday.adapter Faraday.default_adapter
         end
       end
 

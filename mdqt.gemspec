@@ -24,20 +24,18 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency 'commander', "~>4.6"
-  spec.add_dependency 'faraday', "~>1.8"
-  spec.add_dependency 'faraday_middleware', "~>1.2"
-  spec.add_dependency 'faraday-http-cache', "~>2.2"
-  spec.add_dependency 'typhoeus', "~>1.4"
-  spec.add_dependency 'activesupport', "~>6.1"
-  spec.add_dependency 'dalli', "~>3.0"
+  spec.add_dependency 'faraday', "~>2.9.0"
+  spec.add_dependency 'faraday-http-cache', "~>2.5.0"
+  spec.add_dependency 'faraday-gzip', "~>2.0"
+  spec.add_dependency 'faraday-follow_redirects', "~>0.3.0"
+  spec.add_dependency 'activesupport', "~>7.1.2"
+  spec.add_dependency 'dalli', "~>3.2"
   spec.add_dependency 'pastel', "~>0.8"
   spec.add_dependency 'terminal-table', "~>3.0"
-  spec.add_dependency 'concurrent-ruby-ext', "1.1.9"
+  spec.add_dependency 'concurrent-ruby-ext', "~>1.2.2"
+  spec.add_dependency 'xmldsig', "~>0.7.0"
 
-
-  #spec.add_dependency 'xmldsig'
-
-  spec.add_development_dependency "bundler", "~> 2"
+  spec.add_development_dependency "bundler", "~>2"
   spec.add_development_dependency "rake", ">= 12.3.3"
   spec.add_development_dependency "rspec", "~> 3.10"
   spec.add_development_dependency "cucumber", "~> 7.1"
