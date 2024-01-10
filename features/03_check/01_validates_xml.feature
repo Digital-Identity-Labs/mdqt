@@ -28,7 +28,7 @@ Feature: Validate Metadata XML Files
     When I run `mdqt check bad.xml`
     Then the exit status should not be 0
     And the output should contain "Error: XML validation failed"
-    And the output should match /(Premature end of data in tag EntityDescriptor line 1|must be terminated by the matching end-tag)/
+    And the output should match /FATAL: Opening and ending tag mismatch/
 
   Scenario: Metadata XML with missing mandatory attributes is checked
     Given that I have a file with missing attributes
