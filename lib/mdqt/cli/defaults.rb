@@ -57,7 +57,7 @@ module MDQT
             },
             { alias: "dfn",
               locale: "de_utf8",
-              url: "https://mdq.aai.dfn.de"
+              url: "https://mdq.aai.dfn.de/"
             },
           ]
         end
