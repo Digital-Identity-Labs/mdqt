@@ -85,7 +85,7 @@ module MDQT
         choice = options.service.to_s.strip
 
         if choice.downcase.start_with? "http"
-          choice
+          normalize_base_url(choice)
         else
           Defaults.lookup_service_alias(choice)
         end
@@ -171,6 +171,15 @@ module MDQT
       end
 
       private
+
+      ## Base URLs should end with a "/", it might be easier to just add one rather than raise an error
+      def self.normalize_base_url(url)
+        if url.end_with?('/')
+          url
+        else
+          "#{url}/"
+        end
+      end
 
     end
 
