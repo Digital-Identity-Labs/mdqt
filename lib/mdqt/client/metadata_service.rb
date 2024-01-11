@@ -8,7 +8,6 @@ module MDQT
       require 'faraday'
       require 'faraday-http-cache'
       require 'faraday/follow_redirects'
-      require 'faraday/gzip'
 
       require 'active_support'
       require 'active_support/core_ext'
@@ -17,6 +16,7 @@ module MDQT
       require 'active_support/cache/mem_cache_store'
       require 'active_support/logger'
       require 'active_support/notifications'
+      require "httpx/adapters/faraday"
 
       require_relative './metadata_response'
 
@@ -146,7 +146,6 @@ module MDQT
       def connection
         Faraday.new(:url => base_url) do |faraday|
           faraday.request :url_encoded
-          faraday.request :gzip
           faraday.response :follow_redirects
           if cache?
             faraday.use :http_cache,
@@ -160,7 +159,7 @@ module MDQT
           faraday.headers['Accept-Charset'] = 'utf-8'
           faraday.headers['User-Agent'] = "MDQT v#{MDQT::VERSION}"
           #faraday.response :logger
-          faraday.adapter Faraday.default_adapter
+          faraday.adapter :httpx
         end
       end
 
