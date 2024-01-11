@@ -27,7 +27,7 @@ module MDQT
 
       def build_url(mds, entity_id)
 
-        URI.join(service_url(options), "/entities/#{mds.prepare_id(entity_id)}")
+        URI.join(service_url(options), "entities/#{mds.prepare_id(entity_id)}")
       end
 
     end

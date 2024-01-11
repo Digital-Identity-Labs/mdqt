@@ -27,3 +27,13 @@ Feature: Shows direct MDQ URL for the specified entity ID
       | http://mdq.ukfederation.org.uk/ | {sha1}c0045678aa1b1e04e85d412f428ea95d2f627255 | http://mdq.ukfederation.org.uk/entities/%7Bsha1%7Dc0045678aa1b1e04e85d412f428ea95d2f627255 |
       | https://mdq.incommon.org/ | {sha1}c0045678aa1b1e04e85d412f428ea95d2f627255 | https://mdq.incommon.org/entities/%7Bsha1%7Dc0045678aa1b1e04e85d412f428ea95d2f627255 |
 
+  Scenario Outline: MDQ services on paths are supported
+    Given that I have defined the MDQ service as <service>
+    When I run `mdqt url <entity_id>`
+    Then the output should contain "<url>"
+    And the exit status should be 0
+
+    Examples:
+      | service | entity_id | url       |
+      | http://localhost:4018/mdq/all/ | https://indiid.net/idp/shibboleth | http://localhost:4018/mdq/all/entities/https%3A%2F%2Findiid.net%2Fidp%2Fshibboleth |
+      | http://localhost:4018/bad/no_slash | https://indiid.net/idp/shibboleth | http://localhost:4018/bad/no_slash/entities/https%3A%2F%2Findiid.net%2Fidp%2Fshibboleth |
