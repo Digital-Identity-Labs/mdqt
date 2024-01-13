@@ -7,6 +7,9 @@
 
 name: Ruby
 
+env:
+  LANG: "en_GB.UTF-8"
+
 on:
   push:
     branches: [ "master" ]
