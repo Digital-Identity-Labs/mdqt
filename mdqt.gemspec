@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Pete Birkinshaw"]
   spec.email         = ["pete@digitalidentitylabs.com"]
 
-  spec.summary       = %q{Library and commandline utility for accessing MDQ services}
-  spec.description   = %q{Library and commandline utility for downloading SAML metadata from MDQ services}
+  spec.summary       = %q{Commandline utility for accessing MDQ services}
+  spec.description   = %q{Commandline utility for downloading SAML metadata from MDQ services}
   spec.homepage      = "https://github.com/Digital-Identity-Labs/mdqt"
   spec.license       = "MIT"
 
