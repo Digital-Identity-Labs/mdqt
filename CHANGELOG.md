@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.8.0
+
+## Breaking Changes
+
+- MDQT now requires Ruby 3.0 or later, due to updated dependencies and their requirements
+- MDQT now installs XML handling gems automatically - Nokogiri and XMLDSig are no longer optional. Nokogiri seems to be
+  less troublesome to install now and is needed by some useful current and planned features. Please let me know if this
+  causes you any problems.
+
+## Improvements
+
+- New HTTP library means caching should be slightly faster and HTTP2 is now supported
+- MDQ base URLs should end with a slash, so slashless URLs are now normalised to include one.
+
+## Fixes
+
+- URLs for MDQ entity records now properly support paths - previously only MDQ services at the root path would work
+
 ## 0.7.0
 
 ### Improvements

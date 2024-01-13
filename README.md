@@ -33,7 +33,7 @@ The UK Access Management Federation has a
 ## Installation
 
 MDQT is tested on recent MacOS and Linux, and should work with
- Ruby 2.2.0 or later and recent JRuby releases.
+ Ruby 3.0.0 or later and recent JRuby releases.
 
 ### As a gem for general use
 
@@ -62,7 +62,7 @@ and then execute:
 (Experimental)
 See the instructions at [MDQT-Container](https://github.com/Digital-Identity-Labs/mdqt-container)
 
-### Extra steps for verifying signed metadata
+### Verifying signed metadata, installing Nokogiri
 
 MDQT can check that metadata has not been tampered with by verifying its
 signature. Some MDQ services use unencrypted HTTP connections and rely
@@ -71,17 +71,9 @@ signature. Some MDQ services use unencrypted HTTP connections and rely
 MDQT supports signature verification but requires a Ruby library called
 Nokogiri to do the hard work. Nokogiri is fast and useful but can sometimes
 be awkward to install for non-developers (it can sometimes require a C development
-environment and various XML libraries). To make it easier to install a basic MDQT we've made
-XML signature verification an optional feature.
-
-To enable signature verification you must also install the `xmdsig` gem:
-
-    $ sudo gem install xmldsig
-
-The `xmldsig` gem will install Nokogiri, and Nokogiri will try to build itself.
-If you encounter any problems installing Nokogiri the
-[Installing Nokogiri](http://www.nokogiri.org/tutorials/installing_nokogiri.html)
-documentation is very helpful.
+environment and various XML libraries). In most cases Nokogiri will install 
+automatically, without problems, when you install MDQT, but if you encounter any 
+problems installing Nokogiri the [Installing Nokogiri](http://www.nokogiri.org/tutorials/installing_nokogiri.html) documentation is very helpful.
 
 ## Commandline Usage as an MDQ client
 
@@ -255,8 +247,10 @@ by Tom Scavo of Internet2. Some of the scripts provide similar functionality to 
 
 ## Library Usage
 
-Please don't! This gem is early in development and the API is not stable. Later
-releases of this gem will provide a simple library to use in other Ruby applications.
+Please don't! We originally had plans to include a usable generic library was part of MDQT but unless there's new demand
+for it that's now unlikely to happen. However, we do now have a set of libraries for the Elixir language, based around
+[Smee](https://github.com/Digital-Identity-Labs/smee) - not very helpful for Ruby projects but possibly of use for new
+projects.
 
 ## Development
 
