@@ -6,3 +6,4 @@ gemspec
 gem 'simplecov', require: false, group: :test
 
 gem 'pry'
+gem 'rake'
